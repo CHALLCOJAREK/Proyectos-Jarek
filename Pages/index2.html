@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jarek — Automation Architect</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/66Ct5ryw/j2.png">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --accent: #00d8ff;
+            --accent2: #0091e6;
+            --text: #e9edf5;
+            --muted: #96a4b8;
+            --bg: #00040f;
+            --card: rgba(255,255,255,0.04);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Inter", sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* INTRO ANIMATION */
+        #intro {
+            position: fixed;
+            inset: 0;
+            background: #000814;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            color: var(--accent);
+            font-size: 48px;
+            letter-spacing: 2px;
+            animation: fadeIntro 3s forwards;
+        }
+
+        @keyframes fadeIntro {
+            0% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+
+        /* WEBGL CANVAS */
+        #bg-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: -10;
+        }
+
+        header {
+            padding: 26px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(6px);
+        }
+
+        .logo-box {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .logo-box img {
+            width: 44px;
+        }
+
+        .logo-box h1 {
+            font-size: 20px;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* HERO */
+        .hero {
+            padding: 140px 10% 100px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 70px;
+            place-items: center;
+        }
+
+        .hero-info h2 {
+            font-size: 50px;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--accent), #c6f7ff);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .hero-info p {
+            margin-top: 18px;
+            line-height: 1.7;
+            max-width: 520px;
+            color: var(--muted);
+        }
+
+        /* HOLOGRAM IMAGE */
+        .holo {
+            width: 420px;
+            border-radius: 20px;
+            filter: drop-shadow(0 0 50px rgba(0,255,255,0.4));
+            animation: holo-glitch 4s infinite;
+        }
+
+        @keyframes holo-glitch {
+            0%, 100% { filter: drop-shadow(0 0 50px rgba(0,255,255,0.4)); }
+            50% { filter: drop-shadow(0 0 70px rgba(0,200,255,0.8)); }
+        }
+
+        /* SECTION */
+        .section-title {
+            padding: 10px 10% 0;
+            font-size: 30px;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .grid {
+            padding: 40px 10% 80px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 26px;
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: .26s;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-8px);
+            background: rgba(255,255,255,0.12);
+        }
+
+        /* CHATBOT BUTTON */
+        #chatbot-btn {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background: var(--accent);
+            color: #000a11;
+            padding: 14px 20px;
+            border-radius: 50px;
+            font-size: 22px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        #chatbot-btn:hover {
+            background: #00a8d6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 50px;
+            color: var(--muted);
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- INTRO -->
+    <div id="intro">JAREK</div>
+
+    <!-- WEBGL BACKGROUND -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo-box">
+            <img src="https://i.postimg.cc/66Ct5ryw/j2.png" alt="">
+            <h1>Jarek Portfolio</h1>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-info">
+            <h2>Automation Architect • IA Strategist</h2>
+            <p>
+                Arquitecto soluciones que combinan IA, Automatización,
+                RPA, n8n y visión estratégica para construir sistemas del futuro.
+            </p>
+        </div>
+
+        <img class="holo"
+            src="https://i.postimg.cc/tg07MXcD/jarek2.jpg" alt="">
+    </section>
+
+    <!-- SPECIALTIES -->
+    <h3 class="section-title">Especialidades</h3>
+
+    <div class="grid">
+        <div class="card">
+            <h4>IA Avanzada</h4>
+            <p>Agentes autónomos, GPT, Gemini, DeepSeek, analítica inteligente.</p>
+        </div>
+
+        <div class="card">
+            <h4>RPA Empresarial</h4>
+            <p>Robots con Rocketbot, Python, OCR y procesos E2E.</p>
+        </div>
+
+        <div class="card">
+            <h4>n8n & Integraciones</h4>
+            <p>APIs, microservicios, pipelines y automatizaciones reales.</p>
+        </div>
+
+        <div class="card">
+            <h4>Consultoría Técnica</h4>
+            <p>Escalabilidad SaaS, arquitectura, propuestas y visión estratégica.</p>
+        </div>
+    </div>
+
+    <!-- CHATBOT -->
+    <div id="chatbot-btn">
+        <i class="fa-solid fa-robot"></i>
+    </div>
+
+    <footer>
+        © 2025 Jarek — Automation Architect & IA Specialist
+    </footer>
+
+    <!-- THREE.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        /* --- 3D BACKGROUND --- */
+        const canvas = document.getElementById("bg-canvas");
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+
+        renderer.setSize(innerWidth, innerHeight);
+        camera.position.z = 3;
+
+        /* Particles */
+        const particlesGeometry = new THREE.BufferGeometry();
+        const count = 1200;
+        const positions = new Float32Array(count * 3);
+
+        for (let i = 0; i < count*3; i++) {
+            positions[i] = (Math.random() - 0.5) * 10;
+        }
+
+        particlesGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.015,
+            color: "#00d8ff"
+        });
+
+        const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particles);
+
+        function animate() {
+            requestAnimationFrame(animate);
+            particles.rotation.y += 0.0008;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener("resize", () => {
+            camera.aspect = innerWidth / innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(innerWidth, innerHeight);
+        });
+    </script>
+
+</body>
+</html>

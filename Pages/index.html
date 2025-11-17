@@ -1,148 +1,728 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Herramientas Jarek</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jarek — Automation Architect 2077</title>
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="https://i.postimg.cc/66Ct5ryw/j2.png">
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/66Ct5ryw/j2.png">
 
-  <!-- ICONS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- ICONOS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <style>
-    :root {
-      --bg1: #020617;
-      --bg2: #0b1220;
-      --card: rgba(15,23,42,0.88);
-      --accent: #0ea5e9;
-      --text: #e2e8f0;
-      --soft: #94a3b8;
-    }
+    <!-- TIPOGRAFÍA -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: "Segoe UI", sans-serif;
-      background: radial-gradient(circle at 0% 0%, #1e3a8a 0%, transparent 50%),
-                  radial-gradient(circle at 100% 0%, #0284c7 0%, transparent 45%),
-                  linear-gradient(160deg, var(--bg1), var(--bg2));
-      color: var(--text);
-    }
+    <!-- =======================================
+         SECCIÓN DE ESTILOS (VACÍO AÚN)
+         ======================================= -->
+    <style>
+        /* Aquí meteremos TODO el CSS premium */
+        /***********************************************
+    RESET & BASE
+************************************************/
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Inter", sans-serif;
+        }
 
-    .container {
-      width: 100%;
-      max-width: 520px;
-      background: var(--card);
-      padding: 32px;
-      border-radius: 22px;
-      text-align: center;
-      border: 1px solid rgba(56,189,248,0.25);
-      box-shadow: 0 25px 80px rgba(0,0,0,0.45);
-    }
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            background: #00040f;
+            color: #e8ecf5;
+            scroll-behavior: smooth;
+        }
 
-    .logo {
-      width: 72px;
-      height: 72px;
-      margin: auto;
-      border-radius: 16px;
-      background: radial-gradient(circle at 30% 0%, #38bdf8, #0284c7 60%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 12px 40px rgba(14,165,233,0.3);
-    }
+        :root {
+            --accent: #00d8ff;
+            --accent2: #0088cc;
+            --text: #e8edf5;
+            --muted: #9aa5b9;
+            --bg: #00040f;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-strong: rgba(255, 255, 255, 0.11);
+        }
 
-    .logo i {
-      font-size: 32px;
-      color: white;
-    }
+        /***********************************************
+    INTRO • NEON LOADING
+************************************************/
+        #intro {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, #001322, #00040f 80%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: introFade 3s forwards 2s ease-out;
+        }
 
-    h1 {
-      margin-top: 18px;
-      font-size: 1.6rem;
-      font-weight: 600;
-    }
+        #intro-text span {
+            font-size: 58px;
+            font-weight: 900;
+            letter-spacing: 6px;
+            color: var(--accent);
+            text-shadow: 0 0 25px rgba(0, 216, 255, 0.8);
+            animation: neonGlow 2s infinite alternate;
+        }
 
-    p {
-      margin-top: 8px;
-      color: var(--soft);
-      font-size: 0.9rem;
-    }
+        #intro-loader {
+            width: 150px;
+            height: 6px;
+            margin-top: 25px;
+            border-radius: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            animation: loadingBar 2s infinite linear;
+        }
 
-    .btn-group {
-      margin-top: 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+        @keyframes neonGlow {
+            0% {
+                opacity: 0.5;
+                text-shadow: 0 0 10px var(--accent);
+            }
 
-    a.btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px;
-      border-radius: 14px;
-      text-decoration: none;
-      font-size: 1rem;
-      font-weight: 500;
-      background: linear-gradient(135deg, var(--accent), #0284c7);
-      color: white;
-      transition: 0.2s;
-      box-shadow: 0 10px 30px rgba(14,165,233,0.45);
-    }
+            100% {
+                opacity: 1;
+                text-shadow: 0 0 35px var(--accent);
+            }
+        }
 
-    a.btn i {
-      margin-right: 8px;
-      font-size: 1.1rem;
-    }
+        @keyframes introFade {
+            0% {
+                opacity: 1;
+            }
 
-    a.btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 20px 40px rgba(14,165,233,0.55);
-    }
+            90% {
+                opacity: 1;
+            }
 
-    footer {
-      margin-top: 22px;
-      font-size: 0.75rem;
-      color: var(--soft);
-    }
-  </style>
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        @keyframes loadingBar {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: translateX(100%);
+                opacity: 1;
+            }
+        }
+
+        /***********************************************
+    HEADER
+************************************************/
+        #header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 22px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 90;
+            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.25);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-box img {
+            width: 44px;
+        }
+
+        .logo-box h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .btn-icon {
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 12px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            color: var(--accent);
+            font-size: 20px;
+            transition: .3s;
+        }
+
+        .btn-icon:hover {
+            background: var(--glass-strong);
+            transform: translateY(-2px);
+        }
+
+        /***********************************************
+    HERO • HOLOGRAMA
+************************************************/
+        #hero {
+            padding: 180px 10% 140px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-info h2 {
+            font-size: 52px;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--accent), #baf4ff);
+            -webkit-background-clip: text;
+            color: transparent;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .hero-info p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: var(--muted);
+        }
+
+        .hero-holo {
+            position: relative;
+            width: 420px;
+            margin: auto;
+        }
+
+        #holo-img {
+            width: 100%;
+            border-radius: 20px;
+            filter: drop-shadow(0 0 45px rgba(0, 216, 255, 0.45));
+        }
+
+        #holo-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg,
+                    transparent,
+                    rgba(0, 216, 255, 0.2),
+                    transparent);
+            mix-blend-mode: screen;
+            opacity: 0.5;
+            animation: holoShine 5s infinite linear;
+        }
+
+        @keyframes holoShine {
+            0% {
+                transform: translateY(-120%);
+            }
+
+            100% {
+                transform: translateY(120%);
+            }
+        }
+
+        /***********************************************
+    SECCIONES GENERALES
+************************************************/
+        .section-title {
+            padding: 0 10%;
+            font-size: 32px;
+            color: var(--accent);
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        /***********************************************
+    TIMELINE FUTURISTA
+************************************************/
+        #sobre-mi {
+            padding: 40px 10% 120px;
+        }
+
+        .timeline {
+            border-left: 2px solid var(--accent2);
+            margin-left: 20px;
+            padding-left: 35px;
+            position: relative;
+        }
+
+        .tl-item {
+            margin-bottom: 55px;
+            position: relative;
+        }
+
+        .tl-dot {
+            width: 16px;
+            height: 16px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: absolute;
+            left: -43px;
+            top: 4px;
+            box-shadow: 0 0 18px rgba(0, 216, 255, 0.6);
+        }
+
+        .tl-year {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .tl-item p {
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /***********************************************
+    GITHUB REPOS • TARJETAS
+************************************************/
+        #github {
+            padding: 40px 10% 120px;
+        }
+
+        .repos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .repo-card {
+            background: var(--glass);
+            padding: 22px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: .3s;
+        }
+
+        .repo-card:hover {
+            background: var(--glass-strong);
+            transform: translateY(-6px);
+        }
+
+        .repo-card h4 {
+            color: var(--accent);
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .repo-card p {
+            color: var(--muted);
+            font-size: 15px;
+            margin-bottom: 14px;
+        }
+
+        .repo-card a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /***********************************************
+    APPS GRID
+************************************************/
+        #apps {
+            padding: 40px 10% 120px;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .app-card {
+            text-decoration: none;
+            background: var(--glass);
+            padding: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 18px;
+            text-align: center;
+            color: var(--text);
+            transition: .3s;
+        }
+
+        .app-card:hover {
+            transform: translateY(-6px);
+            background: var(--glass-strong);
+            border-color: var(--accent);
+        }
+
+        .app-card i {
+            font-size: 42px;
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+
+        /***********************************************
+        CTA FINAL
+        ************************************************/
+        #cta {
+            text-align: center;
+            padding: 100px 10%;
+        }
+
+        #cta h2 {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        #cta p {
+            color: var(--muted);
+            font-size: 18px;
+            max-width: 700px;
+            margin: auto;
+            margin-bottom: 30px;
+        }
+
+        .cta-btn {
+            text-decoration: none;
+            background: var(--accent);
+            padding: 14px 40px;
+            border-radius: 40px;
+            color: #00161d;
+            font-weight: 700;
+            transition: .3s;
+        }
+
+        .cta-btn:hover {
+            background: var(--accent2);
+        }
+
+        /***********************************************
+    FOOTER
+************************************************/
+        #footer {
+            text-align: center;
+            padding: 50px 0;
+            color: var(--muted);
+            font-size: 15px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        /***********************************************
+    RESPONSIVO TOTAL
+************************************************/
+        @media(max-width: 900px) {
+            .hero-info h2 {
+                font-size: 42px;
+            }
+
+            #hero {
+                padding: 160px 8% 100px;
+            }
+
+            .hero-holo {
+                width: 320px;
+            }
+        }
+
+        @media(max-width: 600px) {
+            .hero-info h2 {
+                font-size: 34px;
+            }
+
+            .section-title {
+                font-size: 26px;
+            }
+
+            #cta h2 {
+                font-size: 30px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <div class="container">
-    <div class="logo">
-      <i class="fa-solid fa-bolt"></i>
+    <!-- =======================================
+         INTRO ANIMADA / LOADING NEON
+         ======================================= -->
+    <div id="intro">
+        <div id="intro-text">
+            <span>JAREK</span>
+        </div>
+        <div id="intro-loader"></div>
     </div>
 
-    <h1>Herramientas de Jarek</h1>
-    <p>Selecciona una herramienta para comenzar</p>
+    <!-- =======================================
+         FONDO 3D WEBGL (THREE.JS)
+         ======================================= -->
+    <canvas id="bg-canvas"></canvas>
 
-    <div class="btn-group">
-      <a href="./wspgeneratorlink.html" class="btn">
-        <i class="fa-brands fa-whatsapp"></i> Generar Link de WhatsApp
-      </a>
+    <!-- =======================================
+         AUDIO (MÚSICA AMBIENTE)
+         ======================================= -->
+    <audio id="bg-music" loop>
+        <source src="https://cdn.pixabay.com/audio/2023/05/30/audio_7f3e3e7fdd.mp3" type="audio/mpeg">
+    </audio>
 
-      <a href="./QRGnernator.html" class="btn">
-        <i class="fa-solid fa-qrcode"></i> Generar Código QR
-      </a>
+    <!-- =======================================
+         HEADER
+         ======================================= -->
+    <header id="header">
+        <div class="logo-box">
+            <img src="https://i.postimg.cc/66Ct5ryw/j2.png" alt="Logo">
+            <h1>Jarek Portfolio</h1>
+        </div>
 
-      <a href="./sorteo copy.html" class="btn">
-        <i class="fa fa-gift"></i> Sorteos
-      </a>
-    </div>
+        <button id="music-btn" class="btn-icon">
+            <i class="fa-solid fa-wave-square"></i>
+        </button>
+    </header>
 
-    <footer>
-      © 2025 – Powered by Jarek
+    <!-- =======================================
+         HERO • FOTO HOLOGRAMA + INFO
+         ======================================= -->
+    <section id="hero">
+        <div class="hero-info">
+            <h2 class="typewriter">
+                Automation Architect • IA Strategist
+            </h2>
+            <p>
+                Arquitecto sistemas inteligentes, flujos automatizados,
+                modelos de IA, microservicios y experiencias digitales que
+                transforman el futuro de las empresas.
+            </p>
+        </div>
+
+        <div class="hero-holo">
+            <img id="holo-img" src="https://i.postimg.cc/tg07MXcD/jarek2.jpg" alt="Holograma">
+            <div id="holo-overlay"></div>
+        </div>
+    </section>
+
+    <!-- =======================================
+         SECCIÓN SOBRE MÍ — TIMELINE FUTURISTA
+         ======================================= -->
+    <section id="sobre-mi">
+        <h3 class="section-title">Sobre Mí</h3>
+
+        <div class="timeline">
+
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <span class="tl-year">2021</span>
+                <p>Primeros pasos en programación y automatización.</p>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <span class="tl-year">2022</span>
+                <p>Inicio en RPA y proyectos reales para empresas.</p>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <span class="tl-year">2023</span>
+                <p>Evolución hacia IA, modelos LLM y sistemas cognitivos.</p>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <span class="tl-year">2024</span>
+                <p>Consultor IA + RPA + Integraciones de alto nivel.</p>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <span class="tl-year">2025</span>
+                <p>Arquitecto de automatización y soluciones estratégicas.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- =======================================
+         GITHUB (DINÁMICO CON API)
+         ======================================= -->
+    <section id="github">
+        <h3 class="section-title">Últimos Repositorios en GitHub</h3>
+
+        <div id="github-repos" class="repos-grid">
+            <div class="repos-cargando">Cargando repositorios...</div>
+        </div>
+    </section>
+
+    <!-- =======================================
+         APPS / HERRAMIENTAS
+         ======================================= -->
+    <section id="apps">
+        <h3 class="section-title">Herramientas & Creaciones</h3>
+
+        <div class="apps-grid">
+
+            <a href="./wspgeneratorlink.html" class="app-card">
+                <i class="fa-brands fa-whatsapp"></i>
+                <h4>WhatsApp Link Generator</h4>
+            </a>
+
+            <a href="./QRGnernator.html" class="app-card">
+                <i class="fa-solid fa-qrcode"></i>
+                <h4>QR Maker Pro</h4>
+            </a>
+
+            <a href="./sorteo.html" class="app-card">
+                <i class="fa-solid fa-gift"></i>
+                <h4>Random Sorteos</h4>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- =======================================
+         CTA FINAL
+         ======================================= -->
+    <section id="cta">
+        <h2>Construyamos algo épico.</h2>
+        <p>IA, automatización, arquitectura y soluciones inteligentes que impulsan tu empresa al siguiente nivel.</p>
+
+        <a href="https://wa.me/51972781723?text=Hola%20Jarek,%20quiero%20consultar%20sobre%20IA%20y%20automatización"
+            class="cta-btn">
+            Hablemos
+        </a>
+    </section>
+
+    <!-- =======================================
+         FOOTER
+         ======================================= -->
+    <footer id="footer">
+        © 2025 Jarek — Automation Architect & IA Specialist
     </footer>
 
-  </div>
+
+    <!-- =======================================
+         SCRIPTS / LÓGICA JS
+         ======================================= -->
+
+    <!-- THREE.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+
+        /* ====================
+           INTRO NEON
+        ==================== */
+        function introAnimation() {
+            console.log("Intro lista.");
+        }
+
+
+        /* ====================
+           WEBGL FONDO 3D
+        ==================== */
+        function initWebGL() {
+            const canvas = document.getElementById("bg-canvas");
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+
+            renderer.setSize(innerWidth, innerHeight);
+            camera.position.z = 3;
+
+            // Partículas base
+            const geo = new THREE.BufferGeometry();
+            const count = 1200;
+            const positions = new Float32Array(count * 3);
+
+            for (let i = 0; i < count * 3; i++) {
+                positions[i] = (Math.random() - 0.5) * 10;
+            }
+
+            geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+
+            const mat = new THREE.PointsMaterial({
+                size: 0.015,
+                color: "#00d8ff"
+            });
+
+            const points = new THREE.Points(geo, mat);
+            scene.add(points);
+
+            function animate() {
+                requestAnimationFrame(animate);
+                points.rotation.y += 0.0008;
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+
+        /* ====================
+           MÚSICA AMBIENTE
+        ==================== */
+        function initMusic() {
+            const audio = document.getElementById("bg-music");
+            const btn = document.getElementById("music-btn");
+
+            btn.onclick = () => {
+                if (audio.paused) audio.play();
+                else audio.pause();
+            };
+        }
+
+
+        /* ====================
+           GITHUB API
+        ==================== */
+        function loadGitHubRepos() {
+            const container = document.getElementById("github-repos");
+
+            fetch("https://api.github.com/users/CHALLCOJAREK/repos")
+                .then(res => res.json())
+                .then(repos => {
+                    container.innerHTML = "";
+
+                    repos.slice(0, 6).forEach(repo => {
+                        const el = document.createElement("div");
+                        el.className = "repo-card";
+                        el.innerHTML = `
+                            <h4>${repo.name}</h4>
+                            <p>${repo.description || "Sin descripción"}</p>
+                            <a href="${repo.html_url}" target="_blank">Ver repo</a>
+                        `;
+                        container.appendChild(el);
+                    });
+                });
+        }
+
+
+        /* ====================
+           TIMELINE ANIMADO
+        ==================== */
+        function animateTimeline() {
+            console.log("Timeline listo.");
+        }
+
+
+        /* ====================
+           INICIO
+        ==================== */
+        window.onload = () => {
+            introAnimation();
+            initWebGL();
+            initMusic();
+            loadGitHubRepos();
+            animateTimeline();
+        };
+
+    </script>
 
 </body>
+
 </html>
