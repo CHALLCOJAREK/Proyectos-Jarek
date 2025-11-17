@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For You</title>
+<link rel="icon" type="image/png" href="https://i.postimg.cc/66Ct5ryw/j2.png">
+
+<style>
+:root {
+  /* PALETA */
+  --bg1: #2c348b;
+  --bg2: #0c0e21;
+  --glass: rgba(255,255,255,0.14);
+  --glass-soft: rgba(255,255,255,0.10);
+  --glass-border: rgba(255,255,255,0.18);
+  --text-light: #eef1ff;
+  --text-dim: #c7c9dd;
+  --accent1: #345bff;
+  --accent2: #8b2ae2;
+
+  --radius-xl: 28px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+
+  --blur: blur(14px);
+}
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at 30% 0%, var(--bg1), var(--bg2) 70%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 34px 20px;
+  color: white;
+  overflow-x: hidden;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 440px;
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* TITULOS */
+.title {
+  text-align: center;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--text-light);
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  text-align: center;
+  margin-top: 8px;
+  font-size: 1rem;
+  color: var(--text-dim);
+}
+
+/* GRID APPS */
+.app-grid {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px 20px;
+  justify-items: center;
+}
+
+.app-icon {
+  width: 88px;
+  height: 88px;
+  border-radius: var(--radius-lg);
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: var(--blur);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.18s ease;
+  box-shadow: 0 10px 32px rgba(0,0,0,0.25);
+}
+
+.app-icon:hover {
+  transform: translateY(-3px) scale(1.05);
+}
+
+.app-icon:active {
+  transform: scale(0.92);
+  opacity: 0.85;
+}
+
+.app-icon svg {
+  width: 32px;
+  height: 32px;
+  opacity: 0.95;
+}
+
+.icon-label {
+  margin-top: 8px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-light);
+}
+
+/* SECCIONES */
+.section {
+  display: none;
+  animation: fadeSection 0.45s ease;
+}
+
+@keyframes fadeSection {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.back-btn:hover {
+  color: var(--text-light);
+  transform: translateX(-2px);
+}
+
+.back-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* TEXTOS */
+.section h2 {
+  font-size: 1.35rem;
+  margin-bottom: 16px;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+.text-box {
+  background: var(--glass-soft);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: var(--blur);
+  padding: 22px;
+  border-radius: var(--radius-lg);
+  line-height: 1.58;
+  font-size: 1rem;
+  color: var(--text-light);
+  box-shadow: 0 10px 32px rgba(0,0,0,0.22);
+}
+
+/* CHAT */
+.chat-box {
+  background: linear-gradient(180deg, #152573, #0a0f28);
+  padding: 20px 16px;
+  border-radius: var(--radius-xl);
+  height: 450px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: inset 0 0 45px rgba(0,0,0,0.4);
+}
+
+.bubble {
+  max-width: 78%;
+  padding: 12px 14px;
+  font-size: 0.92rem;
+  border-radius: var(--radius-lg);
+  animation: slideUp 0.35s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.bubble.her {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid var(--glass-border);
+  align-self: flex-start;
+  color: var(--text-light);
+}
+
+.bubble.me {
+  background: linear-gradient(90deg, #1ddc8d, #0fb870);
+  color: #062e1c;
+  align-self: flex-end;
+}
+
+/* BOTÓN WHATSAPP */
+.wa-btn {
+  margin-top: 28px;
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  padding: 16px;
+  border-radius: 999px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-align: center;
+  display: block;
+  color: #eef1ff;
+  text-decoration: none;
+  letter-spacing: -0.3px;
+  transition: 0.18s ease;
+  box-shadow: 0 12px 32px rgba(80,45,170,0.42);
+}
+
+.wa-btn:hover {
+  transform: translateY(-2px);
+}
+
+.wa-btn:active {
+  transform: scale(0.95);
+  opacity: 0.9;
+}
+
+/* SPOTIFY */
+iframe {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  margin-top: 14px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+}
+
+/* CARDS */
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.card-item {
+  background: rgba(15,23,42,0.75);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  border: 1px solid rgba(148,163,184,0.38);
+  color: var(--text-light);
+}
+
+/* RESPIRAR */
+.breathe-wrap {
+  background: linear-gradient(180deg,#12172e,#050712);
+  border-radius: var(--radius-xl);
+  padding: 28px 18px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:22px;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+}
+
+.breathe-circle {
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, #72b3ff, #1d4ed8);
+  box-shadow:0 0 45px rgba(56,189,248,0.45);
+  animation: breathe 6s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0% { transform: scale(0.88); opacity: 0.9; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(0.88); opacity: 0.9; }
+}
+
+/* CHECK-IN */
+.check-buttons {
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:10px;
+}
+
+.check-btn {
+  padding:12px 14px;
+  border-radius:var(--radius-md);
+  border:none;
+  cursor:pointer;
+  background:rgba(15,23,42,0.85);
+  color:var(--text-light);
+  font-size:0.95rem;
+  text-align:left;
+  border:1px solid rgba(148,163,184,0.45);
+  transition:0.15s;
+}
+
+.check-btn:hover {
+  transform: translateX(3px);
+}
+
+.check-btn:active {
+  transform:scale(0.97);
+  opacity:0.9;
+}
+
+.check-response {
+  margin-top:16px;
+  font-size:0.95rem;
+  color:var(--text-light);
+  background:rgba(15,23,42,0.75);
+  border-radius:var(--radius-md);
+  padding:14px;
+  border:1px solid rgba(148,163,184,0.38);
+}
+
+/* ESTRELLAS */
+.stars-box {
+  position:relative;
+  height:270px;
+  border-radius:var(--radius-xl);
+  overflow:hidden;
+  background:radial-gradient(circle at top,#1d4ed8,#020617 75%);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+}
+
+.star {
+  position:absolute;
+  width:3px;
+  height:3px;
+  background:#f9fafb;
+  border-radius:50%;
+  opacity:0.85;
+  animation: twinkle 4s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%,100% { opacity:0.2; }
+  50% { opacity:0.9; }
+}
+
+/* GALERÍA */
+.galeria-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.galeria-grid img {
+  width: 100%;
+  height: 115px;
+  object-fit: cover;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: 0.22s ease;
+  box-shadow: 0 5px 22px rgba(0,0,0,0.22);
+}
+
+.galeria-grid img:hover {
+  transform: scale(1.05);
+}
+
+/* VISOR MEJORADO */
+.visor {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+}
+
+.visor img {
+  width: auto;
+  height: auto;
+  max-width: 95vw;   /* ancho máximo */
+  max-height: 95vh;  /* alto máximo */
+  object-fit: contain; /* mantiene proporción perfecta */
+  border-radius: 16px;
+  box-shadow: 0 0 45px rgba(0,0,0,0.6);
+  animation: zoomIn 0.22s ease;
+}
+
+/* animación suave al abrir */
+@keyframes zoomIn {
+  from { transform: scale(0.86); opacity: 0.4; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- HOME -->
+  <div id="home">
+    <div class="title">Para Juli</div>
+    <div class="subtitle">Un pequeño espacio solo para ti.</div>
+
+    <div class="app-grid">
+
+      <!-- MENSAJE -->
+      <div class="app-icon" onclick="openSection('mensaje')">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M4 4h16v12H5.17L4 17.17V4M4 2a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H4z"/></svg>
+        <div class="icon-label">Mensaje</div>
+      </div>
+
+      <!-- CARTA -->
+      <div class="app-icon" onclick="openSection('carta')">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M20 4H4a2 2 0 0 0-2 2v12c0 1.11.89 2 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2m0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        <div class="icon-label">Carta</div>
+      </div>
+
+      <!-- MUSICA -->
+      <div class="app-icon" onclick="openSection('musica')">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 3v12.26A4 4 0 1 0 14 19V7h4V3h-6z"/></svg>
+        <div class="icon-label">Música</div>
+      </div>
+
+      <!-- CALMA -->
+      <div class="app-icon" onclick="openSection('calma')">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 3a9 9 0 0 0 0 18 9 9 0 0 0 0-18z"/></svg>
+        <div class="icon-label">Calma</div>
+      </div>
+
+      <!-- HABLAR -->
+      <div class="app-icon" onclick="window.open('https://wa.link/5uo6cm','_blank')">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 3C6.48 3 2 7.26 2 12.6c0 2.15.76 4.14 2 5.74L3 21l2.78-.93c1.62.85 3.5 1.33 5.47 1.33 5.52 0 10-4.26 10-9.6S17.52 3 12 3z"/></svg>
+        <div class="icon-label">Hablar</div>
+      </div>
+
+      <!-- DIARIO -->
+      <div class="app-icon" onclick="openSection('diario')">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M7 3h10a2 2 0 0 1 2 2v14l-4-2-4 2-4-2-4 2V5a2 2 0 0 1 2-2h2z"/></svg>
+        <div class="icon-label">Diario</div>
+      </div>
+
+      <!-- RESPIRA -->
+      <div class="app-icon" onclick="openSection('respira')">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a7 7 0 0 0-7 7c0 4.5 7 13 7 13s7-8.5 7-13a7 7 0 0 0-7-7z"/></svg>
+        <div class="icon-label">Respira</div>
+      </div>
+
+      <!-- GUARDADOS -->
+      <div class="app-icon" onclick="openSection('guardados')">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M6 2a2 2 0 0 0-2 2v18l8-4 8 4V4a2 2 0 0 0-2-2H6z"/></svg>
+        <div class="icon-label">Guardados</div>
+      </div>
+
+      <!-- GALERÍA -->
+      <div class="app-icon" onclick="openSection('galeria')">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M21 19V5a2 2 0 0 0-2-2H5C3.89 3 3 3.9 3 5v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2m-2 0H5V5h14v14M8.5 12.5 11 15.5l2.5-3.01L17.5 18h-11l2-2.5z"/></svg>
+        <div class="icon-label">Galería</div>
+      </div>
+
+      <!-- MERECES -->
+      <div class="app-icon" onclick="openSection('mereces')">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5A4.49 4.49 0 0 1 6.5 4 4.78 4.78 0 0 1 12 6.09 4.78 4.78 0 0 1 17.5 4 4.49 4.49 0 0 1 22 8.5c0 3.78-3.4 6.86-8.55 11.54z"/></svg>
+        <div class="icon-label">Lo que mereces</div>
+      </div>
+
+      <!-- PLANES -->
+      <div class="app-icon" onclick="openSection('planes')">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M3 5h18v2H3V5m0 6h18v2H3v-2m0 6h10v2H3v-2z"/></svg>
+        <div class="icon-label">Planes</div>
+      </div>
+
+      <!-- ALEATORIO -->
+      <div class="app-icon" onclick="openSection('aleatorio')">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M14 3h7v7l-2.5-2.5-3.54 3.54-1.41-1.41L17.09 6.5 14 3m-4 14.5L6.91 17 10 13.91 8.59 12.5 5.5 15.59 3 13v7h7l-2.5-2.5L10 17.5zM4 3h7v2H4v7H2V5a2 2 0 0 1 2-2m18 18a2 2 0 0 1-2 2h-7v-2h7v-7h2v7z"/></svg>
+        <div class="icon-label">Aleatorio</div>
+      </div>
+
+      <!-- ESTRELLAS -->
+      <div class="app-icon" onclick="openSection('estrellas')">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2 9.19 8.63 2 9.27l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-6.99L22 9.27l-7.19-.64z"/></svg>
+        <div class="icon-label">Estrellas</div>
+      </div>
+
+      <!-- CHECK-IN -->
+      <div class="app-icon" onclick="openSection('checkin')">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M9 21 3 15l1.41-1.41L9 18.17l10.59-10.6L21 9l-12 12z"/></svg>
+        <div class="icon-label">Check-in</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MENSAJE -->
+  <div class="section" id="mensaje">
+    <div class="back-btn" onclick="goHome()">
+      <svg viewBox="0 0 24 24"><path d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+      Volver
+    </div>
+    <h2>Mensaje del Día</h2>
+    <div class="chat-box">
+      <div class="bubble her">Solo necesitaba un respiro hoy.</div>
+      <div class="bubble me">Y está bien. Mereces más de uno.</div>
+      <div class="bubble me">Si puedo hacer tu día un poco más ligero, aquí estoy.</div>
+    </div>
+  </div>
+
+  <!-- CARTA -->
+  <div class="section" id="carta">
+    <div class="back-btn" onclick="goHome()">
+      <svg viewBox="0 0 24 24"><path d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+      Volver
+    </div>
+    <h2>Una Carta para Ti</h2>
+      <div class="text-box">
+        No sé si esto es una confesión o solo una forma tranquila de decirte algo que me guardo hace tiempo.  
+        <br><br>
+        No quiero ponerte en un lugar incómodo, ni pedirte una respuesta, ni empujarte a sentir algo para lo que no estés lista.  
+        <br><br>
+        Solo quiero ser honesto, como siempre he intentado ser contigo.  
+        <br><br>
+        A veces siento que tú no ves lo que vales, que no te miras con los ojos con los que te mira alguien que te quiere bien. Y quizá no te lo decía tan directo, pero te lo digo ahora: hay algo en ti que me toca la vida de una manera que no esperaba.  
+        <br><br>
+        Me gusta cómo eres cuando estás feliz, pero también cuando estás seria, cuando te pierdes en tus ideas, cuando te ríes sin querer, cuando te quedas callada… cuando simplemente existes.  
+        <br><br>
+        No quiero controlar tu vida ni presionarte, ni que sientas que tengo que convencerte de algo. Nada de eso.  
+        <br><br>
+        Lo único que quiero que sepas es algo simple: me gustas, y me gustas de verdad. Y sí, te quiero, a mi manera tranquila, sin exigirte nada, sin pedirte que te adelantes a mí, sin pedirte que decidas hoy.  
+        <br><br>
+        Si algún día, sin prisa y sin miedo, tu corazón te dice que puedo tener un lugar un poquito más cerca, yo voy a estar. No para apurarte, sino para acompañarte con la misma calma de siempre.  
+        <br><br>
+        Y si no pasa, igual agradezco haberte conocido como eres, porque contigo nunca sentí que perdía el tiempo.  
+        <br><br>
+        No tienes que decir nada ahora. Solo quería que supieras la verdad… la mía.
+      </div>
+  </div>
+
+  <!-- MUSICA -->
+  <div class="section" id="musica">
+    <div class="back-btn" onclick="goHome()">
+      <svg viewBox="0 0 24 24"><path d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+      Volver
+    </div>
+    <h2>Música para Acompañarte</h2>
+    <iframe src="https://open.spotify.com/embed/artist/5C4PDR4LnhZTbVnKWXuDKD?utm_source=generator"
+            height="352" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+  </div>
+
+  <!-- CALMA -->
+  <div class="section" id="calma">
+    <div class="back-btn" onclick="goHome()">
+      <svg viewBox="0 0 24 24"><path d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+      Volver
+    </div>
+    <h2>Un Momento de Calma</h2>
+    <div class="text-box">
+      Está bien si el día fue pesado.  
+      <br><br>
+      Está bien si te sientes cansada o sin ganas.  
+      <br><br>
+      A veces lo único que se necesita es un minuto de silencio y alguien que te acompañe.  
+      <br><br>
+      Aquí tienes ambos.
+    </div>
+  </div>
+
+  <!-- DIARIO -->
+  <div class="section" id="diario">
+    <div class="back-btn" onclick="goHome()">
+      <svg viewBox="0 0 24 24"><path d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+      Volver
+    </div>
+    <h2>Diario Suave</h2>
+    <div class="text-box" id="diarioText">
+      Hoy tu única tarea es ser un poco más amable contigo misma que ayer.
+    </div>
+  </div>
+
+  <!-- RESPIRA -->
+  <div class="section" id="respira">
+    <div class="back-btn" onclick="goHome()">
+      <svg viewBox="0 0 24 24"><path d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+      Volver
+    </div>
+    <h2>Respira Conmigo</h2>
+    <div class="breathe-wrap">
+      <div class="breathe-circle"></div>
+      <div class="breathe-text">
+        Inhala cuando el círculo crece.<br>
+        Exhala cuando vuelva a hacerse pequeño.<br><br>
+        Solo eso por unos segundos.
+      </div>
+    </div>
+  </div>
+
+  <!-- GUARDADOS -->
+  <div class="section" id="guardados">
+    <div class="back-btn" onclick="goHome()">
+      <svg viewBox="0 0 24 24"><path d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+      Volver
+    </div>
+    <h2>Mensajes Guardados</h2>
+    <div class="text-box">
+      <div class="card-list">
+        <div class="card-item">No tienes que poder con todo hoy. Solo con lo que puedas.</div>
+        <div class="card-item">Lo que sientes importa, aunque no lo pongas en palabras.</div>
+        <div class="card-item">No estás sola, aunque a veces tu día se empeñe en decir lo contrario.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GALERÍA -->
+  <div class="section" id="galeria">
+    <div class="back-btn" onclick="goHome()">
+      <svg viewBox="0 0 24 24"><path d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+      Volver
+    </div>
+    <h2>Atardeceres para Ti</h2>
+    <div class="text-box" style="margin-bottom:12px;">
+      Un pequeño lugar para tus atardeceres favoritos.  
+      Toca una foto para verla en grande.
+    </div>
+
+    <div id="galeriaGrid" class="galeria-grid"></div>
+
+    <div id="visor" class="visor">
+      <img id="visorImg" />
+    </div>
+  </div>
+
+  <!-- MERECES -->
+  <div class="section" id="mereces">
+    <div class="back-btn" onclick="goHome()">
+      <svg viewBox="0 0 24 24"><path d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+      Volver
+    </div>
+    <h2>Cosas que Mereces</h2>
+    <div class="text-box">
+      <div class="card-list">
+        <div class="card-item">Descansar sin sentir culpa.</div>
+        <div class="card-item">Que te escuchen cuando quieras hablar.</div>
+        <div class="card-item">Días ligeros, sin tanta carga.</div>
+        <div class="card-item">Espacios donde puedas ser tú, sin explicar nada.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLANES -->
+  <div class="section" id="planes">
+    <div class="back-btn" onclick="goHome()">
+      <svg viewBox="0 0 24 24"><path d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+      Volver
+    </div>
+    <h2>Planes Pendientes</h2>
+    <div class="text-box">
+      <div class="card-list">
+        <div class="card-item">Un café tranquilo en algún lugar que te guste.</div>
+        <div class="card-item">Ver un atardecer sin apuro.</div>
+        <div class="card-item">Actualizar esa pantalla cuando se pueda.</div>
+        <div class="card-item">Tener una conversación larga, sin prisa.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALEATORIO -->
+  <div class="section" id="aleatorio">
+    <div class="back-btn" onclick="goHome()">
+      <svg viewBox="0 0 24 24"><path d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+      Volver
+    </div>
+    <h2>Algo Bonito al Azar</h2>
+    <div class="text-box" id="aleatorioText">
+      Hoy el azar dice: que te tomes al menos un momento para ti.
+    </div>
+  </div>
+
+  <!-- ESTRELLAS -->
+  <div class="section" id="estrellas">
+    <div class="back-btn" onclick="goHome()">
+      <svg viewBox="0 0 24 24"><path d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+      Volver
+    </div>
+    <h2>Lluvia de Estrellas</h2>
+    <div class="stars-box" id="starsBox"></div>
+  </div>
+
+  <!-- CHECK-IN -->
+  <div class="section" id="checkin">
+    <div class="back-btn" onclick="goHome()">
+      <svg viewBox="0 0 24 24"><path d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+      Volver
+    </div>
+    <h2>¿Cómo Va Tu Día?</h2>
+    <div class="text-box">
+      <div>Elige una opción. No es una encuesta, solo un pequeño check-in.</div>
+      <div class="check-buttons">
+        <button class="check-btn" onclick="setCheckin(1)">Estoy bien, solo cansada.</button>
+        <button class="check-btn" onclick="setCheckin(2)">Estoy un poco cargada.</button>
+        <button class="check-btn" onclick="setCheckin(3)">Siento que necesito hablar.</button>
+      </div>
+      <div class="check-response" id="checkResponse">
+        Lo que elijas está bien. No tienes que justificarlo.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+<script>
+function openSection(id){
+  document.getElementById("home").style.display = "none";
+  document.querySelectorAll(".section").forEach(s => s.style.display = "none");
+  document.getElementById(id).style.display = "block";
+
+  if(id === "diario"){
+    const frases = [
+      "Hoy tu única tarea es ser un poco más amable contigo misma que ayer.",
+      "No tienes que poder con todo, solo con lo que hoy te alcance.",
+      "Aunque el día sea ruidoso, siempre puedes crear un minuto de silencio para ti.",
+      "Estar cansada no te hace menos fuerte. Te hace humana."
+    ];
+    document.getElementById("diarioText").textContent =
+      frases[Math.floor(Math.random()*frases.length)];
+  }
+
+  if(id === "aleatorio"){
+    const frases = [
+      "Hoy el azar dice: que te tomes al menos un momento para ti.",
+      "Si nadie te lo dijo hoy: hiciste lo mejor que pudiste con lo que tenías.",
+      "No necesitas tener todo claro para estar avanzando.",
+      "A veces, descansar también es una forma de seguir."
+    ];
+    document.getElementById("aleatorioText").textContent =
+      frases[Math.floor(Math.random()*frases.length)];
+  }
+
+  if(id === "estrellas"){
+    const box = document.getElementById("starsBox");
+    if(!box.dataset.created){
+      for(let i=0;i<40;i++){
+        const s = document.createElement("div");
+        s.className = "star";
+        s.style.left = Math.random()*100 + "%";
+        s.style.top = Math.random()*100 + "%";
+        s.style.animationDelay = (Math.random()*4)+"s";
+        box.appendChild(s);
+      }
+      box.dataset.created = "1";
+    }
+  }
+}
+
+function goHome(){
+  document.querySelectorAll(".section").forEach(s => s.style.display = "none");
+  document.getElementById("home").style.display = "block";
+}
+
+function setCheckin(level){
+  const el = document.getElementById("checkResponse");
+  if(level === 1){
+    el.textContent = "Aunque el día te canse, sigues valiendo lo mismo que en tus mejores días.";
+  } else if(level === 2){
+    el.textContent = "Si te sientes cargada, está bien soltar un poco. No tienes que sostenerlo todo sola.";
+  } else {
+    el.textContent = "Si alguna vez quieres hablar, aquí hay alguien dispuesto a escucharte, sin prisa.";
+  }
+}
+
+
+
+// ---------------------------------------------------------------------
+// ⭐⭐ GALERÍA – AQUÍ PEGAS LOS 153 LINKS ⭐⭐
+// ---------------------------------------------------------------------
+
+// Ejemplo:
+// "https://i.postimg.cc/xxxxxxx/foto1.jpg",
+
+const imagenes = [
+  "https://i.postimg.cc/v4wXK3m4/010c3a07ed629565407cf2acaf2c1087.jpg",
+  "https://i.postimg.cc/S2PffGP1/20240512-125325.jpg",
+  "https://i.postimg.cc/CB2ss422/20240512-125329.jpg",
+  "https://i.postimg.cc/jw144h9V/20240516-175323.jpg",
+  "https://i.postimg.cc/zbQFFkQs/20240517-175523.jpg",
+  "https://i.postimg.cc/MvVm1Vm3/20240517-175616.jpg",
+  "https://i.postimg.cc/TLsJJcSM/20240518-170623.jpg",
+  "https://i.postimg.cc/9RkYYBSH/20240520-174604.jpg",
+  "https://i.postimg.cc/xXGgVMkC/20250724-193652-(1).jpg",
+  "https://i.postimg.cc/0M400C3P/20250724-193719-(1).jpg",
+  "https://i.postimg.cc/WFyww7Ks/20250724-193822-(1).jpg",
+  "https://i.postimg.cc/mtCy7Cy6/20250724-193958-(1).jpg",
+  "https://i.postimg.cc/HVX9bX9h/20250726-100135.jpg",
+  "https://i.postimg.cc/Pp7QQMcX/20250727-193756-(1).jpg",
+  "https://i.postimg.cc/4mVQpVQj/20250727-194226-(1).jpg",
+  "https://i.postimg.cc/xXGgVMk8/20250727-194303-(1).jpg",
+  "https://i.postimg.cc/fJmfYmv4/20250727-194608-(1).jpg",
+  "https://i.postimg.cc/dLrjGrjz/20250727-194915-(1).jpg",
+  "https://i.postimg.cc/9rZYyZBH/20250727-195026-(1).jpg",
+  "https://i.postimg.cc/2bt77xJz/20250727-204154-(1).jpg",
+  "https://i.postimg.cc/0bD07DCx/20250727-204250.jpg",
+  "https://i.postimg.cc/9DH1kJfy/20250727-204327-(1).jpg",
+  "https://i.postimg.cc/SJCfcCGk/20250727-204402-(1).jpg",
+  "https://i.postimg.cc/BXHB2HCn/20250727-204452.jpg",
+  "https://i.postimg.cc/zVKFTKkB/20250727-204522.jpg",
+  "https://i.postimg.cc/CR0H75vg/20250727-204552-(1).jpg",
+  "https://i.postimg.cc/LJSBD5yM/20250828-180738-(1).jpg",
+  "https://i.postimg.cc/mP4Njkd4/20250828-180740.jpg",
+  "https://i.postimg.cc/FYvgpzPN/20250828-180741-(1).jpg",
+  "https://i.postimg.cc/tZcNNzfR/20250828-185108.jpg",
+  "https://i.postimg.cc/bD599RMv/20250828-185111.jpg",
+  "https://i.postimg.cc/CR0H75vw/20250830-172255-(1).jpg",
+  "https://i.postimg.cc/QFZSz0M7/20250830-173615-(1).jpg",
+  "https://i.postimg.cc/rDGg2xdz/20250902-171646.jpg",
+  "https://i.postimg.cc/zbQFFkMV/20250904-172602-(1).jpg",
+  "https://i.postimg.cc/5YrSSmGj/20250904-204055.jpg",
+  "https://i.postimg.cc/JDF55QgD/20250904-204115.jpg",
+  "https://i.postimg.cc/pmQkMz9p/20250904-204154-(1).jpg",
+  "https://i.postimg.cc/QKWk4TGx/20250904-204221-(1).jpg",
+  "https://i.postimg.cc/bS2HCtcv/20250904-204320-(1).jpg",
+  "https://i.postimg.cc/1VNcCqh4/20250904-204527-(1).jpg",
+  "https://i.postimg.cc/fS0j29nm/20250904-204602-(1).jpg",
+  "https://i.postimg.cc/hQ7bydWx/20250904-204742-(2).jpg",
+  "https://i.postimg.cc/RJnQsH57/20250904-204903-(1).jpg",
+  "https://i.postimg.cc/XBycHCSK/20250906-180743.jpg",
+  "https://i.postimg.cc/ZvyF7dtx/20250906-183557.jpg",
+  "https://i.postimg.cc/QKWk4TGb/20250906-183633.jpg",
+  "https://i.postimg.cc/0KJdWwRc/20250906-183704.jpg",
+  "https://i.postimg.cc/N2r7JHqN/20250906-183909-(1).jpg",
+  "https://i.postimg.cc/G9BQhZBZ/20250906-183939.jpg",
+  "https://i.postimg.cc/hX8MRTJX/20250906-184046.jpg",
+  "https://i.postimg.cc/V5SRL3rQ/20250906-184109-(1).jpg",
+  "https://i.postimg.cc/21dTNhqL/20250906-184308.jpg",
+  "https://i.postimg.cc/k2NwPKVt/20250906-184340-(1).jpg",
+  "https://i.postimg.cc/XrKx6dZw/20250906-184410.jpg",
+  "https://i.postimg.cc/QFgSZ1Bk/20250906-184428.jpg",
+  "https://i.postimg.cc/RW1GxK3R/20250907-174442-(1).jpg",
+  "https://i.postimg.cc/bZ0LfkGL/20250907-175951.jpg",
+  "https://i.postimg.cc/qNcQHytm/20250907-190002.jpg",
+  "https://i.postimg.cc/K4KNvdkb/20250907-190702.jpg",
+  "https://i.postimg.cc/Yj43qJGw/20250907-190717.jpg",
+  "https://i.postimg.cc/CdZNLWBS/20250907-191204.jpg",
+  "https://i.postimg.cc/Bj5NfH8Y/20250907-191213.jpg",
+  "https://i.postimg.cc/Bj5NfH8w/20250907-191244-(1).jpg",
+  "https://i.postimg.cc/RW1GxK3y/20250907-191300.jpg",
+  "https://i.postimg.cc/qtkwJqnQ/20250907-191436.jpg",
+  "https://i.postimg.cc/xk05f8Hh/20250907-191459.jpg",
+  "https://i.postimg.cc/Y4pRr0Yc/20250907-191531.jpg",
+  "https://i.postimg.cc/p92CWr8S/20250907-191559.jpg",
+  "https://i.postimg.cc/yJVj1xcC/20250907-191752-(1).jpg",
+  "https://i.postimg.cc/gxpqsjMn/20250907-233813.jpg",
+  "https://i.postimg.cc/LJSBD5yX/20250907-233847-(1).jpg",
+  "https://i.postimg.cc/hXnbsvCQ/20250911-180446-(1).jpg",
+  "https://i.postimg.cc/9z4pFvRW/20250911-193653-(1).jpg",
+  "https://i.postimg.cc/NKt7DFNr/20250913-173608.jpg",
+  "https://i.postimg.cc/068nkjDs/20250914-135237.jpg",
+  "https://i.postimg.cc/RWmQdhPK/20250914-172632.jpg",
+  "https://i.postimg.cc/QVBbxR9N/20250914-172641-(1).jpg",
+  "https://i.postimg.cc/pmvYCr0f/20250914-172643.jpg",
+  "https://i.postimg.cc/9D2tb0xP/20250914-173059.jpg",
+  "https://i.postimg.cc/ZWmFHnfF/20250914-173106-(1).jpg",
+  "https://i.postimg.cc/14gH5Ln5/20250914-173906-(1).jpg",
+  "https://i.postimg.cc/XXZ87TGX/20250914-173912-(1).jpg",
+  "https://i.postimg.cc/3WyBJP4k/20250914-173920-(1).jpg",
+  "https://i.postimg.cc/MXcDKhMc/20250914-174011-(1).jpg",
+  "https://i.postimg.cc/mhcw20z1/20250914-174014-(1).jpg",
+  "https://i.postimg.cc/TKxq01kc/20250914-174025-(1).jpg",
+  "https://i.postimg.cc/9D2tb0xp/20250914-174027-(1).jpg",
+  "https://i.postimg.cc/87bd0G3W/20250914-175031.jpg",
+  "https://i.postimg.cc/w3tVTSyJ/20250919-174808-(1).jpg",
+  "https://i.postimg.cc/yWJPYwgF/20250919-180231.jpg",
+  "https://i.postimg.cc/xk05f8Mn/20250919-180549-(1).jpg",
+  "https://i.postimg.cc/94Wbm0ZW/20250919-181357-(1).jpg",
+  "https://i.postimg.cc/SXydSRCK/20250923-173437.jpg",
+  "https://i.postimg.cc/5jZmHnLy/20250926-173026.jpg",
+  "https://i.postimg.cc/d74BLFjF/20250926-174414.jpg",
+  "https://i.postimg.cc/06cfbv05/20251007-180507.jpg",
+  "https://i.postimg.cc/Z01L9VpC/20251007-180511.jpg",
+  "https://i.postimg.cc/McdDvwmK/20251009-173850.jpg",
+  "https://i.postimg.cc/bdKRG3kG/20251009-173857.jpg",
+  "https://i.postimg.cc/d74BLFjL/20251022-180913.jpg",
+  "https://i.postimg.cc/WtQ7DXgq/20251022-181117.jpg",
+  "https://i.postimg.cc/t7Lz12Wx/20251023-181510.jpg",
+  "https://i.postimg.cc/3ynBdhFk/20251023-181518.jpg",
+  "https://i.postimg.cc/s1tJBw7W/20251023-181845.jpg",
+  "https://i.postimg.cc/v13zcytW/20251023-181932.jpg",
+  "https://i.postimg.cc/HJB2Vm9M/20251023-213335.jpg",
+  "https://i.postimg.cc/wyMkNrwy/20251024-183056.jpg",
+  "https://i.postimg.cc/phrBjSsn/20251024-185435-(1).jpg",
+  "https://i.postimg.cc/Wd7mHVK0/20251024-185515-(1).jpg",
+  "https://i.postimg.cc/xXPG4Q7K/20251024-185548-(1).jpg",
+  "https://i.postimg.cc/nX1KPx5G/20251024-185632-(1).jpg",
+  "https://i.postimg.cc/NKx8ztVx/20251024-185731-(1).jpg",
+  "https://i.postimg.cc/3kZjch6t/20251024-185803-(1).jpg",
+  "https://i.postimg.cc/DScQMhD5/20251024-185841-(1).jpg",
+  "https://i.postimg.cc/v4v7Nyjj/20251024-185929-(1).jpg",
+  "https://i.postimg.cc/9DBPn2Sn/20251024-190014-(1).jpg",
+  "https://i.postimg.cc/CR4CQ0t9/20251024-190039-(1).jpg",
+  "https://i.postimg.cc/qg9GtjyX/20251110-170411.jpg",
+  "https://i.postimg.cc/njr1mW3B/20251111-175500.jpg",
+  "https://i.postimg.cc/wyMkNrwQ/20251113-180018.jpg",
+  "https://i.postimg.cc/xqWPktMP/20251114-174802.jpg",
+  "https://i.postimg.cc/CdW4Zmk7/20251114-174819.jpg",
+  "https://i.postimg.cc/PNBML2Y6/20251114-175235.jpg",
+  "https://i.postimg.cc/0zCGBv3L/20251114-180043.jpg",
+  "https://i.postimg.cc/jWd6V90g/20251114-180316.jpg",
+  "https://i.postimg.cc/XGqg5Psx/20251114-180321.jpg",
+  "https://i.postimg.cc/xJ8PmZ65/20251114-202156.jpg",
+  "https://i.postimg.cc/jw2hf1Mg/20251115-182901.jpg",
+  "https://i.postimg.cc/NLWxypmb/ebb96fd6d0534a4efc5fd31a9d26db0d.jpg",
+  "https://i.postimg.cc/68hVmKgN/FB-IMG-1757757086360.jpg",
+  "https://i.postimg.cc/5Yymzrsk/file-000000001474620ebe8cd515043bf2d9.png",
+  "https://i.postimg.cc/Z01L9VpQ/file-000000004bb4622f99572399aa702691-(1).png",
+  "https://i.postimg.cc/rzv9dQx7/file-00000000616c61f8b9543944c019f499.png",
+  "https://i.postimg.cc/3WPZynmc/file-00000000ec1061fb8b489c6a502a9413.png",
+  "https://i.postimg.cc/QBxgLPGY/Gry-(1).jpg",
+  "https://i.postimg.cc/jCGhWZP9/H.jpg",
+  "https://i.postimg.cc/DJ0cGNxM/Hh-(1).jpg",
+  "https://i.postimg.cc/D8LP1LP6/Hhat.jpg",
+  "https://i.postimg.cc/yJYhq54r/IMG-20250727-WA0027-(1).jpg",
+  "https://i.postimg.cc/qhqGKF1D/IMG-20250905-WA0033-(1).jpg",
+  "https://i.postimg.cc/sQxJWLTL/IMG-20250907-WA0069.jpg",
+  "https://i.postimg.cc/jLP4yP4Z/IMG-20250912-WA0056.jpg",
+  "https://i.postimg.cc/9R0B9kLs/IMG-20250930-WA0023.jpg",
+  "https://i.postimg.cc/2Vh7nh7T/IMG-20251022-WA0037.jpg",
+  "https://i.postimg.cc/WFz7Zy5Q/J.jpg",
+  "https://i.postimg.cc/Jy43wgVS/Nnn-(1).jpg",
+  "https://i.postimg.cc/GBhP0NwV/Screenshot-20250831-165009-Tik-Tok.jpg",
+  "https://i.postimg.cc/qhqGKFmf/Screenshot-20250907-185015-Whats-App.jpg",
+  "https://i.postimg.cc/xJ8PmZsD/Tg-(1).jpg"
+];
+
+
+// ---------------------------------------------------------------------
+
+const grid = document.getElementById("galeriaGrid");
+imagenes.forEach(url => {
+  const img = document.createElement("img");
+  img.src = url;
+  img.onclick = () => abrirVisor(url);
+  grid.appendChild(img);
+});
+
+function abrirVisor(url){
+  const visor = document.getElementById("visor");
+  const visorImg = document.getElementById("visorImg");
+  visorImg.src = url;
+  visor.style.display = "flex";
+}
+
+document.getElementById("visor").onclick = (e) => {
+  if(e.target.id === "visor") {
+    document.getElementById("visor").style.display = "none";
+  }
+};
+</script>
+
+</body>
+</html>
