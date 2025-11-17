@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jarek — Automation Architect 2077</title>
+    <title>Portafolio</title>
 
     <!-- FAVICON -->
     <link rel="icon" type="image/png" href="https://i.postimg.cc/66Ct5ryw/j2.png">
@@ -445,6 +445,34 @@
                 font-size: 30px;
             }
         }
+
+        /***********************************************
+    FOOTER NUEVO
+************************************************/
+        #footer {
+            text-align: center;
+            padding: 60px 0 40px;
+            color: var(--muted);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 26px;
+            margin-bottom: 18px;
+        }
+
+        .footer-icon {
+            font-size: 28px;
+            color: var(--accent);
+            transition: .3s;
+        }
+
+        .footer-icon:hover {
+            color: var(--accent2);
+            transform: translateY(-4px);
+        }
     </style>
 </head>
 
@@ -471,9 +499,10 @@
     <header id="header">
         <div class="logo-box">
             <img src="https://i.postimg.cc/66Ct5ryw/j2.png" alt="Logo">
+            <h1>Jarek Angelo Challco Juarez</h1>
         </div>
 
-        
+
     </header>
 
     <!-- =======================================
@@ -539,17 +568,6 @@
     </section>
 
     <!-- =======================================
-         GITHUB (DINÁMICO CON API)
-         ======================================= -->
-    <section id="github">
-        <h3 class="section-title">Últimos Repositorios en GitHub</h3>
-
-        <div id="github-repos" class="repos-grid">
-            <div class="repos-cargando">Cargando repositorios...</div>
-        </div>
-    </section>
-
-    <!-- =======================================
          APPS / HERRAMIENTAS
          ======================================= -->
     <section id="apps">
@@ -592,8 +610,24 @@
          FOOTER
          ======================================= -->
     <footer id="footer">
-        © 2025 Jarek — Automation Architect & IA Specialist
+        <div class="footer-links">
+            <a href="https://github.com/CHALLCOJAREK" target="_blank" class="footer-icon">
+                <i class="fa-brands fa-github"></i>
+            </a>
+
+            <a href="https://www.linkedin.com/in/jarek-angelo-challco-juarez-70a029249/" target="_blank"
+                class="footer-icon">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+
+            <a href="https://wa.me/51972781723" target="_blank" class="footer-icon">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </div>
+
+        <p>© 2025 Jarek — Automation Architect & IA Specialist</p>
     </footer>
+
 
 
     <!-- =======================================
