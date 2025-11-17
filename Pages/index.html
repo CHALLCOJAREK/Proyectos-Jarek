@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Herramientas Jarek</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/G2NPGfPx/logo-ibit.png">
+
+  <!-- ICONS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg1: #020617;
+      --bg2: #0b1220;
+      --card: rgba(15,23,42,0.88);
+      --accent: #0ea5e9;
+      --text: #e2e8f0;
+      --soft: #94a3b8;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Segoe UI", sans-serif;
+      background: radial-gradient(circle at 0% 0%, #1e3a8a 0%, transparent 50%),
+                  radial-gradient(circle at 100% 0%, #0284c7 0%, transparent 45%),
+                  linear-gradient(160deg, var(--bg1), var(--bg2));
+      color: var(--text);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+      background: var(--card);
+      padding: 32px;
+      border-radius: 22px;
+      text-align: center;
+      border: 1px solid rgba(56,189,248,0.25);
+      box-shadow: 0 25px 80px rgba(0,0,0,0.45);
+    }
+
+    .logo {
+      width: 72px;
+      height: 72px;
+      margin: auto;
+      border-radius: 16px;
+      background: radial-gradient(circle at 30% 0%, #38bdf8, #0284c7 60%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 40px rgba(14,165,233,0.3);
+    }
+
+    .logo i {
+      font-size: 32px;
+      color: white;
+    }
+
+    h1 {
+      margin-top: 18px;
+      font-size: 1.6rem;
+      font-weight: 600;
+    }
+
+    p {
+      margin-top: 8px;
+      color: var(--soft);
+      font-size: 0.9rem;
+    }
+
+    .btn-group {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    a.btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      background: linear-gradient(135deg, var(--accent), #0284c7);
+      color: white;
+      transition: 0.2s;
+      box-shadow: 0 10px 30px rgba(14,165,233,0.45);
+    }
+
+    a.btn i {
+      margin-right: 8px;
+      font-size: 1.1rem;
+    }
+
+    a.btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 40px rgba(14,165,233,0.55);
+    }
+
+    footer {
+      margin-top: 22px;
+      font-size: 0.75rem;
+      color: var(--soft);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="logo">
+      <i class="fa-solid fa-bolt"></i>
+    </div>
+
+    <h1>Herramientas de Jarek</h1>
+    <p>Selecciona una herramienta para comenzar</p>
+
+    <div class="btn-group">
+      <a href="./wspgeneratorlink.html" class="btn">
+        <i class="fa-brands fa-whatsapp"></i> Generar Link de WhatsApp
+      </a>
+
+      <a href="./QRGenerator.html" class="btn">
+        <i class="fa-solid fa-qrcode"></i> Generar Código QR
+      </a>
+
+      <a href="./sorteo copy.html" class="btn">
+        <i class="fa-solid fa-qrcode"></i> Generar Código QR
+      </a>
+    </div>
+
+    <footer>
+      © 2025 – Powered by Jarek
+    </footer>
+
+  </div>
+
+</body>
+</html>
