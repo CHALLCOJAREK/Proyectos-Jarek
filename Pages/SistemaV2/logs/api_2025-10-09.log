@@ -1,0 +1,36 @@
+[2025-10-09 18:48:26,320] [INFO] 📩 GET https://fb0e3f223c3b.ngrok-free.app/ | Cliente: 179.1.148.226
+[2025-10-09 18:48:26,479] [INFO] ✅ 200 - /
+[2025-10-09 18:48:26,730] [INFO] 📩 GET https://fb0e3f223c3b.ngrok-free.app/static/style.css | Cliente: 179.1.148.226
+[2025-10-09 18:48:26,736] [INFO] 📩 GET https://fb0e3f223c3b.ngrok-free.app/static/app.js | Cliente: 179.1.148.226
+[2025-10-09 18:48:26,736] [INFO] 📩 GET https://fb0e3f223c3b.ngrok-free.app/static/logo.png | Cliente: 179.1.148.226
+[2025-10-09 18:48:26,800] [INFO] ✅ 200 - /static/style.css
+[2025-10-09 18:48:26,801] [INFO] ✅ 200 - /static/app.js
+[2025-10-09 18:48:26,813] [INFO] ✅ 200 - /static/logo.png
+[2025-10-09 18:48:27,696] [INFO] 📩 GET https://fb0e3f223c3b.ngrok-free.app/secciones | Cliente: 179.1.148.226
+[2025-10-09 18:48:27,750] [INFO] 📩 GET https://fb0e3f223c3b.ngrok-free.app/static/favicon.ico?v=5 | Cliente: 179.1.148.226
+[2025-10-09 18:48:27,751] [INFO] ✅ 200 - /secciones
+[2025-10-09 18:48:27,754] [INFO] ✅ 404 - /static/favicon.ico
+[2025-10-09 18:48:42,009] [INFO] 📩 GET https://fb0e3f223c3b.ngrok-free.app/comandos?seccion=RENIEC | Cliente: 179.1.148.226
+[2025-10-09 18:48:42,053] [INFO] ✅ 200 - /comandos
+[2025-10-09 18:50:05,322] [INFO] 📩 GET https://fb0e3f223c3b.ngrok-free.app/comandos?seccion=FAMILIA | Cliente: 179.1.148.226
+[2025-10-09 18:50:05,332] [INFO] ✅ 200 - /comandos
+[2025-10-09 18:51:10,954] [INFO] 📩 GET https://fb0e3f223c3b.ngrok-free.app/comandos?seccion=RENIEC | Cliente: 179.1.148.226
+[2025-10-09 18:51:10,955] [INFO] ✅ 200 - /comandos
+[2025-10-09 18:51:14,155] [INFO] 📩 GET https://fb0e3f223c3b.ngrok-free.app/ | Cliente: 179.1.148.226
+[2025-10-09 18:51:14,176] [INFO] ✅ 200 - /
+[2025-10-09 18:51:14,433] [INFO] 📩 GET https://fb0e3f223c3b.ngrok-free.app/secciones | Cliente: 179.1.148.226
+[2025-10-09 18:51:14,434] [INFO] ✅ 200 - /secciones
+[2025-10-09 18:51:16,005] [INFO] 📩 GET https://fb0e3f223c3b.ngrok-free.app/comandos?seccion=RENIEC | Cliente: 179.1.148.226
+[2025-10-09 18:51:16,006] [INFO] ✅ 200 - /comandos
+[2025-10-09 18:52:51,494] [INFO] 📩 GET https://fb0e3f223c3b.ngrok-free.app/ | Cliente: 179.1.148.226
+[2025-10-09 18:52:51,499] [INFO] ✅ 200 - /
+[2025-10-09 18:52:51,745] [INFO] 📩 GET https://fb0e3f223c3b.ngrok-free.app/secciones | Cliente: 179.1.148.226
+[2025-10-09 18:52:51,748] [INFO] ✅ 200 - /secciones
+[2025-10-09 18:52:53,460] [INFO] 📩 GET https://fb0e3f223c3b.ngrok-free.app/comandos?seccion=RENIEC | Cliente: 179.1.148.226
+[2025-10-09 18:52:53,463] [INFO] ✅ 200 - /comandos
+[2025-10-09 18:53:01,575] [INFO] 📩 GET https://fb0e3f223c3b.ngrok-free.app/ | Cliente: 179.1.148.226
+[2025-10-09 18:53:01,577] [INFO] ✅ 200 - /
+[2025-10-09 18:53:01,817] [INFO] 📩 GET https://fb0e3f223c3b.ngrok-free.app/secciones | Cliente: 179.1.148.226
+[2025-10-09 18:53:01,819] [INFO] ✅ 200 - /secciones
+[2025-10-09 18:53:03,233] [INFO] 📩 GET https://fb0e3f223c3b.ngrok-free.app/comandos?seccion=RENIEC | Cliente: 179.1.148.226
+[2025-10-09 18:53:03,234] [INFO] ✅ 200 - /comandos

@@ -1,0 +1,322 @@
+/* ============================================================
+   ⚡ REGISTRA PERÚ – UI CORPORATIVA v6.0
+   ============================================================ */
+
+:root {
+  --bg-main: #090c12;
+  --bg-panel: #10141f;
+  --bg-sidebar: #0d111a;
+  --color-primary: #007bff;
+  --color-accent: #ff0044;
+  --color-text: #e9eef5;
+  --color-subtext: #9ba4b5;
+  --radius: 14px;
+  --font: "Inter", "Segoe UI", sans-serif;
+}
+
+/* === Reset general === */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--bg-main);
+  color: var(--color-text);
+  font-family: var(--font);
+  overflow: hidden;
+}
+
+/* === Layout principal === */
+.layout {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+/* === Barra lateral === */
+.sidebar {
+  width: 280px;
+  background: var(--bg-sidebar);
+  border-right: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 3px 0 10px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px 15px;
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  text-align: center;
+}
+
+.sidebar-logo {
+  width: 280px;
+  margin-bottom: 12px
+}
+
+.slogan {
+  color: var(--color-subtext);
+  font-size: 0.9em;
+  margin-top: -5px;
+}
+
+.sidebar-nav {
+  width: 100%;
+  margin-top: 25px;
+}
+
+.sidebar-nav h3 {
+  text-transform: uppercase;
+  font-size: 0.9em;
+  color: var(--color-accent);
+  letter-spacing: 0.8px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav li {
+  padding: 10px 15px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.3s;
+  color: var(--color-text);
+}
+
+.sidebar-nav li:hover {
+  background: rgba(0, 123, 255, 0.2);
+  color: var(--color-primary);
+}
+
+.sidebar-nav li.active {
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* === Área principal === */
+.main-content {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+  background: linear-gradient(180deg, #0c1018 0%, #10141f 100%);
+}
+
+.header h1 {
+  font-size: 1.9em;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.header p {
+  color: var(--color-subtext);
+  font-size: 0.95em;
+}
+
+/* === Panel de resultados limpio === */
+.resultado {
+  background: var(--bg-panel);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius);
+  padding: 25px;
+  margin-top: 25px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+.resultado > h3 {
+  font-size: 1.3em;
+  color: var(--color-primary);
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.resultado .subtitulo {
+  color: var(--color-subtext);
+  font-size: 0.95em;
+  margin-bottom: 20px;
+}
+
+.resultado-content {
+  padding: 15px 20px;
+  background: #171c27;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.05);
+  margin-top: 10px;
+}
+
+/* Eliminamos pseudo-elementos de texto redundante */
+.resultado::before,
+.resultado::after {
+  content: none !important;
+}
+
+/* === Comandos === */
+.comandos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  margin-top: 25px;
+}
+
+.command-card {
+  background: #171c27;
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.command-card:hover {
+  background: #1e2431;
+  transform: translateY(-4px);
+  border-color: var(--color-primary);
+}
+
+.btn-run {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-run:hover {
+  opacity: 0.85;
+}
+
+/* === Scroll minimal === */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--color-primary), var(--color-accent));
+  border-radius: 4px;
+}
+/* ============================================================
+   🧩 FORMULARIOS DE CONSULTA — ESTILO CORPORATIVO
+   ============================================================ */
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  color: var(--color-subtext);
+  font-size: 0.95em;
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  width: 85%;
+  max-width: 280px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  color: var(--color-text);
+  font-size: 0.95em;
+  outline: none;
+  transition: all 0.25s ease;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.4);
+}
+
+.form-group input::placeholder {
+  color: #7a8398;
+  opacity: 0.8;
+}
+
+.form-group input:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.form-group input:focus {
+  border-color: var(--color-primary);
+  background: rgba(0,123,255,0.12);
+  box-shadow: 0 0 10px rgba(0,123,255,0.3);
+}
+
+/* Estilo de los botones dentro de formularios */
+.btn-run {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+
+.btn-run:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 18px rgba(0,123,255,0.3);
+}
+
+/* Diseño específico cuando hay varias columnas */
+.form-group input[type="text"] {
+  min-width: 0;
+}
+.form-group input:focus {
+  animation: inputGlow 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes inputGlow {
+  from { box-shadow: 0 0 10px rgba(0,123,255,0.3); }
+  to { box-shadow: 0 0 18px rgba(255,0,80,0.3); }
+}
+
+/* ============================================================
+   💡 EFECTO LED DETRÁS DEL LOGO (Edición especial REGISTRA PERÚ)
+   ============================================================ */
+.sidebar-logo {
+  position: relative;
+  width: 280px; /* ajusta si deseas más grande o pequeño */
+  margin-bottom: 15px;
+  z-index: 1;
+  filter: drop-shadow(0 0 15px rgba(0,123,255,0.45))
+          drop-shadow(0 0 25px rgba(255,0,80,0.25));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.sidebar-logo:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 25px rgba(0,123,255,0.6))
+          drop-shadow(0 0 35px rgba(255,0,80,0.3));
+}
+
+/* Halo LED animado detrás del logo */
+.sidebar-logo::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 140%;
+  height: 140%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.91), rgba(255,0,80,0.15), transparent 70%);
+  filter: blur(25px);
+  z-index: -1;
+  opacity: 0.9;
+  animation: pulseGlow 4s infinite ease-in-out;
+  border-radius: 50%;
+}
+
+@keyframes pulseGlow {
+  0% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+  100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+}

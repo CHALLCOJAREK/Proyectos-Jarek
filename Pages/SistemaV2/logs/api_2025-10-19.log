@@ -1,0 +1,39 @@
+[2025-10-19 22:04:59,392] [INFO] 📩 GET http://127.0.0.1:8000/ | Cliente: 127.0.0.1
+[2025-10-19 22:04:59,402] [INFO] ✅ 200 - /
+[2025-10-19 22:04:59,434] [INFO] 📩 GET http://127.0.0.1:8000/static/style.css | Cliente: 127.0.0.1
+[2025-10-19 22:04:59,439] [INFO] ✅ 200 - /static/style.css
+[2025-10-19 22:04:59,440] [INFO] 📩 GET http://127.0.0.1:8000/static/app.js | Cliente: 127.0.0.1
+[2025-10-19 22:04:59,441] [INFO] 📩 GET http://127.0.0.1:8000/static/logo.png | Cliente: 127.0.0.1
+[2025-10-19 22:04:59,444] [INFO] ✅ 200 - /static/app.js
+[2025-10-19 22:04:59,444] [INFO] ✅ 200 - /static/logo.png
+[2025-10-19 22:04:59,541] [INFO] 📩 GET http://127.0.0.1:8000/secciones | Cliente: 127.0.0.1
+[2025-10-19 22:04:59,554] [INFO] ✅ 200 - /secciones
+[2025-10-19 22:06:09,203] [INFO] 📩 GET https://b61b62e9b013.ngrok-free.app/ | Cliente: 179.1.148.226
+[2025-10-19 22:06:09,204] [INFO] ✅ 200 - /
+[2025-10-19 22:06:09,464] [INFO] 📩 GET https://b61b62e9b013.ngrok-free.app/static/logo.png | Cliente: 179.1.148.226
+[2025-10-19 22:06:09,467] [INFO] ✅ 200 - /static/logo.png
+[2025-10-19 22:06:09,468] [INFO] 📩 GET https://b61b62e9b013.ngrok-free.app/static/style.css | Cliente: 179.1.148.226
+[2025-10-19 22:06:09,470] [INFO] ✅ 200 - /static/style.css
+[2025-10-19 22:06:09,476] [INFO] 📩 GET https://b61b62e9b013.ngrok-free.app/static/app.js | Cliente: 179.1.148.226
+[2025-10-19 22:06:09,477] [INFO] ✅ 200 - /static/app.js
+[2025-10-19 22:06:10,148] [INFO] 📩 GET https://b61b62e9b013.ngrok-free.app/secciones | Cliente: 179.1.148.226
+[2025-10-19 22:06:10,149] [INFO] ✅ 200 - /secciones
+[2025-10-19 22:06:10,237] [INFO] 📩 GET https://b61b62e9b013.ngrok-free.app/static/favicon.ico | Cliente: 179.1.148.226
+[2025-10-19 22:06:10,238] [INFO] ✅ 200 - /static/favicon.ico
+[2025-10-19 22:06:15,376] [INFO] 📩 GET https://b61b62e9b013.ngrok-free.app/comandos?seccion=RENIEC | Cliente: 179.1.148.226
+[2025-10-19 22:06:15,378] [INFO] ✅ 200 - /comandos
+[2025-10-19 22:06:30,051] [INFO] 📩 GET https://b61b62e9b013.ngrok-free.app/comandos?seccion=FAMILIA | Cliente: 179.1.148.226
+[2025-10-19 22:06:30,052] [INFO] ✅ 200 - /comandos
+[2025-10-19 22:06:31,368] [INFO] 📩 GET https://b61b62e9b013.ngrok-free.app/comandos?seccion=DELITOS | Cliente: 179.1.148.226
+[2025-10-19 22:06:31,369] [INFO] ✅ 200 - /comandos
+[2025-10-19 22:06:45,885] [INFO] 📩 GET https://b61b62e9b013.ngrok-free.app/comandos?seccion=RENIEC | Cliente: 179.1.148.226
+[2025-10-19 22:06:45,886] [INFO] ✅ 200 - /comandos
+[2025-10-19 22:07:04,652] [INFO] 📩 GET https://b61b62e9b013.ngrok-free.app/consulta?comando=%2Fseeker%2076046785 | Cliente: 179.1.148.226
+[2025-10-19 22:07:04,678] [INFO] Connecting to 149.154.175.59:443/TcpFull...
+[2025-10-19 22:07:04,758] [INFO] Connection to 149.154.175.59:443/TcpFull complete!
+[2025-10-19 22:08:37,841] [INFO] Starting direct file download in chunks of 131072 at 0, stride 131072
+[2025-10-19 22:08:39,198] [INFO] ✅ 200 - /consulta
+[2025-10-19 22:08:39,437] [INFO] 📩 GET https://b61b62e9b013.ngrok-free.app/temp_files/respuestas.json?_=1760929719320 | Cliente: 179.1.148.226
+[2025-10-19 22:08:39,439] [INFO] ✅ 200 - /temp_files/respuestas.json
+[2025-10-19 22:08:50,923] [INFO] 📩 GET https://b61b62e9b013.ngrok-free.app/descargar/respuesta_1760929717_1.pdf | Cliente: 179.1.148.226
+[2025-10-19 22:08:50,925] [INFO] ✅ 200 - /descargar/respuesta_1760929717_1.pdf

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registra Perú - Panel de Consultas</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+</head>
+
+<body>
+ <div class="layout">
+
+    <!-- LATERAL IZQUIERDO -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="/static/logo.png" alt="Logo Registra Perú" class="sidebar-logo" />
+        <h2>Registra Perú</h2>
+        <p class="slogan">Consultas Inteligentes</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <h3>Secciones</h3>
+        <ul id="lista-secciones">
+          <li>Cargando secciones...</li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+      <header class="header">
+        <h1>Panel de Consultas Inteligentes</h1>
+        <p>Selecciona una sección a la izquierda y elige un tipo de consulta.</p>
+      </header>
+
+      <section class="panel-consulta">
+        <div id="resultado" class="resultado">
+          <p style="color:#9ca3af;">👋 Bienvenido, selecciona una sección para comenzar.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

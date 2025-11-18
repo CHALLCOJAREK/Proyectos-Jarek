@@ -1,0 +1,237 @@
+{
+  "RENIEC": [
+    {
+      "titulo": "DNI Básico",
+      "nombre": "/dni",
+      "descripcion": "Datos C4 y foto rostro",
+      "tipo_respuesta": "texto+imagen"
+    },
+    {
+      "titulo": "DNI Completo",
+      "nombre": "/dnif",
+      "descripcion": "Datos C4, foto rostro, firma y huellas",
+      "tipo_respuesta": "texto+imagen"
+    },
+    {
+      "titulo": "DNI Database",
+      "nombre": "/dnid",
+      "descripcion": "Datos C4 y foto rostro (base interna)",
+      "tipo_respuesta": "texto+imagen"
+    },
+    {
+      "titulo": "DNI Database Completo",
+      "nombre": "/dnifd",
+      "descripcion": "Datos C4, foto rostro, firma y huellas (base interna)",
+      "tipo_respuesta": "texto+imagen"
+    },
+    {
+      "titulo": "Búsqueda por Nombres",
+      "nombre": "/nm",
+      "descripcion": "Buscar DNI por nombres y apellidos",
+      "tipo_respuesta": "texto"
+    },
+    {
+      "titulo": "DNI Virtual",
+      "nombre": "/dnivir",
+      "descripcion": "Genera un DNI virtual con ambas caras por DNI",
+      "tipo_respuesta": "imagen"
+    },
+    {
+      "titulo": "DNI Electrónico",
+      "nombre": "/dnive",
+      "descripcion": "Genera un DNI virtual electrónico con ambas caras por DNI",
+      "tipo_respuesta": "imagen"
+    },
+    {
+      "titulo": "Ficha RENIEC C4",
+      "nombre": "/c4",
+      "descripcion": "Genera una ficha RENIEC en PDF por DNI",
+      "tipo_respuesta": "pdf"
+    },
+    {
+      "titulo": "Ficha RENIEC C4 Blanco",
+      "nombre": "/c4w",
+      "descripcion": "Genera una ficha RENIEC blanca en PDF por DNI",
+      "tipo_respuesta": "pdf"
+    },
+    {
+      "titulo": "Certificado de Inscripción",
+      "nombre": "/c4t",
+      "descripcion": "Genera un certificado de inscripción en PDF por DNI",
+      "tipo_respuesta": "pdf"
+    },
+    {
+      "titulo": "Datos Seeker",
+      "nombre": "/seeker",
+      "descripcion": "Genera datos seeker en PDF por DNI",
+      "tipo_respuesta": "pdf"
+    }
+  ],
+  "FAMILIA": [
+    {
+      "titulo": "Clasificación del Hogar",
+      "nombre": "/hogar",
+      "descripcion": "Obtiene información socioeconómica del hogar",
+      "tipo_respuesta": "texto"
+    },
+    {
+      "titulo": "Miembros de Familia",
+      "nombre": "/fam",
+      "descripcion": "Busca personas con las que vive o convive una persona por DNI",
+      "tipo_respuesta": "texto"
+    },
+    {
+      "titulo": "Árbol Genealógico",
+      "nombre": "/ag",
+      "descripcion": "Busca árbol genealógico de una persona por DNI",
+      "tipo_respuesta": "texto"
+    },
+    {
+      "titulo": "Árbol Genealógico Visual",
+      "nombre": "/agv",
+      "descripcion": "Genera listado de familiares organizado con imagen",
+      "tipo_respuesta": "imagen"
+    }
+  ],
+  "DELITOS": [
+    {
+      "titulo": "Fiscalía MPFN (por DNI)",
+      "nombre": "/mpfn",
+      "descripcion": "Búsqueda fiscal de delitos y agraviaciones por DNI",
+      "tipo_respuesta": "texto"
+    },
+    {
+      "titulo": "Fiscalía MPFN (por Nombre)",
+      "nombre": "/mpfnv",
+      "descripcion": "Búsqueda fiscal de delitos y agraviaciones por nombres completos",
+      "tipo_respuesta": "texto"
+    },
+    {
+      "titulo": "Requisitorias",
+      "nombre": "/rq",
+      "descripcion": "Busca requisitorias de una persona por DNI",
+      "tipo_respuesta": "texto"
+    },
+    {
+      "titulo": "Verificador Penal",
+      "nombre": "/antpenver",
+      "descripcion": "Verifica antecedentes penales por DNI",
+      "tipo_respuesta": "texto"
+    },
+    {
+      "titulo": "Verificador Policial",
+      "nombre": "/antpolver",
+      "descripcion": "Verifica antecedentes policiales por DNI",
+      "tipo_respuesta": "texto"
+    },
+    {
+      "titulo": "Verificador Judicial",
+      "nombre": "/antjudver",
+      "descripcion": "Verifica antecedentes judiciales por DNI",
+      "tipo_respuesta": "texto"
+    },
+    {
+      "titulo": "Antecedentes Penales PDF",
+      "nombre": "/antpenal",
+      "descripcion": "Genera antecedentes penales en PDF por DNI",
+      "tipo_respuesta": "pdf"
+    },
+    {
+      "titulo": "Antecedentes Policiales PDF",
+      "nombre": "/antpol",
+      "descripcion": "Genera antecedentes policiales en PDF por DNI",
+      "tipo_respuesta": "pdf"
+    },
+    {
+      "titulo": "Antecedentes Judiciales PDF",
+      "nombre": "/antjud",
+      "descripcion": "Genera antecedentes judiciales en PDF por DNI",
+      "tipo_respuesta": "pdf"
+    },
+    {
+      "titulo": "Reporte MPFN PDF",
+      "nombre": "/mpfnpdf",
+      "descripcion": "Búsqueda fiscal de delitos y agraviaciones (PDF)",
+      "tipo_respuesta": "pdf"
+    },
+    {
+      "titulo": "Requisitorias PDF",
+      "nombre": "/rqpdf",
+      "descripcion": "Genera documento de requisitorias en PDF",
+      "tipo_respuesta": "pdf"
+    }
+  ],
+  "VEHICULOS": [
+    {
+      "titulo": "Tarjeta de Propiedad",
+      "nombre": "/tive",
+      "descripcion": "Genera un PDF de la tarjeta de propiedad de un vehículo por placa",
+      "tipo_respuesta": "pdf"
+    },
+    {
+      "titulo": "Tarjeta Propiedad (Modo 2)",
+      "nombre": "/tivep",
+      "descripcion": "Genera un PDF de la tarjeta de propiedad de un vehículo (modo 2)",
+      "tipo_respuesta": "pdf"
+    },
+    {
+      "titulo": "Informe Vehicular Completo",
+      "nombre": "/placap",
+      "descripcion": "Información completa de un vehículo",
+      "tipo_respuesta": "texto"
+    },
+    {
+      "titulo": "Consulta por Placa o DNI",
+      "nombre": "/pla",
+      "descripcion": "Obtiene información de un vehículo por número de placa o DNI",
+      "tipo_respuesta": "texto"
+    },
+    {
+      "titulo": "Licencia de Conducir",
+      "nombre": "/licencia",
+      "descripcion": "Genera licencias de conducir por DNI",
+      "tipo_respuesta": "pdf"
+    }
+  ],
+  "SUNARP": [
+    {
+      "titulo": "Propiedades por DNI",
+      "nombre": "/sunarp",
+      "descripcion": "Busca propiedades de una persona por DNI",
+      "tipo_respuesta": "texto"
+    },
+    {
+      "titulo": "Reporte SUNARP PDF",
+      "nombre": "/sunarpdf",
+      "descripcion": "Genera documentos de propiedades en PDF",
+      "tipo_respuesta": "pdf"
+    }
+  ],
+  "TELEFONIA": [
+    {
+      "titulo": "Teléfonos por DNI",
+      "nombre": "/tel",
+      "descripcion": "Busca líneas por DNI y titulares por número",
+      "tipo_respuesta": "texto"
+    },
+    {
+      "titulo": "Teléfonos en Tiempo Real",
+      "nombre": "/telp",
+      "descripcion": "Busca líneas de un DNI en tiempo real (actualizado 2025)",
+      "tipo_respuesta": "texto"
+    },
+    {
+      "titulo": "Titular Bitel",
+      "nombre": "/bitel",
+      "descripcion": "Busca el titular de un número Bitel",
+      "tipo_respuesta": "texto"
+    },
+    {
+      "titulo": "Titular Claro",
+      "nombre": "/claro",
+      "descripcion": "Busca el titular de un número Claro",
+      "tipo_respuesta": "texto"
+    }
+  ]
+  
+}
