@@ -2,758 +2,427 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio</title>
-
-    <!-- FAVICON -->
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/66Ct5ryw/j2.png">
-
-    <!-- ICONOS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <!-- TIPOGRAFÍA -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-
-    <!-- =======================================
-         SECCIÓN DE ESTILOS (VACÍO AÚN)
-         ======================================= -->
-    <style>
-        /* Aquí meteremos TODO el CSS premium */
-        /***********************************************
-    RESET & BASE
-************************************************/
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Inter", sans-serif;
-        }
-
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            overflow-x: hidden;
-            background: #00040f;
-            color: #e8ecf5;
-            scroll-behavior: smooth;
-        }
-
-        :root {
-            --accent: #00d8ff;
-            --accent2: #0088cc;
-            --text: #e8edf5;
-            --muted: #9aa5b9;
-            --bg: #00040f;
-            --glass: rgba(255, 255, 255, 0.05);
-            --glass-strong: rgba(255, 255, 255, 0.11);
-        }
-
-        /***********************************************
-    INTRO • NEON LOADING
-************************************************/
-        #intro {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle at center, #001322, #00040f 80%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            animation: introFade 3s forwards 2s ease-out;
-        }
-
-        #intro-text span {
-            font-size: 58px;
-            font-weight: 900;
-            letter-spacing: 6px;
-            color: var(--accent);
-            text-shadow: 0 0 25px rgba(0, 216, 255, 0.8);
-            animation: neonGlow 2s infinite alternate;
-        }
-
-        #intro-loader {
-            width: 150px;
-            height: 6px;
-            margin-top: 25px;
-            border-radius: 4px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            animation: loadingBar 2s infinite linear;
-        }
-
-        @keyframes neonGlow {
-            0% {
-                opacity: 0.5;
-                text-shadow: 0 0 10px var(--accent);
-            }
-
-            100% {
-                opacity: 1;
-                text-shadow: 0 0 35px var(--accent);
-            }
-        }
-
-        @keyframes introFade {
-            0% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0;
-                visibility: hidden;
-            }
-        }
-
-        @keyframes loadingBar {
-            0% {
-                transform: translateX(-100%);
-                opacity: 0.3;
-            }
-
-            100% {
-                transform: translateX(100%);
-                opacity: 1;
-            }
-        }
-
-        /***********************************************
-    HEADER
-************************************************/
-        #header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 22px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 90;
-            backdrop-filter: blur(8px);
-            background: rgba(0, 0, 0, 0.25);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .logo-box {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .logo-box img {
-            width: 44px;
-        }
-
-        .logo-box h1 {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--accent);
-        }
-
-        .btn-icon {
-            background: var(--glass);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 12px 16px;
-            border-radius: 12px;
-            cursor: pointer;
-            color: var(--accent);
-            font-size: 20px;
-            transition: .3s;
-        }
-
-        .btn-icon:hover {
-            background: var(--glass-strong);
-            transform: translateY(-2px);
-        }
-
-        /***********************************************
-    HERO • HOLOGRAMA
-************************************************/
-        #hero {
-            padding: 180px 10% 140px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-            gap: 80px;
-            align-items: center;
-        }
-
-        .hero-info h2 {
-            font-size: 52px;
-            font-weight: 900;
-            background: linear-gradient(90deg, var(--accent), #baf4ff);
-            -webkit-background-clip: text;
-            color: transparent;
-            line-height: 1.1;
-            margin-bottom: 16px;
-        }
-
-        .hero-info p {
-            font-size: 18px;
-            line-height: 1.7;
-            color: var(--muted);
-        }
-
-        .hero-holo {
-            position: relative;
-            width: 420px;
-            margin: auto;
-        }
-
-        #holo-img {
-            width: 100%;
-            border-radius: 20px;
-            filter: drop-shadow(0 0 45px rgba(0, 216, 255, 0.45));
-        }
-
-        #holo-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg,
-                    transparent,
-                    rgba(0, 216, 255, 0.2),
-                    transparent);
-            mix-blend-mode: screen;
-            opacity: 0.5;
-            animation: holoShine 5s infinite linear;
-        }
-
-        @keyframes holoShine {
-            0% {
-                transform: translateY(-120%);
-            }
-
-            100% {
-                transform: translateY(120%);
-            }
-        }
-
-        /***********************************************
-    SECCIONES GENERALES
-************************************************/
-        .section-title {
-            padding: 0 10%;
-            font-size: 32px;
-            color: var(--accent);
-            margin-bottom: 30px;
-            font-weight: 700;
-        }
-
-        /***********************************************
-    TIMELINE FUTURISTA
-************************************************/
-        #sobre-mi {
-            padding: 40px 10% 120px;
-        }
-
-        .timeline {
-            border-left: 2px solid var(--accent2);
-            margin-left: 20px;
-            padding-left: 35px;
-            position: relative;
-        }
-
-        .tl-item {
-            margin-bottom: 55px;
-            position: relative;
-        }
-
-        .tl-dot {
-            width: 16px;
-            height: 16px;
-            background: var(--accent);
-            border-radius: 50%;
-            position: absolute;
-            left: -43px;
-            top: 4px;
-            box-shadow: 0 0 18px rgba(0, 216, 255, 0.6);
-        }
-
-        .tl-year {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 8px;
-        }
-
-        .tl-item p {
-            color: var(--muted);
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        /***********************************************
-    GITHUB REPOS • TARJETAS
-************************************************/
-        #github {
-            padding: 40px 10% 120px;
-        }
-
-        .repos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 25px;
-        }
-
-        .repo-card {
-            background: var(--glass);
-            padding: 22px;
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            transition: .3s;
-        }
-
-        .repo-card:hover {
-            background: var(--glass-strong);
-            transform: translateY(-6px);
-        }
-
-        .repo-card h4 {
-            color: var(--accent);
-            margin-bottom: 8px;
-            font-size: 18px;
-        }
-
-        .repo-card p {
-            color: var(--muted);
-            font-size: 15px;
-            margin-bottom: 14px;
-        }
-
-        .repo-card a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        /***********************************************
-    APPS GRID
-************************************************/
-        #apps {
-            padding: 40px 10% 120px;
-        }
-
-        .apps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
-        }
-
-        .app-card {
-            text-decoration: none;
-            background: var(--glass);
-            padding: 28px;
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            border-radius: 18px;
-            text-align: center;
-            color: var(--text);
-            transition: .3s;
-        }
-
-        .app-card:hover {
-            transform: translateY(-6px);
-            background: var(--glass-strong);
-            border-color: var(--accent);
-        }
-
-        .app-card i {
-            font-size: 42px;
-            margin-bottom: 12px;
-            color: var(--accent);
-        }
-
-        /***********************************************
-        CTA FINAL
-        ************************************************/
-        #cta {
-            text-align: center;
-            padding: 100px 10%;
-        }
-
-        #cta h2 {
-            font-size: 36px;
-            font-weight: 800;
-            color: var(--accent);
-            margin-bottom: 20px;
-        }
-
-        #cta p {
-            color: var(--muted);
-            font-size: 18px;
-            max-width: 700px;
-            margin: auto;
-            margin-bottom: 30px;
-        }
-
-        .cta-btn {
-            text-decoration: none;
-            background: var(--accent);
-            padding: 14px 40px;
-            border-radius: 40px;
-            color: #00161d;
-            font-weight: 700;
-            transition: .3s;
-        }
-
-        .cta-btn:hover {
-            background: var(--accent2);
-        }
-
-        /***********************************************
-    FOOTER
-************************************************/
-        #footer {
-            text-align: center;
-            padding: 50px 0;
-            color: var(--muted);
-            font-size: 15px;
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        /***********************************************
-    RESPONSIVO TOTAL
-************************************************/
-        @media(max-width: 900px) {
-            .hero-info h2 {
-                font-size: 42px;
-            }
-
-            #hero {
-                padding: 160px 8% 100px;
-            }
-
-            .hero-holo {
-                width: 320px;
-            }
-        }
-
-        @media(max-width: 600px) {
-            .hero-info h2 {
-                font-size: 34px;
-            }
-
-            .section-title {
-                font-size: 26px;
-            }
-
-            #cta h2 {
-                font-size: 30px;
-            }
-        }
-
-        /***********************************************
-    FOOTER NUEVO
-************************************************/
-        #footer {
-            text-align: center;
-            padding: 60px 0 40px;
-            color: var(--muted);
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 26px;
-            margin-bottom: 18px;
-        }
-
-        .footer-icon {
-            font-size: 28px;
-            color: var(--accent);
-            transition: .3s;
-        }
-
-        .footer-icon:hover {
-            color: var(--accent2);
-            transform: translateY(-4px);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jarek – IA, RPA & Automatización</title>
+
+  <!-- FAVICON -->
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/66Ct5ryw/j2.png" />
+
+  <!-- ICONOS -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+
+  <!-- TIPOGRAFÍA -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- CSS EXTERNO -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+  <!-- INTRO / LOADER -->
+  <div id="intro">
+    <div id="intro-text">
+      <span>JAREK</span>
+      <small>IA · RPA · AUTOMATIZACIÓN</small>
+    </div>
+    <div id="intro-loader"></div>
+  </div>
 
-    <!-- =======================================
-         INTRO ANIMADA / LOADING NEON
-         ======================================= -->
-    <div id="intro">
-        <div id="intro-text">
-            <span>JAREK</span>
+  <!-- FONDO TECH (CANVAS) -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- HEADER FIJO SIN NAV -->
+  <header id="header">
+    <div class="logo-box">
+      <img src="https://i.postimg.cc/66Ct5ryw/j2.png" alt="Logo J²" />
+      <div>
+        <h1>Jarek Angelo Challco Juarez</h1>
+        <h2 class="subtitle">Consultor IA & RPA · Arquitecto de Automatización</h2>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO / CARTA PRINCIPAL -->
+    <section id="hero" class="section hero-section">
+      <div class="hero-info fade-up">
+        <p class="hero-tag">IA · Automatización · Sistemas inteligentes</p>
+
+        <h2 class="hero-title">
+          Diseño y orquesto sistemas que hacen
+          <span>que tu empresa funcione sola.</span>
+        </h2>
+
+        <p>
+          Combino <strong>IA aplicada, RPA, microservicios y ETL</strong> para construir
+          soluciones que no se quedan en demos: viven en producción y se integran a tu operación
+          real. Mi enfoque es simple: automatizar lo que drena tiempo y energía, y reforzar lo que
+          genera valor.
+        </p>
+
+        <p>
+          He trabajado con equipos de distintos países, conectando Excel, bases de datos,
+          plataformas sin API, servicios en la nube y modelos de IA en flujos coherentes, medibles
+          y mantenibles.
+        </p>
+
+        <div class="hero-meta">
+          <div class="meta-card">
+            <span class="meta-label">Rol principal</span>
+            <span class="meta-value">Consultor IA & RPA</span>
+          </div>
+          <div class="meta-card">
+            <span class="meta-label">Especialidad</span>
+            <span class="meta-value">Automatización end-to-end</span>
+          </div>
+          <div class="meta-card">
+            <span class="meta-label">Foco</span>
+            <span class="meta-value">Negocio, datos y escalabilidad</span>
+          </div>
         </div>
-        <div id="intro-loader"></div>
+
+        <div class="hero-actions">
+          <a
+            href="https://wa.me/51972781723?text=Hola%20Jarek,%20quiero%20consultar%20sobre%20IA%20y%20automatización"
+            class="cta-btn"
+          >
+            Hablemos de tu proyecto
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-holo fade-up">
+        <div class="hero-holo-frame">
+          <img
+            id="holo-img"
+            src="https://i.postimg.cc/tg07MXcD/jarek2.jpg"
+            alt="Retrato de Jarek en estilo holográfico"
+          />
+          <div id="holo-overlay"></div>
+        </div>
+
+        <div class="hero-status">
+          <span class="status-dot"></span>
+          <span class="status-text">Disponible para proyectos y consultorías estratégicas</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOQUE SOBRE MÍ / TRAYECTORIA -->
+    <section id="sobre-mi" class="section">
+      <h3 class="section-title fade-up">Una trayectoria orientada a resultados</h3>
+
+      <p class="section-intro fade-up">
+        No me interesa coleccionar tecnologías, sino resultados. Empecé automatizando tareas
+        repetitivas y terminé diseñando arquitecturas completas que sostienen operaciones críticas.
+        Esta es la ruta que me trajo hasta aquí:
+      </p>
+
+      <div class="timeline fade-up">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <span class="tl-year">2021</span>
+          <p>
+            Inicios en desarrollo de scripts y automatización básica. Descubro el potencial de que
+            una máquina haga en minutos lo que una persona tarda horas.
+          </p>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <span class="tl-year">2022</span>
+          <p>
+            Proyectos de <strong>RPA y robots UI</strong> en entornos donde no hay APIs ni
+            integraciones oficiales. Aprendo a lidiar con sistemas “legacy” sin fricción para el
+            usuario final.
+          </p>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <span class="tl-year">2023</span>
+          <p>
+            Salto a la <strong>IA aplicada</strong>: modelos de lenguaje, OCR avanzado, extracción
+            de datos y construcción de asistentes inteligentes conectados a información real del
+            negocio.
+          </p>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <span class="tl-year">2024</span>
+          <p>
+            Proyectos end-to-end que combinan <strong>RPA, IA, ETL y reporting</strong>. Construyo
+            soluciones que ya no son “automaciones sueltas”, sino sistemas completos.
+          </p>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <span class="tl-year">2025</span>
+          <p>
+            Enfoque como <strong>Arquitecto de Automatización</strong>: diseño microservicios,
+            APIs, pipelines de datos y asistentes privados para empresas que quieren ir más allá
+            del experimento y entrar a la operación real.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICIOS / CÓMO AYUDO -->
+    <section id="servicios" class="section">
+      <h3 class="section-title fade-up">Cómo puedo ayudar a tu empresa</h3>
+
+      <p class="section-intro fade-up">
+        Pienso en cada proyecto como en una arquitectura: estrategia, capas claras, responsabilidades definidas y
+        un resultado medible. Estas son algunas de las formas en las que aporto valor:
+      </p>
+
+      <div class="services-grid fade-up">
+        <div class="service-card">
+          <i class="fa-solid fa-robot"></i>
+          <h4>Automatización Inteligente</h4>
+          <p>
+            Diseño y despliego flujos con <strong>Selenium, Rocketbot y n8n</strong> para que
+            procesos manuales, repetitivos y sensibles al error se vuelvan confiables, rápidos y
+            auditables.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <i class="fa-solid fa-brain"></i>
+          <h4>IA aplicada a negocio</h4>
+          <p>
+            Implemento asistentes con <strong>LLMs, OCR y búsqueda semántica</strong> que responden sobre tu propia
+            información: normativa, documentos internos, reportes, correos y más.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <i class="fa-solid fa-diagram-project"></i>
+          <h4>Arquitectura & Integraciones</h4>
+          <p>
+            Construyo <strong>APIs con FastAPI</strong>, integraciones por Webhooks y pipelines
+            que conectan Excel, OneDrive, bases de datos y servicios en la nube en un flujo lógico
+            y mantenible.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <i class="fa-solid fa-laptop-code"></i>
+          <h4>Herramientas y paneles a medida</h4>
+          <p>
+            Desarrollo herramientas internas, dashboards ligeros y paneles de control para que
+            tu equipo tenga una interfaz clara sobre la automatización que ocurre detrás.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STACK / TECNOLOGÍAS -->
+    <section id="tecnologias" class="section">
+      <h3 class="section-title fade-up">Stack y tecnologías que utilizo</h3>
+
+      <p class="section-intro fade-up">
+        No se trata de usar todo, sino de elegir lo correcto para cada caso. Este es el stack con
+        el que construyo soluciones end-to-end:
+      </p>
+
+      <div class="tech-grid fade-up">
+        <span class="tech-item">
+          <i class="fa-brands fa-python"></i> Python
+        </span>
+        <span class="tech-item">
+          <i class="fa-solid fa-brain"></i> IA & LLMs (GPT, Gemini)
+        </span>
+        <span class="tech-item">
+          <i class="fa-solid fa-globe"></i> FastAPI & APIs REST
+        </span>
+        <span class="tech-item">
+          <i class="fa-brands fa-js"></i> JavaScript
+        </span>
+        <span class="tech-item">
+          <i class="fa-brands fa-node"></i> Node.js & n8n
+        </span>
+        <span class="tech-item">
+          <i class="fa-solid fa-robot"></i> RPA / UI Bots
+        </span>
+        <span class="tech-item">
+          <i class="fa-brands fa-html5"></i> HTML & CSS
+        </span>
+        <span class="tech-item">
+          <i class="fa-solid fa-database"></i> MySQL & SQL
+        </span>
+        <span class="tech-item">
+          <i class="fa-solid fa-cloud"></i> Netlify & despliegue estático
+        </span>
+      </div>
+    </section>
+
+    <!-- HERRAMIENTAS / MINI APPS -->
+    <section id="apps" class="section">
+      <h3 class="section-title fade-up">Herramientas que he construido</h3>
+
+      <p class="section-intro fade-up">
+        Además de proyectos corporativos, desarrollo utilidades que resuelven problemas
+        concretos del día a día. Algunas de ellas:
+      </p>
+
+      <div class="apps-grid fade-up">
+        <a href="./WspGenLink/wspgeneratorlink.html" class="app-card">
+          <i class="fa-brands fa-whatsapp"></i>
+          <h4>WhatsApp Link Generator</h4>
+          <p>Genera enlaces limpios y personalizados para campañas y atención al cliente.</p>
+        </a>
+
+        <a href="./QRGen/QRGnernator.html" class="app-card">
+          <i class="fa-solid fa-qrcode"></i>
+          <h4>QR Maker Pro</h4>
+          <p>Códigos QR listos para tu negocio, materiales físicos o eventos.</p>
+        </a>
+
+        <a href="./Sorteo/sorteo.html" class="app-card">
+          <i class="fa-solid fa-gift"></i>
+          <h4>Random Sorteos</h4>
+          <p>Sorteos transparentes para dinámicas internas, premios o campañas.</p>
+        </a>
+
+        <a href="./ForYou/ForYou.html" class="app-card">
+          <i class="fa-solid fa-heart"></i>
+          <h4>Romántico</h4>
+          <p>Proyectos personales donde mezclo código, creatividad y detalles humanos.</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- PROYECTOS DESTACADOS -->
+    <section id="proyectos" class="section">
+      <h3 class="section-title fade-up">Proyectos destacados</h3>
+
+      <p class="section-intro fade-up">
+        Cada uno de estos proyectos refleja un enfoque: automatizar, ordenar y hacer visible lo
+        que antes era manual, disperso o frágil.
+      </p>
+
+      <div class="projects-list fade-up">
+        <div class="project-card">
+          <h4>AntiCaptcha API privada</h4>
+          <p>
+            Sistema OCR híbrido con Tesseract, EasyOCR, TrOCR y fallback en modelos de IA.
+            Expuesto como API privada con autenticación y pensado para integrarse con bots y
+            automatizaciones.
+          </p>
+          <ul>
+            <li>Pipeline híbrido IA + OCR tradicional</li>
+            <li>Control de uso y logs de ejecución</li>
+            <li>Diseñado para consumir desde RPA y microservicios</li>
+          </ul>
+        </div>
+
+        <div class="project-card">
+          <h4>Chatbot tributario con IA</h4>
+          <p>
+            Asistente entrenado con normativa tributaria y fuentes oficiales. Permite consultas
+            naturales y se integra con automatizaciones que obtienen datos de entidades externas.
+          </p>
+          <ul>
+            <li>Buscador semántico + modelo de lenguaje</li>
+            <li>Capas para actualizar información de forma segura</li>
+            <li>Respuestas trazables y auditables</li>
+          </ul>
+        </div>
+
+        <div class="project-card">
+          <h4>ETL de Excel en la nube</h4>
+          <p>
+            Proceso automático que toma archivos de OneDrive, los normaliza, migra a una base de
+            datos y alimenta dashboards de BI sin intervención manual.
+          </p>
+          <ul>
+            <li>Carga incremental y control de duplicados</li>
+            <li>Validación de datos y manejo de errores</li>
+            <li>Actualizaciones programadas para reporting</li>
+          </ul>
+        </div>
+
+        <div class="project-card">
+          <h4>Automatización multiplataforma</h4>
+          <p>
+            Robots UI para plataformas sin API oficial, operando con precisión y estabilidad
+            flujos sensibles a error humano.
+          </p>
+          <ul>
+            <li>Manejo de múltiples sesiones y estados</li>
+            <li>Reportes de ejecución para el equipo</li>
+            <li>Diseñados para correr en segundo plano</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section id="cta" class="section">
+      <h2 class="fade-up">Hagamos que tu operación sea más inteligente.</h2>
+      <p class="fade-up">
+        Si tu empresa está lista para dejar de depender de tareas manuales y empezar a operar con
+        sistemas inteligentes, podemos diseñar una solución a la medida. Sin promesas vacías, con
+        arquitectura clara y resultados medibles.
+      </p>
+
+      <div class="cta-actions fade-up">
+        <a
+          href="https://wa.me/51972781723?text=Hola%20Jarek,%20quiero%20consultar%20sobre%20IA%20y%20automatización"
+          class="cta-btn"
+        >
+          Escríbeme por WhatsApp
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="footer-links">
+      <a href="https://github.com/CHALLCOJAREK" target="_blank" class="footer-icon">
+        <i class="fa-brands fa-github"></i>
+      </a>
+
+      <a
+        href="https://www.linkedin.com/in/jarek-angelo-challco-juarez-70a029249/"
+        target="_blank"
+        class="footer-icon"
+      >
+        <i class="fa-brands fa-linkedin"></i>
+      </a>
+
+      <a href="https://facebook.com" target="_blank" class="footer-icon">
+        <i class="fa-brands fa-facebook"></i>
+      </a>
+
+      <a href="https://wa.me/51972781723" target="_blank" class="footer-icon">
+        <i class="fa-brands fa-whatsapp"></i>
+      </a>
     </div>
 
-    <!-- =======================================
-         FONDO 3D WEBGL (THREE.JS)
-         ======================================= -->
-    <canvas id="bg-canvas"></canvas>
+    <p>© 2025 Jarek — IA, RPA & Arquitectura de Automatización</p>
+    <p class="footer-small">
+      Portafolio construido como una carta viva de lo que hago: automatizar, integrar y escalar
+      sistemas inteligentes orientados a negocio.
+    </p>
+  </footer>
 
-    <!-- =======================================
-         HEADER
-         ======================================= -->
-    <header id="header">
-        <div class="logo-box">
-            <img src="https://i.postimg.cc/66Ct5ryw/j2.png" alt="Logo">
-            <h1>Jarek Angelo Challco Juarez</h1>
-        </div>
-
-
-    </header>
-
-    <!-- =======================================
-         HERO • FOTO HOLOGRAMA + INFO
-         ======================================= -->
-    <section id="hero">
-        <div class="hero-info">
-            <h2 class="typewriter">
-                Automation Architect • IA Strategist
-            </h2>
-            <p>
-            Diseño, automatizo y despliego soluciones reales: IA que piensa, flujos que 
-            corren solos, sistemas que escalan y microservicios que no fallan. 
-            Transformo operaciones completas en experiencias digitales rápidas, 
-            limpias y de negocio puro.
-            </p>
-
-        </div>
-
-        <div class="hero-holo">
-            <img id="holo-img" src="https://i.postimg.cc/tg07MXcD/jarek2.jpg" alt="Holograma">
-            <div id="holo-overlay"></div>
-        </div>
-    </section>
-
-    <!-- =======================================
-         SECCIÓN SOBRE MÍ — TIMELINE FUTURISTA
-         ======================================= -->
-    <section id="sobre-mi">
-        <h3 class="section-title">Sobre Mí</h3>
-
-        <div class="timeline">
-
-            <div class="tl-item">
-                <div class="tl-dot"></div>
-                <span class="tl-year">2021</span>
-                <p>Primeros pasos en programación y automatización.</p>
-            </div>
-
-            <div class="tl-item">
-                <div class="tl-dot"></div>
-                <span class="tl-year">2022</span>
-                <p>Inicio en RPA y proyectos reales para empresas.</p>
-            </div>
-
-            <div class="tl-item">
-                <div class="tl-dot"></div>
-                <span class="tl-year">2023</span>
-                <p>Evolución hacia IA, modelos LLM y sistemas cognitivos.</p>
-            </div>
-
-            <div class="tl-item">
-                <div class="tl-dot"></div>
-                <span class="tl-year">2024</span>
-                <p>Consultor IA + RPA + Integraciones de alto nivel.</p>
-            </div>
-
-            <div class="tl-item">
-                <div class="tl-dot"></div>
-                <span class="tl-year">2025</span>
-                <p>Arquitecto de automatización y soluciones estratégicas.</p>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- =======================================
-         APPS / HERRAMIENTAS
-         ======================================= -->
-    <section id="apps">
-        <h3 class="section-title">Herramientas & Creaciones</h3>
-
-        <div class="apps-grid">
-
-            <a href="./wspgeneratorlink.html" class="app-card">
-                <i class="fa-brands fa-whatsapp"></i>
-                <h4>WhatsApp Link Generator</h4>
-            </a>
-
-            <a href="./QRGnernator.html" class="app-card">
-                <i class="fa-solid fa-qrcode"></i>
-                <h4>QR Maker Pro</h4>
-            </a>
-
-            <a href="./sorteo.html" class="app-card">
-                <i class="fa-solid fa-gift"></i>
-                <h4>Random Sorteos</h4>
-            </a>
-
-            <a href="./ForYou.html" class="app-card">
-                <i class="fa-solid fa-heart"></i>
-                <h4>Romantico</h4>
-            </a>
-
-        </div>
-    </section>
-
-    <!-- =======================================
-         CTA FINAL
-         ======================================= -->
-    <section id="cta">
-        <h2>Construyamos algo épico</h2>
-        <p>IA, automatización, arquitectura y soluciones inteligentes que impulsan tu empresa al siguiente nivel.</p>
-
-        <a href="https://wa.me/51972781723?text=Hola%20Jarek,%20quiero%20consultar%20sobre%20IA%20y%20automatización"
-            class="cta-btn">
-            Hablemos
-        </a>
-    </section>
-
-    <!-- =======================================
-         FOOTER
-         ======================================= -->
-    <footer id="footer">
-        <div class="footer-links">
-            <a href="https://github.com/CHALLCOJAREK" target="_blank" class="footer-icon">
-                <i class="fa-brands fa-github"></i>
-            </a>
-
-            <a href="https://www.linkedin.com/in/jarek-angelo-challco-juarez-70a029249/" target="_blank"
-                class="footer-icon">
-                <i class="fa-brands fa-linkedin"></i>
-            </a>
-
-            <a href="https://wa.me/51972781723" target="_blank" class="footer-icon">
-                <i class="fa-brands fa-whatsapp"></i>
-            </a>
-        </div>
-
-        <p>© 2025 Jarek — Automation Architect & IA Specialist</p>
-    </footer>
-
-
-
-    <!-- =======================================
-         SCRIPTS / LÓGICA JS
-         ======================================= -->
-
-    <!-- THREE.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-    <script>
-
-        /* ====================
-           INTRO NEON
-        ==================== */
-        function introAnimation() {
-            console.log("Intro lista.");
-        }
-
-
-        /* ====================
-           WEBGL FONDO 3D
-        ==================== */
-        function initWebGL() {
-            const canvas = document.getElementById("bg-canvas");
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
-
-            renderer.setSize(innerWidth, innerHeight);
-            camera.position.z = 3;
-
-            // Partículas base
-            const geo = new THREE.BufferGeometry();
-            const count = 1200;
-            const positions = new Float32Array(count * 3);
-
-            for (let i = 0; i < count * 3; i++) {
-                positions[i] = (Math.random() - 0.5) * 10;
-            }
-
-            geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-
-            const mat = new THREE.PointsMaterial({
-                size: 0.015,
-                color: "#00d8ff"
-            });
-
-            const points = new THREE.Points(geo, mat);
-            scene.add(points);
-
-            function animate() {
-                requestAnimationFrame(animate);
-                points.rotation.y += 0.0008;
-                renderer.render(scene, camera);
-            }
-            animate();
-        }
-
-
-        /* ====================
-           MÚSICA AMBIENTE
-        ==================== */
-        function initMusic() {
-            const audio = document.getElementById("bg-music");
-            const btn = document.getElementById("music-btn");
-
-            btn.onclick = () => {
-                if (audio.paused) audio.play();
-                else audio.pause();
-            };
-        }
-
-
-        /* ====================
-           GITHUB API
-        ==================== */
-        function loadGitHubRepos() {
-            const container = document.getElementById("github-repos");
-
-            fetch("https://api.github.com/users/CHALLCOJAREK/repos")
-                .then(res => res.json())
-                .then(repos => {
-                    container.innerHTML = "";
-
-                    repos.slice(0, 6).forEach(repo => {
-                        const el = document.createElement("div");
-                        el.className = "repo-card";
-                        el.innerHTML = `
-                            <h4>${repo.name}</h4>
-                            <p>${repo.description || "Sin descripción"}</p>
-                            <a href="${repo.html_url}" target="_blank">Ver repo</a>
-                        `;
-                        container.appendChild(el);
-                    });
-                });
-        }
-
-
-        /* ====================
-           TIMELINE ANIMADO
-        ==================== */
-        function animateTimeline() {
-            console.log("Timeline listo.");
-        }
-
-
-        /* ====================
-           INICIO
-        ==================== */
-        window.onload = () => {
-            introAnimation();
-            initWebGL();
-            initMusic();
-            loadGitHubRepos();
-            animateTimeline();
-        };
-
-    </script>
-
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="app.js" defer></script>
+  
 </body>
 
 </html>
