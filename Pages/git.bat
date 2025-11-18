@@ -1,3 +1,1 @@
-@echo off
-python gitpush.py
-pause
+@echo off python gitpush.py pause
