@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bitácora de Viaje</title>
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/66Ct5ryw/j2.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <header>
+    <h2>Bitácora de Viaje</h2>
+    <p class="subtext">Dicen que viajar educa, ¡pero contigo se gradúa uno en aventuras! 🎓🧳</p>
+  </header>
+
+  <div class="container">
+    <div class='msg-box' onclick='showPopup("¿Lista para la próxima aventura? Trae snacks. 🧃🍿", "https://cdn-icons-png.flaticon.com/512/4516/4516589.png")'>🌟 Planes nuevos, rutas nuevas.</div>
+    <div class='msg-box' onclick='showPopup("¡Prometo no perderme esta vez! Bueno, tal vez solo un poco... 🗺️😉", "https://cdn-icons-png.flaticon.com/512/4516/4516581.png")'>📸 Sonrisas en cada esquina.</div>
+    <div class='msg-box' onclick='showPopup("¿GPS? Nah... tú guías y yo manejo. 😅", "https://cdn-icons-png.flaticon.com/512/7194/7194164.png")'>🚗 El camino es más bonito contigo.</div>
+    <div class='msg-box' onclick='showPopup("¡Somos como Dora la Exploradora y Botas! Solo que más fashion. 💄🎒", "https://cdn-icons-png.flaticon.com/512/7039/7039043.png")'>🧭 Aventura estilo libre.</div>
+    <div class='msg-box' onclick='showPopup("¿Maleta lista? ¡Yo llevo los antojos! 🍫", "https://cdn-icons-png.flaticon.com/512/7194/7194113.png")'>🌍 Rumbo desconocido, risas aseguradas.</div>
+    <div class='msg-box' onclick='showPopup("Viajar contigo es como TikTok: se pasa volando y te ríes un montón. 😂📱", "https://cdn-icons-png.flaticon.com/512/3132/3132693.png")'>🚀 Aventuras sin filtros.</div>
+    <div class='msg-box' onclick='showPopup("Spoiler: ¡Este viaje también termina con papitas y carcajadas! 🥔🤣", "https://cdn-icons-png.flaticon.com/512/1604/1604443.png")'>🍟 Final feliz garantizado.</div>
+    <div class='msg-box' onclick='showPopup("Somos los mochileros VIP: Viajeros Increíblemente Payasos. 🎭✈️", "https://cdn-icons-png.flaticon.com/512/1046/1046857.png")'>🎒 El viaje es la excusa, las risas son la misión.</div>
+    <div class='msg-box' onclick='showPopup("Un viaje contigo es como WiFi con señal completa: ¡todo fluye! 📶💙", "https://cdn-icons-png.flaticon.com/512/3176/3176295.png")'>🌐 Conexión total (de almas y memes).</div>
+  </div>
+
+  <div class="signature">
+    <p>Hecho a medida solo para ti 🌌✨</p>
+    <p>Tu copiloto de locuras viajeras 😜</p>
+  </div>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>

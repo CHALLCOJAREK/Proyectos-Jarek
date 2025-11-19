@@ -1,0 +1,185 @@
+ @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: url(https://cdn.pixabay.com/photo/2013/07/12/15/37/map-150768_1280.png) no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Poppins', sans-serif;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 0;
+    }
+
+    canvas#stars {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    header, .container, .signature {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      margin-top: 40px;
+      text-align: center;
+      animation: fadeInDown 2s ease-out forwards;
+    }
+
+    h2 {
+      font-size: 3em;
+      color: #a0c4ff;
+      text-shadow: 0 0 12px #5ec5ff, 0 0 22px #78d6ff;
+      animation: glow 2.5s infinite alternate;
+    }
+
+    p.subtext {
+      font-size: 1.4em;
+      color: #fefae0;
+      margin-top: 0.5em;
+      text-shadow: 1px 1px 4px #000;
+      animation: fadeIn 3s ease-in-out;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      animation: fadeInUp 2s ease-in-out;
+    }
+
+    .msg-box {
+      background: linear-gradient(135deg, #1a1a2e, #0f0c29);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 20px 24px;
+      border-radius: 20px;
+      font-size: 1.2em;
+      color: #f3f3f3;
+      cursor: pointer;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      box-shadow: 0 0 22px rgba(144, 238, 255, 0.15);
+      position: relative;
+      backdrop-filter: blur(6px);
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    .msg-box:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 35px rgba(144, 238, 255, 0.5);
+    }
+
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1000;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    .popup img {
+      width: 130px;
+      height: 130px;
+      object-fit: contain;
+      margin-bottom: 25px;
+      filter: drop-shadow(0 0 18px #ffd6ff);
+      animation: pop 0.4s ease-in-out;
+    }
+
+    .popup p {
+      font-size: 1.3em;
+      color: #ffcbf2;
+      text-align: center;
+      line-height: 1.6em;
+    }
+
+    .back-btn {
+      margin-top: 30px;
+      background-color: #a0c4ff;
+      border: none;
+      color: black;
+      padding: 12px 25px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1em;
+      box-shadow: 0 0 15px #a0c4ff;
+      transition: background 0.3s ease, transform 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .back-btn:hover {
+      background-color: #c9dfff;
+      transform: scale(1.05);
+    }
+
+    .signature {
+      font-size: 1em;
+      margin-top: 45px;
+      text-align: center;
+      opacity: 0.85;
+      font-style: italic;
+      color: #ccc;
+      animation: fadeIn 3s ease;
+    }
+
+    @keyframes fadeInDown {
+      from { transform: translateY(-40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.7); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #8ecae6; }
+      to { text-shadow: 0 0 30px #8ecae6, 0 0 50px #8ecae6; }
+    }
