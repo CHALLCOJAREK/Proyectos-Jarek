@@ -1,756 +1,127 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-  <meta charset="UTF-8" />
-  <title>QR Generator</title>
+  <meta charset="UTF-8">
+  <title>QR Generator – J²</title>
+
   <link rel="icon" type="image/png" href="https://i.postimg.cc/66Ct5ryw/j2.png">
-  <!-- Iconos -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-  <style>
-    :root {
-      --bg-main: #020617;
-      --bg-main-2: #0b1220;
-      --card-bg: rgba(15, 23, 42, 0.96);
-      --accent: #0ea5e9;
-      --accent-strong: #0284c7;
-      --accent-soft: rgba(14, 165, 233, 0.18);
-      --border-subtle: rgba(148, 163, 184, 0.35);
-      --text-main: #e5e7eb;
-      --text-soft: #9ca3af;
-      --input-bg: #020617;
-      --danger: #ef4444;
-      --success: #22c55e;
-      --qr-bg: #ffffff;
-      /* solo visual */
-    }
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    * {
-      box-sizing: border-box;
-    }
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at 0% 0%, #1d4ed8 0, transparent 45%),
-        radial-gradient(circle at 100% 0%, #0ea5e9 0, transparent 40%),
-        linear-gradient(160deg, var(--bg-main) 0%, var(--bg-main-2) 60%, #020617 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      color: var(--text-main);
-    }
-
-    .app {
-      width: 100%;
-      max-width: 960px;
-      display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-      gap: 28px;
-      backdrop-filter: blur(18px);
-      background: linear-gradient(145deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.9));
-      border-radius: 22px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      box-shadow:
-        0 24px 80px rgba(15, 23, 42, 0.9),
-        0 0 0 1px rgba(15, 23, 42, 0.7);
-      padding: 26px 28px 26px 26px;
-    }
-
-    @media (max-width: 820px) {
-      .app {
-        grid-template-columns: minmax(0, 1fr);
-        max-width: 540px;
-      }
-    }
-
-    .app-header {
-      grid-column: 1 / -1;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 4px;
-    }
-
-    .app-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 12px;
-      background: radial-gradient(circle at 30% 0%, #38bdf8, #0ea5e9 45%, #0369a1 80%);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.9);
-    }
-
-    .app-icon i {
-      color: #e5f5ff;
-      font-size: 18px;
-    }
-
-    .app-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .app-title span:first-child {
-      text-transform: uppercase;
-      font-size: 0.78rem;
-      color: var(--text-soft);
-      letter-spacing: 0.18em;
-    }
-
-    .app-title span:last-child {
-      font-size: 1.1rem;
-    }
-
-    .app-subtitle {
-      grid-column: 1 / -1;
-      margin-bottom: 16px;
-      font-size: 0.9rem;
-      color: var(--text-soft);
-    }
-
-    .panel {
-      background: radial-gradient(circle at 0 0, var(--accent-soft), transparent 58%),
-        radial-gradient(circle at 100% 0, rgba(56, 189, 248, 0.05), transparent 58%),
-        var(--card-bg);
-      border-radius: 18px;
-      padding: 18px 18px 20px;
-      box-shadow: inset 0 0 0 1px rgba(30, 64, 175, 0.35);
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .panel-title {
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #e5e7eb;
-    }
-
-    .panel-title i {
-      font-size: 0.9rem;
-      color: var(--accent);
-    }
-
-    .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 4px;
-    }
-
-    label {
-      font-size: 0.8rem;
-      color: var(--text-soft);
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 8px;
-    }
-
-    label span.meta {
-      font-size: 0.75rem;
-      opacity: 0.8;
-    }
-
-    .input-row {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .input-text {
-      flex: 1;
-      background: rgba(15, 23, 42, 0.96);
-      border: 1px solid var(--border-subtle);
-      border-radius: 10px;
-      padding: 9px 11px;
-      color: var(--text-main);
-      font-size: 0.9rem;
-      outline: none;
-      transition: border 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-    }
-
-    .input-text::placeholder {
-      color: rgba(148, 163, 184, 0.65);
-    }
-
-    .input-text:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.5);
-      background: #020617;
-    }
-
-    .pill {
-      border-radius: 999px;
-      border: 1px solid var(--border-subtle);
-      padding: 6px 9px;
-      font-size: 0.78rem;
-      color: var(--text-soft);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: linear-gradient(135deg, #020617, #020617);
-    }
-
-    .pill i {
-      font-size: 0.8rem;
-      color: var(--accent);
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    /* WRAPPER moderno */
-    .color-input-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      background: rgba(15, 23, 42, 0.7);
-      border-radius: 20px;
-      /* más suave */
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      padding: 8px 12px;
-      backdrop-filter: blur(6px);
-    }
-
-    /* Label estilo moderno */
-    .color-input-wrapper span {
-      font-size: 0.78rem;
-      color: var(--text-soft);
-    }
-
-    /* 🎯 INPUT DE COLOR — círculo elegante */
-    .color-input-wrapper input[type="color"] {
-      -webkit-appearance: none;
-      appearance: none;
-      padding: 0;
-      margin: 0;
-
-      width: 20px;
-      height: 20px;
-
-      border-radius: 50%;
-      border: 1px;
-      background: none;
-      cursor: pointer;
-
-      transition: border 0.18s ease, transform 0.18s ease;
-    }
-
-    /* quitar el rectángulo interno del color picker */
-    .color-input-wrapper input[type="color"]::-webkit-color-swatch-wrapper {
-      padding: 0;
-      border-radius: 50%;
-    }
-
-    .color-input-wrapper input[type="color"]::-webkit-color-swatch {
-      border: none;
-      border-radius: 50%;
-    }
-
-    /* Hover moderno */
-    .color-input-wrapper input[type="color"]:hover {
-      transform: scale(1.1);
-      border-color: var(--accent);
-    }
-
-
-    .select-input,
-    .range-input {
-      width: 100%;
-      background: rgba(15, 23, 42, 0.96);
-      border-radius: 10px;
-      border: 1px solid var(--border-subtle);
-      padding: 6px 8px;
-      font-size: 0.8rem;
-      color: var(--text-main);
-      outline: none;
-    }
-
-    .range-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .range-row output {
-      min-width: 3ch;
-      text-align: right;
-      font-size: 0.8rem;
-      color: var(--text-soft);
-    }
-
-    input[type="range"] {
-      flex: 1;
-      accent-color: var(--accent);
-    }
-
-    .actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    button {
-      border: none;
-      border-radius: 999px;
-      padding: 9px 14px;
-      font-size: 0.86rem;
-      font-weight: 500;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      transition:
-        background 0.18s ease,
-        transform 0.1s ease,
-        box-shadow 0.18s ease;
-      white-space: nowrap;
-    }
-
-    button i {
-      font-size: 0.85rem;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-      color: #f9fafb;
-      box-shadow: 0 12px 35px rgba(56, 189, 248, 0.45);
-      flex: 1;
-      justify-content: center;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 18px 50px rgba(56, 189, 248, 0.6);
-    }
-
-    .btn-secondary {
-      background: rgba(15, 23, 42, 0.98);
-      color: var(--text-soft);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-    }
-
-    .btn-secondary:hover {
-      background: #020617;
-    }
-
-    .btn-secondary.success {
-      border-color: rgba(34, 197, 94, 0.7);
-      color: #bbf7d0;
-    }
-
-    /* PANEL DE VISTA PREVIA */
-    .preview-panel {
-      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.12), transparent 55%),
-        var(--card-bg);
-      border-radius: 18px;
-      padding: 18px;
-      border: 1px solid rgba(30, 64, 175, 0.5);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    /* Caja externa del preview */
-    .preview-box {
-      margin-top: 4px;
-      border-radius: 16px;
-      padding: 14px;
-      background: radial-gradient(circle at 0 0, rgba(15, 23, 42, 0.95), #020617);
-      border: 1px solid rgba(30, 64, 175, 0.6);
-
-      /* ← ESTA ES LA CLAVE PARA CENTRAR TODO */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      min-height: 260px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .preview-box::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 50% 15%, rgba(56, 189, 248, 0.22), transparent 70%);
-      opacity: 0.55;
-      pointer-events: none;
-    }
-
-    /* Contenedor interno */
-    .preview-inner {
-      display: flex;
-      flex-direction: column;
-
-      /* CENTRADO REAL */
-      justify-content: center;
-      align-items: center;
-
-      text-align: center;
-      gap: 12px;
-      width: 100%;
-    }
-
-    /* Contenedor del QR */
-    #qrcode-container {
-      padding: 10px;
-      border-radius: 14px;
-      background: transparent;
-      box-shadow: 0 12px 40px rgba(15, 23, 42, 0.85);
-
-      /* ← CENTRADO DEL QR */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      min-width: 220px;
-      min-height: 220px;
-    }
-
-    #qrcode canvas {
-      border-radius: 10px;
-    }
-
-    /* Placeholder */
-    .placeholder {
-      text-align: center;
-      color: var(--text-soft);
-      font-size: 0.8rem;
-
-      /* Centrado adicional */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-
-      max-width: 240px;
-    }
-
-    .placeholder-icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 18px;
-      border: 1px dashed rgba(148, 163, 184, 0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 18px;
-    }
-
-    .placeholder-icon i {
-      font-size: 1.2rem;
-      color: rgba(148, 163, 184, 0.9);
-    }
-
-
-
-    .hint {
-      font-size: 0.75rem;
-      color: var(--text-soft);
-      opacity: 0.88;
-    }
-
-    .hint strong {
-      color: #e5e7eb;
-      font-weight: 500;
-    }
-
-    .hint i {
-      font-size: 0.78rem;
-      margin-right: 4px;
-      color: var(--accent);
-    }
-
-    .helper-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-      margin-top: 4px;
-    }
-
-    .helper-row span {
-      font-size: 0.75rem;
-      color: var(--text-soft);
-    }
-
-    .helper-row span strong {
-      color: var(--text-main);
-      font-weight: 500;
-    }
-
-    .badge {
-      font-size: 0.72rem;
-      padding: 3px 7px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.96);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      color: var(--text-soft);
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .badge i {
-      font-size: 0.7rem;
-      color: var(--accent);
-    }
-    
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <main class="app">
-    <header class="app-header">
-      <div class="app-icon">
-        <i class="fa-solid fa-qrcode"></i>
-      </div>
-      <div class="app-title">
-        <span>Generador QR</span>
-        <span>Crea códigos QR listos para usar</span>
-      </div>
-    </header>
+    <div id="intro">
+    <div class="intro-inner">
+      <div class="loader"></div>
+      <p class="intro-text">Inicializando NeoTech Engine…</p>
+    </div>
+  </div>
 
-    <p class="app-subtitle">
-      Ingresa un texto o URL, ajusta el color y el tamaño, y descarga el código QR en formato PNG con fondo transparente
-      para integrar en presentaciones, documentos o piezas gráficas.
-    </p>
 
-    <!-- Panel izquierdo: configuración -->
-    <section class="panel">
-      <div class="panel-title">
-        <i class="fa fa-cog"></i>
-        <span>Configuración del código QR</span>
+  <!-- CANVAS BACKGROUND -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- HEADER MINIMAL TOOL -->
+  <header class="tool-header">
+    <a href="../index.html" class="tool-home-btn">
+      <i class="fa-solid fa-house"></i>
+    </a>
+
+    <div class="tool-title">
+      <i class="fa-solid fa-qrcode title-icon"></i>
+      <span>QR Generator</span>
+    </div>
+  </header>
+
+  <!-- MAIN TOOL LAYOUT -->
+  <main class="tool-wrapper">
+
+    <!-- LEFT: CONFIG PANEL -->
+    <section class="tool-panel glass-card">
+
+      <h2 class="panel-title">
+        <i class="fa-solid fa-sliders"></i>
+        Configuración
+      </h2>
+
+      <div class="field-group">
+        <label for="texto">Contenido</label>
+        <input id="texto" type="text" class="input-text" placeholder="Escribe un texto o URL…">
       </div>
 
       <div class="field-group">
-        <label for="texto">
-          Contenido del código
-        </label>
-        <div class="input-row">
-          <input type="text" id="texto" class="input-text" placeholder="Escribe el contenido que tendrá el QR" />
-        </div>
-      </div>
-
-      <div class="field-group">
-        <label>
-          Apariencia
-        </label>
-        <div class="grid-2">
-          <div class="color-input-wrapper">
+        <label>Apariencia</label>
+        <div class="field-grid">
+          <div class="color-input">
             <span>Color del QR</span>
-            <input type="color" id="colorFrente" value="#000000" />
+            <input type="color" id="colorFrente" value="#000000">
           </div>
-          <div class="color-input-wrapper">
-            <span>Fondo visual</span>
-            <input type="color" id="colorFondo" value="#ffffff" />
+
+          <div class="color-input">
+            <span>Fondo Visual</span>
+            <input type="color" id="colorFondo" value="#ffffff">
           </div>
-        </div>
-        <div class="helper-row">
-          <span><strong>Nota:</strong> el fondo del PNG se descargará transparente.</span>
-          <span class="badge">
-            <i class="fa-solid fa-circle-half-stroke"></i>
-            Vista previa solo visual
-          </span>
         </div>
       </div>
 
       <div class="field-group">
-        <label>
-          Tamaño y nivel de corrección
-        </label>
-        <div class="grid-2">
-          <div class="range-row">
-            <input type="range" id="size" min="160" max="360" step="20" value="260" class="range-input" />
+        <label>Tamaño y Corrección</label>
+        <div class="field-grid">
+          <div class="range-box">
+            <input type="range" id="size" min="160" max="360" step="20" value="260">
             <output id="sizeValue">260</output>
           </div>
-          <select id="nivel" class="select-input">
+
+          <select id="nivel" class="input-select">
             <option value="H">Corrección alta</option>
-            <option value="Q">Corrección media-alta</option>
-            <option value="M">Corrección media</option>
-            <option value="L">Corrección básica</option>
+            <option value="Q">Media-alta</option>
+            <option value="M">Media</option>
+            <option value="L">Básica</option>
           </select>
         </div>
       </div>
 
-      <div class="actions">
-        <button class="btn-primary" id="btnGenerar">
-          <i class="fa-solid fa-bolt"></i>
-          Generar código QR
-        </button>
-        <button class="btn-secondary" id="download" style="display: none;">
-          <i class="fa-solid fa-download"></i>
-          Descargar PNG
-        </button>
-      </div>
+      <button id="btnGenerar" class="btn-primary">
+        <i class="fa-solid fa-bolt"></i>
+        Generar
+      </button>
+
+      <button id="download" class="btn-secondary" style="display:none;">
+        <i class="fa-solid fa-download"></i> Descargar PNG
+      </button>
+
     </section>
 
-    <!-- Panel derecho: vista previa -->
-    <section class="preview-panel">
-      <div>
-        <div class="preview-header">
-          <div class="preview-header-title">
-            Vista previa
-          </div>
+    <!-- RIGHT: PREVIEW PANEL -->
+    <section class="preview-card glass-card">
 
-        </div>
+      <div id="preview-holo">
+        <i class="fa-solid fa-qrcode"></i>
       </div>
 
-      <div class="preview-box">
-        <div class="preview-inner">
-          <div id="qrcode-container">
-            <div id="qrcode">
-              <div class="placeholder">
-                <div class="placeholder-icon">
-                  <i class="fa-solid fa-qrcode"></i>
-                </div>
-                El código QR aparecerá aquí cuando ingreses el contenido
-                y generes el código.
-              </div>
-            </div>
+      <div class="preview-box" id="qrcode-container">
+        <div id="qrcode">
+          <div class="placeholder">
+            <i class="fa-solid fa-qrcode placeholder-icon"></i>
+            Genera un código QR para verlo aquí.
           </div>
         </div>
       </div>
-      </div>
 
-      <p class="hint">
-        <i class="fa fa-info-circle"></i>
-        <strong>Recomendación:</strong> utiliza colores con buen contraste entre el fondo y el QR
-        para asegurar una lectura correcta por parte de los escáneres.
-      </p>
     </section>
+
   </main>
 
-  <!-- Librería QRCode.js -->
+  <!-- LIB QR -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <script>
-    let qrInstance = null;
 
-    const textoInput = document.getElementById("texto");
-    const colorFrenteInput = document.getElementById("colorFrente");
-    const colorFondoInput = document.getElementById("colorFondo");
-    const sizeInput = document.getElementById("size");
-    const sizeValue = document.getElementById("sizeValue");
-    const nivelSelect = document.getElementById("nivel");
-    const downloadBtn = document.getElementById("download");
-    const btnGenerar = document.getElementById("btnGenerar");
+  <!-- APP -->
+  <script src="app.js" defer></script>
 
-    sizeInput.addEventListener("input", () => {
-      sizeValue.textContent = sizeInput.value;
-    });
-
-    colorFondoInput.addEventListener("input", () => {
-      document.documentElement.style.setProperty("--qr-bg", colorFondoInput.value);
-    });
-
-    document.documentElement.style.setProperty("--qr-bg", colorFondoInput.value);
-
-    btnGenerar.addEventListener("click", generarQR);
-
-    textoInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        generarQR();
-      }
-    });
-
-    function nivelToCorrectLevel(nivel) {
-      switch (nivel) {
-        case "L": return QRCode.CorrectLevel.L;
-        case "M": return QRCode.CorrectLevel.M;
-        case "Q": return QRCode.CorrectLevel.Q;
-        case "H":
-        default: return QRCode.CorrectLevel.H;
-      }
-    }
-
-    function generarQR() {
-      const contenedor = document.getElementById("qrcode");
-      contenedor.innerHTML = "";
-
-      const texto = textoInput.value.trim();
-      const colorFrente = colorFrenteInput.value;
-      const visualBackground = colorFondoInput.value;
-      const size = parseInt(sizeInput.value, 10) || 260;
-      const nivel = nivelSelect.value;
-
-      if (!texto) {
-        alert("Escribe el contenido que tendrá el código QR.");
-        return;
-      }
-
-      document.documentElement.style.setProperty("--qr-bg", visualBackground);
-
-      qrInstance = new QRCode(contenedor, {
-        text: texto,
-        width: size,
-        height: size,
-        colorDark: colorFrente,
-        colorLight: "transparent",
-        correctLevel: nivelToCorrectLevel(nivel),
-      });
-
-      downloadBtn.style.display = "inline-flex";
-      downloadBtn.classList.remove("success");
-      downloadBtn.innerHTML = '<i class="fa-solid fa-download"></i> Descargar PNG';
-    }
-
-    downloadBtn.addEventListener("click", descargarQR);
-
-    function descargarQR() {
-      const canvas = document.querySelector("#qrcode canvas");
-      if (!canvas) return;
-
-      const exportCanvas = document.createElement("canvas");
-      exportCanvas.width = canvas.width;
-      exportCanvas.height = canvas.height;
-
-      const exportCtx = exportCanvas.getContext("2d");
-      exportCtx.drawImage(canvas, 0, 0);
-
-      const imgData = exportCtx.getImageData(0, 0, exportCanvas.width, exportCanvas.height);
-      const data = imgData.data;
-
-      for (let i = 0; i < data.length; i += 4) {
-        const r = data[i];
-        const g = data[i + 1];
-        const b = data[i + 2];
-
-        if (r === 255 && g === 0 && b === 255) {
-          data[i + 3] = 0;
-        }
-      }
-
-      exportCtx.putImageData(imgData, 0, 0);
-
-      const enlace = document.createElement("a");
-      enlace.download = "codigo-qr.png";
-      enlace.href = exportCanvas.toDataURL("image/png");
-      enlace.click();
-
-      downloadBtn.classList.add("success");
-      downloadBtn.innerHTML = '<i class="fa-solid fa-check"></i> PNG descargado';
-    }
-  </script>
 </body>
-
 </html>

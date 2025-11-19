@@ -1,0 +1,285 @@
+/* =========================================================
+   NEO•TECH TOOL LAYOUT v6 (Limpio, funcional, elegante)
+========================================================= */
+
+:root {
+  --bg1: #05060d;
+  --bg2: #0b0e16;
+  --bg3: #111623;
+
+  --glass: rgba(255, 255, 255, 0.06);
+  --glass-strong: rgba(255, 255, 255, 0.14);
+
+  --accent: #0ea5e9;
+  --accent2: #38bdf8;
+
+  --text-main: #e8ecf5;
+  --text-soft: #9ca3af;
+
+  --border: rgba(255,255,255,0.10);
+
+  --radius: 20px;
+
+  --transition: 0.25s ease;
+}
+
+/* === RESET === */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: "Inter", sans-serif;
+  color: var(--text-main);
+  background: linear-gradient(160deg, var(--bg1), var(--bg2));
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Fondo canvas */
+#bg-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+/* =========================================================
+   HEADER MINI TOOL (no modal, no caja)
+========================================================= */
+.tool-header {
+  width: 100%;
+  padding: 18px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 30;
+
+  background: rgba(0,0,0,0.15);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.tool-home-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-main);
+  transition: var(--transition);
+}
+
+.tool-home-btn:hover {
+  background: var(--glass-strong);
+  transform: translateY(-2px);
+}
+
+.tool-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.tool-title i {
+  color: var(--accent);
+}
+
+/* =========================================================
+   TOOL CONTENT (YA NO ES MODAL)
+========================================================= */
+
+.tool-wrapper {
+  max-width: 1150px;
+  margin: 120px auto 60px;
+  padding: 0 32px;
+
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 36px;
+}
+
+/* =========================================================
+   PANEL CONFIG (IZQUIERDA)
+========================================================= */
+
+.tool-panel {
+  background: rgba(18, 22, 32, 0.45);
+  backdrop-filter: blur(16px);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  box-shadow:
+    0 12px 40px rgba(0,0,0,0.30),
+    inset 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* INPUTS */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-text,
+.input-select {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  padding: 12px;
+  border-radius: 12px;
+  outline: none;
+  transition: var(--transition);
+}
+
+.input-text:focus,
+.input-select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(14,165,233,0.25);
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.color-input {
+  background: rgba(20,24,32,0.6);
+  border-radius: 12px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255,255,255,0.10);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.color-input input[type="color"] {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+/* Buttons */
+.btn-primary,
+.btn-secondary {
+  padding: 12px 18px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(14,165,233,0.45);
+}
+
+.btn-secondary {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text-soft);
+}
+
+.btn-secondary:hover {
+  background: var(--bg1);
+}
+
+/* =========================================================
+   PREVIEW (DERECHA)
+========================================================= */
+
+.preview-card {
+  background: rgba(18,22,32,0.45);
+  backdrop-filter: blur(16px);
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  padding: 28px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+
+  box-shadow:
+    0 12px 40px rgba(0,0,0,0.30),
+    inset 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+#preview-holo {
+  width: 70px;
+  height: 70px;
+  border-radius: 18px;
+  background: rgba(14,165,233,0.12);
+  border: 1px solid rgba(14,165,233,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-size: 33px;
+
+  box-shadow: 0 0 22px rgba(14,165,233,0.25);
+}
+
+.preview-box {
+  width: 100%;
+  min-height: 280px;
+  background: rgba(12,16,25,0.65);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder {
+  color: var(--text-soft);
+  font-size: 0.92rem;
+  text-align: center;
+  max-width: 240px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 980px) {
+  .tool-wrapper {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+}
