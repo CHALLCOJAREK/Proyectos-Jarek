@@ -282,3 +282,100 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("scroll", updateHeader);
   }
 });
+// ==========================================================
+//  GITHUB PRO — Carrusel + Skeleton + Lenguajes + Estrellas
+// ==========================================================
+
+async function loadGithubRepos() {
+  const user = "CHALLCOJAREK";
+  const url = `https://api.github.com/users/${user}/repos?per_page=40`;
+
+  const container = document.getElementById("github-carousel");
+
+  try {
+    const res = await fetch(url);
+    let repos = await res.json();
+
+    // Orden por estrellas y actividad
+    repos = repos
+      .filter(r => !r.fork)
+      .sort((a, b) => b.stargazers_count - a.stargazers_count);
+
+    container.innerHTML = ""; // limpiar skeletons
+
+    for (const repo of repos) {
+      const lang = repo.language ? repo.language : "Sin especificar";
+
+      const card = document.createElement("div");
+      card.className = "github-card";
+
+      card.innerHTML = `
+        <h4>${repo.name}</h4>
+        <p>${repo.description || "Repositorio sin descripción."}</p>
+
+        <span class="gh-lang">${lang}</span>
+
+        <p style="font-size:13px; color:var(--text-soft); margin-bottom:12px;">
+          ⭐ ${repo.stargazers_count} — Último push: ${repo.updated_at.slice(0,10)}
+        </p>
+
+        <a class="gh-link" href="${repo.html_url}" target="_blank">
+          <i class="fa-brands fa-github"></i> Ver repositorio
+        </a>
+      `;
+
+      container.appendChild(card);
+    }
+
+  } catch (err) {
+    console.error("Error cargando GitHub:", err);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadGithubRepos);
+
+
+// ==========================================================
+//  Flechas de scroll
+// ==========================================================
+
+const ghCarousel = document.getElementById("github-carousel");
+
+document.querySelector(".gh-left").addEventListener("click", () => {
+  ghCarousel.scrollBy({ left: -350, behavior: "smooth" });
+});
+document.querySelector(".gh-right").addEventListener("click", () => {
+  ghCarousel.scrollBy({ left: 350, behavior: "smooth" });
+});
+
+
+// ==========================================================
+//  Auto-scroll suave cada 5s
+// ==========================================================
+
+setInterval(() => {
+  ghCarousel.scrollBy({ left: 320, behavior: "smooth" });
+}, 5000);
+
+
+// ==========================================================
+//  ScrollReveal para animar entrada
+// ==========================================================
+
+ScrollReveal().reveal("#github .section-title", {
+  distance: "40px",
+  duration: 900,
+  origin: "bottom"
+});
+ScrollReveal().reveal("#github .section-intro", {
+  distance: "40px",
+  duration: 1000,
+  origin: "bottom",
+  delay: 150
+});
+ScrollReveal().reveal("#github .github-wrapper", {
+  distance: "60px",
+  duration: 1100,
+  origin: "bottom",
+  delay: 200
+});

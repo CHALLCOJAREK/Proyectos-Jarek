@@ -12,6 +12,8 @@
 
   <!-- TIPOGRAFÍA -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <script src="https://unpkg.com/scrollreveal"></script>
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap"
     rel="stylesheet" />
 
@@ -396,6 +398,38 @@
       </div>
     </section>
 
+    <!-- PROYECTOS GITHUB / CARRUSEL PREMIUM -->
+<section id="github" class="section">
+  <h3 class="section-title fade-up">Proyectos de mi GitHub</h3>
+
+  <p class="section-intro fade-up">
+    Repositorios recientes, ordenados por relevancia, tecnología y actividad real.
+  </p>
+
+  <div class="github-wrapper fade-up">
+    
+    <!-- FLECHA IZQUIERDA -->
+    <button class="gh-btn gh-left">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+
+    <!-- CARRUSEL -->
+    <div class="github-carousel" id="github-carousel">
+      <!-- Skeletons de carga -->
+      <div class="github-skeleton"></div>
+      <div class="github-skeleton"></div>
+      <div class="github-skeleton"></div>
+    </div>
+
+    <!-- FLECHA DERECHA -->
+    <button class="gh-btn gh-right">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+  </div>
+</section>
+
+
     <!-- CTA FINAL -->
     <section id="cta" class="section">
       <h2 class="fade-up">Hagamos que tu operación sea más inteligente.</h2>
@@ -443,6 +477,7 @@
 
   <!-- JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
   <script src="app.js" defer></script>
 
 </body>
