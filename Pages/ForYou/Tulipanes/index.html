@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌷</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/66Ct5ryw/j2.png" />
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/brython@3.12.0/brython.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/brython@3.12.0/brython_stdlib.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 40px 20px 20px 20px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            max-width: 900px;
+            width: 95%;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: normal;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 
+                0 0 10px rgba(255, 20, 147, 0.8),
+                0 0 20px rgba(255, 20, 147, 0.4);
+            letter-spacing: 2px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            font-family: 'Outfit', sans-serif;
+            font-weight: bold;
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            min-width: 140px;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.6);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #8a2be2, #9370db);
+            color: white;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(138, 43, 226, 0.6);
+        }
+
+        .btn-reset {
+            background: linear-gradient(45deg, #00ced1, #40e0d0);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 206, 209, 0.4);
+        }
+
+        .btn-reset:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 206, 209, 0.6);
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .speed-control label {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 500;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .speed-control input[type="range"] {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+        }
+
+        .speed-value {
+            font-family: 'Outfit', sans-serif;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .status {
+            font-family: 'Outfit', sans-serif;
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            color: #fff;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status.completed {
+            background: rgba(0, 255, 127, 0.1);
+            border-color: rgba(0, 255, 127, 0.3);
+            color: #00ff7f;
+        }
+
+        .canvas-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 20px;
+            border: none;
+        }
+
+        #turtleCanvas {
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 30px 10px 10px 10px;
+                padding: 20px;
+                max-width: 95%;
+            }
+
+            h1 {
+                font-size: 2em;
+                margin-bottom: 20px;
+            }
+
+            .controls {
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .btn {
+                width: auto;
+                min-width: 100px;
+                padding: 12px 15px;
+                font-size: 12px;
+                flex: 1;
+                max-width: 140px;
+            }
+
+            .speed-control {
+                flex-direction: row;
+                gap: 15px;
+                padding: 20px;
+                align-items: center;
+            }
+
+            .speed-control label {
+                font-size: 16px;
+                min-width: 80px;
+            }
+
+            .speed-control input[type="range"] {
+                flex: 1;
+                min-width: 200px;
+            }
+
+            .speed-value {
+                font-size: 20px;
+                min-width: 30px;
+            }
+
+            #turtleCanvas {
+                width: 100%;
+                max-width: 800px;
+                height: 600px;
+                min-height: 300px;
+            }
+
+            .canvas-container {
+                padding: 15px;
+                margin: 15px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin: 25px 5px 5px 5px;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 15px;
+                letter-spacing: 1px;
+            }
+
+            .controls {
+                flex-direction: row;
+                align-items: center;
+                gap: 8px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .btn {
+                width: auto;
+                min-width: 85px;
+                padding: 10px 12px;
+                font-size: 11px;
+                flex: 1;
+                max-width: 110px;
+            }
+
+            .speed-control {
+                flex-direction: row;
+                padding: 15px;
+                gap: 10px;
+                align-items: center;
+            }
+
+            .speed-control label {
+                font-size: 14px;
+                min-width: 70px;
+            }
+
+            .speed-control input[type="range"] {
+                flex: 1;
+                min-width: 150px;
+            }
+
+            .speed-value {
+                font-size: 18px;
+                min-width: 25px;
+            }
+
+            #turtleCanvas {
+                height: auto;
+                aspect-ratio: 4/3;
+                min-height: 250px;
+            }
+
+            .canvas-container {
+                padding: 10px;
+                margin: 10px 0;
+            }
+
+            .status {
+                font-size: 14px;
+                padding: 12px;
+            }
+        }
+
+        /* Portrait orientation optimization */
+        @media (max-width: 768px) and (orientation: portrait) {
+            #turtleCanvas {
+                height: auto;
+                aspect-ratio: 4/3;
+                min-height: 280px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.6em;
+            }
+        }
+
+        /* Landscape orientation optimization */
+        @media (max-width: 768px) and (orientation: landscape) {
+            #turtleCanvas {
+                height: auto;
+                aspect-ratio: 4/3;
+                min-height: 200px;
+            }
+
+            .controls {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .btn {
+                width: auto;
+                min-width: 120px;
+            }
+        }
+
+        /* Extra small devices */
+        @media (max-width: 320px) {
+            .container {
+                margin: 20px 2px 2px 2px;
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 1.4em;
+                margin-bottom: 10px;
+            }
+
+            .controls {
+                flex-direction: row;
+                align-items: center;
+                gap: 5px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .btn {
+                padding: 8px 10px;
+                font-size: 10px;
+                min-width: 70px;
+                max-width: 90px;
+                flex: 1;
+            }
+
+            .speed-control {
+                flex-direction: row;
+                padding: 10px;
+                gap: 8px;
+                align-items: center;
+            }
+
+            .speed-control label {
+                font-size: 12px;
+                min-width: 60px;
+            }
+
+            .speed-control input[type="range"] {
+                flex: 1;
+                min-width: 120px;
+            }
+
+            .speed-value {
+                font-size: 16px;
+                min-width: 20px;
+            }
+
+            #turtleCanvas {
+                height: auto;
+                aspect-ratio: 4/3;
+                min-height: 200px;
+            }
+
+            .status {
+                font-size: 12px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body onload="brython()">
+    <div class="container">
+        <h1>🌷 Tulipanes para ti</h1>
+        
+        <div class="controls">
+            <button class="btn btn-primary" onclick="startDrawing()">👨‍🎨 Dibujar</button>
+            <button class="btn btn-secondary" onclick="pauseDrawing()">⏸️ Pausar</button>
+            <button class="btn btn-reset" onclick="resetDrawing()">🔄 Reiniciar</button>
+        </div>
+
+        <div class="speed-control">
+            <label for="speed">Velocidad:</label>
+            <input type="range" id="speed" min="1" max="10" value="5" onchange="updateSpeed()">
+            <span class="speed-value" id="speedValue">5</span>
+        </div>
+
+        <div class="status" id="status">Cargando datos...</div>
+
+        <div class="canvas-container">
+            <canvas id="turtleCanvas" width="800" height="600"></canvas>
+        </div>
+    </div>
+
+    <script type="text/python">
+        from browser import document, window
+        from browser.timer import set_timeout, clear_timeout
+        import json
+
+        # Variables globales
+        turtle_data = None
+        drawing_active = False
+        current_shape = 0
+        drawing_timeout = None
+        turtle_speed = 5
+
+        # Canvas setup
+        canvas = document['turtleCanvas']
+        ctx = canvas.getContext('2d')
+        canvas_width = 800
+        canvas_height = 600
+
+        # Turtle variables
+        turtle_x = canvas_width // 2
+        turtle_y = canvas_height // 2
+        turtle_pen_down = True
+
+        def clear_canvas():
+            ctx.clearRect(0, 0, canvas_width, canvas_height)
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.02)'
+            ctx.fillRect(0, 0, canvas_width, canvas_height)
+
+        def set_color(r, g, b):
+            ctx.strokeStyle = f'rgb({int(r*255)}, {int(g*255)}, {int(b*255)})'
+            ctx.fillStyle = f'rgb({int(r*255)}, {int(g*255)}, {int(b*255)})'
+            ctx.lineWidth = 1
+
+        def pen_up():
+            global turtle_pen_down
+            turtle_pen_down = False
+
+        def pen_down():
+            global turtle_pen_down
+            turtle_pen_down = True
+
+        def goto(x, y):
+            global turtle_x, turtle_y
+            
+            # Scale coordinates
+            scale_factor = min(canvas_width, canvas_height) / 800
+            scaled_x = canvas_width // 2 + x * scale_factor * 0.8
+            scaled_y = canvas_height // 2 + y * scale_factor * 0.8
+            
+            if turtle_pen_down:
+                ctx.lineTo(scaled_x, scaled_y)
+            
+            turtle_x = scaled_x
+            turtle_y = scaled_y
+
+        def begin_fill():
+            ctx.beginPath()
+            global first_point
+            first_point = (turtle_x, turtle_y)
+
+        def end_fill():
+            if 'first_point' in globals():
+                ctx.lineTo(first_point[0], first_point[1])
+            ctx.fill()
+
+        def load_data():
+            global turtle_data
+            try:
+                import urllib.request
+                response = urllib.request.urlopen('./data.json')
+                data = response.read()
+                if isinstance(data, bytes):
+                    data = data.decode('utf-8')
+                turtle_data = json.loads(data)
+                document['status'].textContent = "Listo para dibujar 💕"
+                return True
+            except Exception as e:
+                document['status'].textContent = f"Error: {str(e)}"
+                return False
+
+        def draw_next():
+            global current_shape, drawing_active, drawing_timeout
+            
+            try:
+                if not drawing_active or not turtle_data:
+                    return
+                
+                if current_shape >= len(turtle_data["coordenadas"]):
+                    drawing_active = False
+                    status_element = document['status']
+                    status_element.textContent = "¡Dibujado! 🌷💕"
+                    status_element.className = 'status completed'
+                    return
+                
+                # Dibujar forma completa
+                shape = turtle_data["coordenadas"][current_shape]
+                color = turtle_data["color"][current_shape]
+                
+                progress_percentage = int(((current_shape + 1) / len(turtle_data['coordenadas'])) * 100)
+                document['status'].textContent = f"Dibujando... {progress_percentage}% 💕"
+                
+                # Configurar color
+                set_color(color[0], color[1], color[2])
+                begin_fill()
+                
+                # Dibujar toda la forma
+                pen_up()
+                goto(shape[0][0], shape[0][1])
+                pen_down()
+                
+                # Mover al primer punto para comenzar el relleno
+                ctx.moveTo(turtle_x, turtle_y)
+                
+                for i in range(1, len(shape)):
+                    goto(shape[i][0], shape[i][1])
+                
+                end_fill()
+                current_shape += 1
+                
+                # Siguiente forma con velocidad ajustable
+                if drawing_active:
+                    delay = max(5, 50 - turtle_speed * 5)
+                    drawing_timeout = set_timeout(draw_next, delay)
+                    
+            except Exception as e:
+                document['status'].textContent = f"Error en dibujo: {str(e)}"
+                drawing_active = False
+
+        def start_drawing():
+            global drawing_active, current_shape, drawing_timeout
+            
+            if not turtle_data:
+                if not load_data():
+                    return
+            
+            # Limpiar timeout anterior si existe
+            if drawing_timeout:
+                clear_timeout(drawing_timeout)
+            
+            drawing_active = True
+            current_shape = 0
+            clear_canvas()
+            document['status'].textContent = f"Dibujando {len(turtle_data['coordenadas'])} formas de amor..."
+            draw_next()
+
+        def pause_drawing():
+            global drawing_active, drawing_timeout
+            drawing_active = False
+            if drawing_timeout:
+                clear_timeout(drawing_timeout)
+            document['status'].textContent = "Dibujo pausado 💕"
+
+        def reset_drawing():
+            global drawing_active, current_shape, drawing_timeout
+            drawing_active = False
+            if drawing_timeout:
+                clear_timeout(drawing_timeout)
+            current_shape = 0
+            clear_canvas()
+            document['status'].textContent = "Listo para dibujar tulipanes de amor 💕"
+
+        def update_speed():
+            global turtle_speed
+            speed_element = document['speed']
+            speed_value_element = document['speedValue']
+            turtle_speed = int(speed_element.value)
+            speed_value_element.textContent = str(turtle_speed)
+
+        # Configurar funciones globales para JavaScript
+        window.startDrawing = start_drawing
+        window.pauseDrawing = pause_drawing
+        window.resetDrawing = reset_drawing
+        window.updateSpeed = update_speed
+
+        # Inicialización
+        clear_canvas()
+        document['status'].textContent = "Cargando datos de amor..."
+        load_data()
+    </script>
+    
+    <!-- Créditos -->
+    <div style="text-align: center; margin-top: 30px; padding: 20px; color: rgba(255, 255, 255, 0.7); font-family: 'Outfit', sans-serif; font-size: 14px;">
+        by <a href="https://github.com/CHALLCOJAREK" target="_blank" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; font-weight: bold;">Jarek</a>
+    </div>
+</body>
+</html>

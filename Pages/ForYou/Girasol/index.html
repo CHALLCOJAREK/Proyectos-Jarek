@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🌻</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/66Ct5ryw/j2.png" />
+    <!-- FUENTES GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/brython@3.12.0/brython.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/brython@3.12.0/brython_stdlib.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 1000px;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .dog-gif {
+            width: 420px;
+            height: 420px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 5px solid #FFA216;
+            box-shadow: 0 8px 25px rgba(255, 162, 22, 0.5);
+            transition: all 0.3s ease;
+            margin-bottom: 5px;
+        }
+
+        .dog-gif:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 162, 22, 0.5);
+        }
+
+        .page-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 400;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            color: #FFA216;
+            transition: opacity 0.5s ease;
+        }
+
+        .initial-interface {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .initial-interface.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.9);
+        }
+
+        .drawing-interface {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #000000;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .drawing-interface.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        #output {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 400;
+            font-size: 1rem;
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
+            min-width: 300px;
+        }
+
+        .canvas-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+            padding: 0;
+            background: transparent;
+        }
+
+        .drawing-interface .canvas-container {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        #turtleCanvas {
+            border: none;
+            background: #000000;
+            border-radius: 0;
+            max-width: 100vw;
+            max-height: 100vh;
+            width: auto;
+            height: auto;
+        }
+
+        button {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 18px 45px;
+            margin: 30px 0;
+            background: linear-gradient(135deg, #FFA216, #FF8C00);
+            color: #000000;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            box-shadow: 0 6px 20px rgba(255, 162, 22, 0.4);
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 6px 20px rgba(255, 162, 22, 0.4);
+            }
+            25% {
+                transform: scale(1.05);
+                box-shadow: 0 8px 25px rgba(255, 162, 22, 0.6);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 10px 30px rgba(255, 162, 22, 0.8);
+            }
+            75% {
+                transform: scale(1.05);
+                box-shadow: 0 8px 25px rgba(255, 162, 22, 0.6);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 6px 20px rgba(255, 162, 22, 0.4);
+            }
+        }
+
+        button:hover {
+            animation-play-state: paused;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 162, 22, 0.5);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        .speed-control {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .speed-label {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 400;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+        }
+
+        .speed-slider {
+            width: 180px;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+            -webkit-appearance: none;
+            margin-bottom: 10px;
+        }
+
+        .speed-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #FFA216;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(255, 162, 22, 0.3);
+        }
+
+        .speed-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #FFA216;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 6px rgba(255, 162, 22, 0.3);
+        }
+
+        .speed-value {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 500;
+            font-size: 1.2rem;
+            color: #FFA216;
+        }
+
+        .credits {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 400;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.7);
+            z-index: 1000;
+        }
+
+        .credits a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .credits a:hover {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .smile-text {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 300;
+            font-size: 1.5rem;
+            color: #FFA216;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            z-index: 10;
+        }
+
+        .smile-text.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .smile-text .letter {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: letterAppear 0.3s ease forwards;
+        }
+
+        @keyframes letterAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            #turtleCanvas {
+                max-width: 90vw;
+                max-height: 90vh;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 1.7rem;
+                margin-bottom: 15px;
+            }
+            
+            .dog-gif {
+                width: 330px;
+                height: 330px;
+                margin-bottom: 5px;
+            }
+            
+            .container {
+                padding: 20px 15px;
+            }
+            
+            button {
+                font-size: 1rem;
+                padding: 15px 30px;
+                margin: 25px 0;
+            }
+            
+            .speed-slider {
+                width: 150px;
+            }
+            
+            .speed-value {
+                font-size: 1.1rem;
+            }
+            
+            #turtleCanvas {
+                max-width: 95vw;
+                max-height: 70vh;
+            }
+            
+            .smile-text {
+                font-size: 1.3rem;
+                top: 25%;
+            }
+            
+            .credits {
+                font-size: 0.8rem;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 1.4rem;
+                margin-bottom: 12px;
+            }
+            
+            .dog-gif {
+                width: 260px;
+                height: 260px;
+                margin-bottom: 3px;
+            }
+            
+            button {
+                font-size: 0.9rem;
+                padding: 12px 25px;
+                margin: 20px 0;
+            }
+            
+            .speed-slider {
+                width: 120px;
+            }
+            
+            .speed-label {
+                font-size: 0.9rem;
+            }
+            
+            .speed-value {
+                font-size: 1rem;
+            }
+            
+            #turtleCanvas {
+                max-width: 98vw;
+                max-height: 60vh;
+            }
+            
+            .smile-text {
+                font-size: 1.2rem;
+                top: 30%;
+            }
+            
+            .credits {
+                font-size: 0.75rem;
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .page-title {
+                font-size: 1.2rem;
+                margin-bottom: 10px;
+            }
+            
+            .dog-gif {
+                width: 210px;
+                height: 210px;
+                margin-bottom: 2px;
+            }
+            
+            button {
+                font-size: 0.8rem;
+                padding: 10px 20px;
+            }
+            
+            .speed-slider {
+                width: 100px;
+            }
+            
+            #turtleCanvas {
+                max-width: 100vw;
+                max-height: 55vh;
+            }
+            
+            .smile-text {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body onload="brython()">
+    <!-- Interfaz inicial -->
+    <div class="initial-interface" id="initialInterface">
+        <h1 class="page-title">Un girasol para ti 🌻</h1>
+        <img src="dog.gif" alt="Perro con girasol" class="dog-gif">
+        
+        <button onclick="startDrawing()">Abrir girasol</button>
+        
+        <div class="speed-control">
+            <div class="speed-label">Velocidad de la flor:</div>
+            <input type="range" class="speed-slider" id="speedSlider" min="1" max="10" value="5">
+            <div class="speed-value" id="speedValue">5</div>
+        </div>
+    </div>
+
+    <!-- Interfaz de dibujo -->
+    <div class="drawing-interface" id="drawingInterface">
+        <div class="canvas-container">
+            <canvas id="turtleCanvas" width="1000" height="1000"></canvas>
+        </div>
+        <div class="smile-text" id="smileText">porque sí, para ti :)</div>
+    </div>
+
+    <!-- Créditos -->
+    <div class="credits">
+        by <a href="https://github.com/CHALLCOJAREK" target="_blank">Jarek</a>
+    </div>
+
+    <script type="text/python">
+        from browser import document, window
+        from browser.timer import set_timeout, clear_timeout
+        import math
+        
+        # Variables globales
+        drawing_active = False
+        current_petal = 0
+        current_segment = 0
+        current_seed = 0
+        drawing_timeout = None
+        drawing_speed = 5  # Velocidad por defecto (1-10)
+        
+        # Canvas setup
+        canvas = document['turtleCanvas']
+        ctx = canvas.getContext('2d')
+        canvas_width = 1000
+        canvas_height = 1000
+        
+        # Turtle variables
+        turtle_x = canvas_width // 2
+        turtle_y = canvas_height // 2
+        turtle_heading = 0
+        turtle_pen_down = True
+        
+        def clear_canvas():
+            """Limpia el canvas y lo pinta de negro"""
+            ctx.clearRect(0, 0, canvas_width, canvas_height)
+            ctx.fillStyle = 'black'
+            ctx.fillRect(0, 0, canvas_width, canvas_height)
+        
+        def set_color(color_str):
+            """Establece el color del trazo"""
+            ctx.strokeStyle = color_str
+            ctx.fillStyle = color_str
+            ctx.lineWidth = 3
+        
+        def pen_up():
+            """Levanta el lápiz"""
+            global turtle_pen_down
+            turtle_pen_down = False
+        
+        def pen_down():
+            """Baja el lápiz"""
+            global turtle_pen_down
+            turtle_pen_down = True
+        
+        def goto(x, y):
+            """Mueve la tortuga a una posición específica"""
+            global turtle_x, turtle_y
+            
+            # Escalar coordenadas para que la flor sea 50% más grande
+            scale_factor = min(canvas_width, canvas_height) / 133
+            scaled_x = canvas_width // 2 + x * scale_factor
+            scaled_y = canvas_height // 2 - y * scale_factor
+            
+            if turtle_pen_down:
+                ctx.lineTo(scaled_x, scaled_y)
+                ctx.stroke()
+            else:
+                ctx.moveTo(scaled_x, scaled_y)
+            
+            turtle_x = scaled_x
+            turtle_y = scaled_y
+        
+        def right(angle):
+            """Gira la tortuga a la derecha"""
+            global turtle_heading
+            turtle_heading -= angle
+        
+        def left(angle):
+            """Gira la tortuga a la izquierda"""
+            global turtle_heading
+            turtle_heading += angle
+        
+        def circle(radius, extent=None):
+            """Dibuja un arco de círculo como turtle real"""
+            global turtle_x, turtle_y, turtle_heading
+            
+            if extent is None:
+                extent = 360
+            
+            # En turtle, circle() dibuja hacia la izquierda desde la dirección actual
+            # El centro del círculo está a 90 grados a la izquierda de la tortuga
+            center_angle = turtle_heading + 90
+            center_x = turtle_x + radius * math.cos(math.radians(center_angle))
+            center_y = turtle_y + radius * math.sin(math.radians(center_angle))
+            
+            # Ángulo inicial desde el centro del círculo hasta la posición actual de la tortuga
+            start_angle = math.radians(turtle_heading - 90)
+            end_angle = start_angle + math.radians(extent)
+            
+            # Dibujar el arco
+            ctx.beginPath()
+            ctx.arc(center_x, center_y, radius, start_angle, end_angle)
+            ctx.stroke()
+            
+            # Actualizar posición de la tortuga (turtle se mueve al final del arco)
+            turtle_x = center_x + radius * math.cos(end_angle)
+            turtle_y = center_y + radius * math.sin(end_angle)
+            
+            # Actualizar heading (turtle gira según el extent)
+            turtle_heading += extent
+        
+        def stamp():
+            """Dibuja una semilla circular en la posición actual - igual que turtle.stamp()"""
+            global turtle_x, turtle_y, turtle_heading
+            
+            # Guardar el estado actual
+            ctx.save()
+            
+            # Mover al centro de la semilla
+            ctx.translate(turtle_x, turtle_y)
+            ctx.rotate(math.radians(turtle_heading))
+            
+            # Dibujar semilla circular pequeña con borde negro para distinguir cada semilla
+            ctx.beginPath()
+            ctx.arc(0, 0, 4, 0, 2 * math.pi)  # Círculo más grande (radio 4) para flor agrandada
+            
+            # Relleno marrón
+            ctx.fillStyle = '#8B4513'  # Marrón más claro para mejor visibilidad
+            ctx.fill()
+            
+            # Borde negro para distinguir cada semilla
+            ctx.strokeStyle = 'black'
+            ctx.lineWidth = 1
+            ctx.stroke()
+            
+            # Restaurar el estado
+            ctx.restore()
+        
+        def draw_center():
+            """Dibuja el centro del girasol con 140 semillas"""
+            global current_seed, drawing_active, drawing_timeout
+            
+            try:
+                if not drawing_active:
+                    return
+                
+                if current_seed >= 140:
+                    drawing_active = False
+                    show_smile_text()
+                    return
+                
+                # Calcular posición usando espiral de Fibonacci y ángulo dorado
+                # Radio ajustado para mantener semillas en el centro de la flor agrandada
+                r = 0.47 * math.sqrt(current_seed)
+                theta = current_seed * 137.508 * (math.pi / 180)
+                x = r * math.cos(theta)
+                y = r * math.sin(theta)
+                
+                # Mover a la posición sin dibujar, ajustando para centrar en el círculo negro
+                pen_up()
+                goto(x, y - 5.5)  # Ajustar hacia abajo para centrar en el círculo negro
+                set_heading(current_seed * 137.508)
+                pen_down()
+                
+                # Dibujar la semilla
+                stamp()
+                
+                current_seed += 1
+                
+                # Siguiente semilla con delay basado en velocidad
+                if drawing_active:
+                    delay = max(10, 100 - (drawing_speed * 9))
+                    drawing_timeout = set_timeout(draw_center, delay)
+                    
+            except Exception as e:
+                drawing_active = False
+        
+        def set_heading(angle):
+            """Establece la dirección de la tortuga"""
+            global turtle_heading
+            turtle_heading = angle
+        
+        def draw_next():
+            """Dibuja el siguiente segmento del girasol"""
+            global current_petal, current_segment, drawing_active, drawing_timeout, current_seed
+            
+            try:
+                if not drawing_active:
+                    return
+                
+                if current_petal >= 16:
+                    # Completar los pétalos y empezar el centro
+                    circle(40, 24)
+                    current_seed = 0
+                    # Cambiar a color negro para el contorno del centro (como en el código original)
+                    set_color('black')
+                    # Configurar forma circular y tamaño (shape('circle'), shapesize(0.5))
+                    # Iniciar dibujo del centro
+                    set_timeout(draw_center, 100)
+                    return
+                
+                if current_segment >= 18:
+                    # Completar el pétalo actual
+                    circle(40, 24)
+                    # Siguiente pétalo
+                    current_petal += 1
+                    current_segment = 0
+                    # Delay basado en velocidad (más lento = más delay)
+                    delay = max(30, 150 - (drawing_speed * 12))
+                    set_timeout(draw_next, delay)
+                    return
+                
+                # Dibujar el siguiente segmento del pétalo actual - CÓDIGO EXACTO DE 01.py
+                set_color('#FFA216')
+                right(90)
+                circle(150-current_segment*6, 90)
+                left(90)
+                circle(150-current_segment*6, 90)
+                right(180)
+                
+                # Sin mensajes de progreso - solo dibujo limpio
+                
+                current_segment += 1
+                
+                # Siguiente segmento con delay basado en velocidad
+                if drawing_active:
+                    # Velocidad 1 = muy lento, velocidad 10 = muy rápido
+                    delay = max(10, 100 - (drawing_speed * 9))
+                    drawing_timeout = set_timeout(draw_next, delay)
+                    
+            except Exception as e:
+                drawing_active = False
+        
+        def start_drawing():
+            """Inicia el dibujo del girasol"""
+            global drawing_active, current_petal, current_segment, current_seed, drawing_timeout, drawing_speed
+            
+            # Obtener velocidad del slider
+            speed_slider = document['speedSlider']
+            drawing_speed = int(speed_slider.value)
+            
+            # Limpiar timeout anterior si existe
+            if drawing_timeout:
+                clear_timeout(drawing_timeout)
+            
+            # Ocultar interfaz inicial y mostrar interfaz de dibujo
+            initial_interface = document['initialInterface']
+            drawing_interface = document['drawingInterface']
+            
+            # Fade out de la interfaz inicial
+            initial_interface.classList.add('hidden')
+            
+            # Esperar un poco y luego mostrar la interfaz de dibujo
+            def show_drawing_interface():
+                drawing_interface.classList.add('active')
+            
+            set_timeout(show_drawing_interface, 400)  # Medio segundo de delay
+            
+            drawing_active = True
+            current_petal = 0
+            current_segment = 0
+            current_seed = 0
+            clear_canvas()
+            
+            # Posición inicial ajustada para centrado vertical
+            pen_up()
+            pen_down()
+            
+            # Iniciar dibujo después de la transición
+            def start_actual_drawing():
+                draw_next()
+            
+            set_timeout(start_actual_drawing, 800)  # Esperar a que termine la transición
+        
+        def show_smile_text():
+            """Muestra el texto con efecto de escritura letra por letra"""
+            smile_element = document['smileText']
+            smile_element.classList.add('visible')
+            
+            # Dividir el texto en letras
+            text = "porque sí, para ti :)"
+            smile_element.innerHTML = ""
+            
+            for i, char in enumerate(text):
+                if char == " ":
+                    span = document.createElement('span')
+                    span.innerHTML = "&nbsp;"
+                    span.style.animationDelay = f"{i * 0.1}s"
+                    smile_element.appendChild(span)
+                else:
+                    span = document.createElement('span')
+                    span.classList.add('letter')
+                    span.text = char
+                    span.style.animationDelay = f"{i * 0.1}s"
+                    smile_element.appendChild(span)
+        
+        def update_speed_display():
+            """Actualiza la visualización del valor de velocidad"""
+            speed_slider = document['speedSlider']
+            speed_value = document['speedValue']
+            speed_value.text = speed_slider.value
+        
+        # Configurar el control de velocidad
+        speed_slider = document['speedSlider']
+        speed_slider.bind('input', lambda e: update_speed_display())
+        
+        # Exportar funciones para JavaScript
+        window.startDrawing = start_drawing
+        
+        # Inicialización
+        clear_canvas()
+        update_speed_display()  # Mostrar valor inicial de velocidad
+    </script>
+
+    <script>
+        function startDrawing() {
+            if (window.startDrawing) {
+                window.startDrawing();
+            } else {
+                document.getElementById('output').innerHTML = '<p style="color: red;">❌ Sistema aún no está listo</p>';
+            }
+        }
+    </script>
+</body>
+</html>
