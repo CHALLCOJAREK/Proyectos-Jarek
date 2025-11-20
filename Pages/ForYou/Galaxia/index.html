@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxia</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/66Ct5ryw/j2.png">
+    <script type="text/javascript"
+        src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=c3nn3ZHejs_r-xGqWhOlumNK7tpo4FbCVlwge1aUlbmCPuUiLE1tYFUK-594uEAFoaEzzWoT6q1xIKYqGHD6fZpf3Zuw1ChrfS5c-dxOQmCkkhztKjKt3Ry-wy1EC5dK0KyA1n7VY35x9zf0XCidvVTQj9tugZ3hISLCijVAcew"
+        charset="UTF-8"></script>
+    <link rel="stylesheet" crossorigin="anonymous"
+        href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9iY29kZXN0b3JhZ3VlLmFudGVyb3Rlb2JhbGRvYi53b3JrZXJzLmRldi9zaGFyZS9hbnRlcm90ZW9iYWxkb2JfZ21haWxfY29tL0RFVEFMTEVTL2RpYV9ub3Zpby5odG1s" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/FontLoader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/TextGeometry.min.js"></script>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+
+    <div id="marca-agua-bcode"
+        style="position: fixed !important; top: 10px !important; left: 10px !important; font-size: 0.95rem !important; color: #00FFFF !important; z-index: 99999999 !important; pointer-events: auto !important; user-select: none !important; font-weight: 600 !important; font-family: 'Arial', sans-serif !important; padding: 2px 10px !important; border-left: 2px solid #00FFFF !important; border-right: 2px solid #00FFFF !important; background-color: rgba(0, 0, 0, 0.01) !important; mix-blend-mode: normal !important; text-align: left !important;">
+        <a href="https://j2-peru.com/" target="_blank"
+            style="color: #00FFFF !important; text-decoration: none !important;" id="..">Desarrollado For You</a>
+        <p style="margin: 2px 0 0 0 !important; font-size: 0.75rem !important; font-weight: 400 !important; color: #00FFFF !important;"
+            id="...">Cosas bonitas para ti</p>
+    </div>
+
+    <div class="cielo" id="cielo-estrellas">
+        <div class="luna"></div>
+    </div>
+
+    <div id="cargando">
+        <div class="contenido-cargando">
+            <h2> For You</h2><span id="puntos-cargando">...</span>
+            <div class="cargador-reloj" id="cargador-reloj">
+                <div class="manecilla-reloj"></div>
+                <div class="centro-reloj"></div>
+            </div>
+            <div class="texto-progreso" id="texto-progreso">0%</div>
+        </div>
+    </div>
+
+    <div id="contenedor-escena"></div>
+
+    <div id="superposicion-ui">
+        <button id="alternar-audio">OFF</button>
+        <div id="indicador-toque"></div>
+        <div id="instrucciones">Toca la pantalla ❤️ </div>
+        <div class="galeria">
+            <div class="elemento-galeria" data-indice="0"><img
+                    src="https://bcodestorague.anteroteobaldob.workers.dev/share/anteroteobaldob_gmail_com/GIF/gatito.gif"
+                    alt="Amor 1"></div>
+            <div class="elemento-galeria" data-indice="1"><img
+                    src="https://bcodestorague.anteroteobaldob.workers.dev/share/anteroteobaldob_gmail_com/GIF/img.gif"
+                    alt="Amor 2"></div>
+            <div class="elemento-galeria" data-indice="2"><img
+                    src="https://bcodestorague.anteroteobaldob.workers.dev/share/anteroteobaldob_gmail_com/GIF/Gatitosi.gif"
+                    alt="Amor 3"></div>
+            <div class="elemento-galeria" data-indice="3"><img
+                    src="https://bcodestorague.anteroteobaldob.workers.dev/share/anteroteobaldob_gmail_com/GIF/Gatito1.gif"
+                    alt="Amor 4"></div>
+        </div>
+    </div>
+
+    <div id="modal-imagen" class="modal">
+        <span class="boton-cerrar">&times;</span>
+        <img class="contenido-modal" id="imagen-modal">
+        <div class="mensaje-modal" id="mensaje-modal"></div>
+    </div>
+
+    <audio id="audio-fondo" loop>
+        <source
+            src="https://bcodestorague.anteroteobaldob.workers.dev/share/anteroteobaldob_gmail_com/AUDIO/en%20saturno.mp3"
+            type="audio/mpeg">
+    </audio>
+
+
+    <script src="./script.js"></script>
+</body>
+
+</html>
