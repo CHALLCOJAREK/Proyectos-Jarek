@@ -1,0 +1,45 @@
+Clientes
+ClienteID: PK
+Nombre
+Apellido
+Email
+Telefono
+Direccion
+FechaRegistro
+Estado
+
+Productos
+ProductoID: PK
+NombreProducto
+Descripcion
+PrecioUnitario
+Stock
+CategoriaID
+Estado
+
+Empleados
+EmpleadoID: PK
+Nombre
+Apellido
+Cargo
+Email
+Telefono
+FechaContratacion
+Estado
+
+Ventas
+VentaID: PK
+ClienteID: FK > Clientes.ClienteID
+EmpleadoID: FK > Empleados.EmpleadoID
+FechaVenta
+TotalVenta
+MetodoPago
+Estado
+
+Detalles_Venta
+DetalleID: PK
+VentaID: FK > Ventas.VentaID
+ProductoID: FK > Productos.ProductoID
+Cantidad
+PrecioUnitario
+Subtotal

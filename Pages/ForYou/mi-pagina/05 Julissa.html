@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corazón de partículas simple❤️</title>
+    <style>
+        :root {
+            --background-color: #000000;
+            --heart-particle-color-hue-min: 345;
+            --heart-particle-color-hue-range: 10;
+            --heart-particle-color-lightness: 70%;
+            --text-particle-color-hue-min: 350;
+            --text-particle-color-hue-range: 20;
+            --text-particle-color-lightness: 90%;
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #backgroundCanvas {
+            z-index: 1;
+        }
+
+        #heartCanvas {
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="backgroundCanvas"></canvas>
+    <canvas id="heartCanvas"></canvas>
+
+    <script>
+        // Configuración de parámetros
+        const config = {
+            heart: {
+                particleCount: 800, // Reducido para mejor rendimiento
+                scaleFactor: 0.35,
+                scaleFactorDesktop: 0.25,
+                particleSizeMin: 1.5,
+                particleSizeRange: 2.5,
+                trembleAmplitude: 3,
+                orbitRadius: 3,
+                orbitSpeedMin: 0.03,
+                orbitSpeedRange: 0.05,
+                densityMin: 1,
+                densityRange: 20
+            },
+            text: {
+                particleCount: 150, // Reducido para mejor rendimiento
+                fontSizeMobile: 0.11,
+                fontSizeDesktop: 0.08,
+                particleSizeMin: 0.8,
+                particleSizeRange: 1.2,
+                trembleAmplitude: 2,
+                orbitRadius: 2,
+                orbitSpeedMin: 0.03,
+                orbitSpeedRange: 0.05,
+                pixelStepMobile: 1.2, // Aumentado para menos partículas
+                pixelStepDesktop: 1.8, // Aumentado para menos partículas
+                densityMin: 1,
+                densityRange: 20
+            },
+            mouse: {
+                radius: 200
+            },
+            background: {
+                waveSpeed: 0.001, // Mayor velocidad
+                waveAmplitude: 0.4, // Mayor amplitud
+                secondaryWaveSpeed: 0.0008, // Segunda onda para más movimiento
+                secondaryWaveAmplitude: 0.3,
+                redIntensity: 0.3
+            }
+        };
+
+        const backgroundCanvas = document.getElementById('backgroundCanvas');
+        const heartCanvas = document.getElementById('heartCanvas');
+        const bgCtx = backgroundCanvas.getContext('2d');
+        const ctx = heartCanvas.getContext('2d');
+        
+        // Ajustar el tamaño de los canvas
+        function resizeCanvas() {
+            backgroundCanvas.width = window.innerWidth;
+            backgroundCanvas.height = window.innerHeight;
+            heartCanvas.width = window.innerWidth;
+            heartCanvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        
+        // Configuración
+        const particles = [];
+        const isMobile = window.innerWidth <= 768;
+        const scaleFactor = Math.min(heartCanvas.width, heartCanvas.height) / 1080;
+        const mouse = {
+            x: null,
+            y: null,
+            radius: config.mouse.radius * scaleFactor
+        };
+        
+        // Event listeners
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+        
+        window.addEventListener('touchmove', (event) => {
+            event.preventDefault();
+            const touch = event.touches[0];
+            mouse.x = touch.clientX;
+            mouse.y = touch.clientY;
+        }, { passive: false });
+        
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            init();
+        });
+        
+        // Fondo degradado en movimiento
+        function drawBackground() {
+            bgCtx.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
+            const time = Date.now();
+            const waveTime = time * config.background.waveSpeed;
+            const secondaryWaveTime = time * config.background.secondaryWaveSpeed;
+            
+            for (let x = 0; x < backgroundCanvas.width; x += 10) { // Paso más grande para mejor rendimiento
+                for (let y = 0; y < backgroundCanvas.height; y += 10) {
+                    const dx = (x - backgroundCanvas.width / 2) / backgroundCanvas.width;
+                    const dy = (y - backgroundCanvas.height / 2) / backgroundCanvas.height;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    // Dos ondas superpuestas para efecto aurora
+                    const wave = Math.sin(distance * 10 + waveTime) * config.background.waveAmplitude;
+                    const secondaryWave = Math.cos(distance * 8 + secondaryWaveTime) * config.background.secondaryWaveAmplitude;
+                    const red = Math.min(255 * config.background.redIntensity * (distance + wave + secondaryWave), 255);
+                    
+                    bgCtx.fillStyle = `rgba(${red}, 0, 0, ${1 - distance * 0.8})`;
+                    bgCtx.fillRect(x, y, 10, 10);
+                }
+            }
+        }
+        
+        // Clase Partícula
+        class Particle {
+            constructor(x, y, isTextParticle = false) {
+                this.x = x;
+                this.y = y;
+                const cfg = isTextParticle ? config.text : config.heart;
+                this.size = isTextParticle ? 
+                    (Math.random() * cfg.particleSizeRange + cfg.particleSizeMin) * scaleFactor : 
+                    (Math.random() * cfg.particleSizeRange + cfg.particleSizeMin) * scaleFactor;
+                this.baseX = x;
+                this.baseY = y;
+                this.density = (Math.random() * cfg.densityRange) + cfg.densityMin;
+                this.isTextParticle = isTextParticle;
+                
+                this.color = isTextParticle ? 
+                    `hsl(${Math.random() * getComputedStyle(document.documentElement).getPropertyValue('--text-particle-color-hue-range') + parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--text-particle-color-hue-min'))}, 100%, ${getComputedStyle(document.documentElement).getPropertyValue('--text-particle-color-lightness')})` :
+                    `hsl(${Math.random() * getComputedStyle(document.documentElement).getPropertyValue('--heart-particle-color-hue-range') + parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--heart-particle-color-hue-min'))}, 100%, ${getComputedStyle(document.documentElement).getPropertyValue('--heart-particle-color-lightness')})`;
+                
+                this.trembleOffset = Math.random() * Math.PI * 2;
+                this.trembleSpeed = Math.random() * 0.1 + 0.06;
+                this.trembleAmplitude = cfg.trembleAmplitude * scaleFactor;
+                
+                this.orbitOffset = Math.random() * Math.PI * 2;
+                this.orbitSpeed = Math.random() * cfg.orbitSpeedRange + cfg.orbitSpeedMin;
+                this.orbitRadius = cfg.orbitRadius * scaleFactor;
+            }
+            
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+            
+            update() {
+                const time = Date.now() * 0.001;
+                const cfg = this.isTextParticle ? config.text : config.heart;
+                const trembleX = Math.sin(time * this.trembleSpeed + this.trembleOffset) * this.trembleAmplitude;
+                const trembleY = Math.cos(time * this.trembleSpeed + this.trembleOffset * 1.5) * this.trembleAmplitude;
+                
+                const orbitX = Math.sin(time * this.orbitSpeed + this.orbitOffset) * this.orbitRadius;
+                const orbitY = Math.cos(time * this.orbitSpeed + this.orbitOffset * 1.2) * this.orbitRadius;
+                
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                const distance = Math.hypot(dx, dy);
+                let forceDirectionX = distance > 0 ? dx / distance : 0;
+                let forceDirectionY = distance > 0 ? dy / distance : 0;
+                
+                const maxDistance = mouse.radius;
+                let force = (maxDistance - distance) / maxDistance;
+                
+                if (force < 0) force = 0;
+                
+                const targetX = this.baseX + trembleX + orbitX;
+                const targetY = this.baseY + trembleY + orbitY;
+                const directionX = (targetX - this.x) / (this.isTextParticle ? 6 : 8);
+                const directionY = (targetY - this.y) / (this.isTextParticle ? 6 : 8);
+                
+                if (distance < mouse.radius) {
+                    this.x -= forceDirectionX * force * this.density * 2;
+                    this.y -= forceDirectionY * force * this.density * 2;
+                } else {
+                    this.x += directionX;
+                    this.y += directionY;
+                }
+                
+                this.draw();
+            }
+        }
+        
+        // Crear partículas de texto
+        function createTextParticles() {
+            const centerX = heartCanvas.width / 2;
+            const centerY = heartCanvas.height / 2;
+            const text = "Te amo ❤️";
+            const fontSize = Math.min(heartCanvas.width, heartCanvas.height) * (isMobile ? config.text.fontSizeMobile : config.text.fontSizeDesktop);
+            
+            ctx.font = `bold ${fontSize}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            const textCanvas = document.createElement('canvas');
+            const textCtx = textCanvas.getContext('2d');
+            textCanvas.width = heartCanvas.width;
+            textCanvas.height = heartCanvas.height;
+            
+            textCtx.font = ctx.font;
+            textCtx.textAlign = 'center';
+            textCtx.textBaseline = 'middle';
+            textCtx.fillStyle = 'white';
+            textCtx.fillText(text, centerX, centerY);
+            
+            const textWidth = textCtx.measureText(text).width;
+            const textHeight = fontSize * 1.2;
+            const startX = centerX - textWidth / 2;
+            const startY = centerY - textHeight / 2;
+            
+            const pixelData = textCtx.getImageData(0, 0, heartCanvas.width, heartCanvas.height).data;
+            const step = isMobile ? config.text.pixelStepMobile : config.text.pixelStepDesktop;
+            
+            for (let y = startY; y < startY + textHeight; y += step) {
+                for (let x = startX; x < startX + textWidth; x += step) {
+                    const pixelIndex = (Math.floor(y) * heartCanvas.width + Math.floor(x)) * 4;
+                    if (pixelData[pixelIndex + 3] > 128) {
+                        particles.push(new Particle(x, y, true));
+                    }
+                }
+            }
+        }
+        
+        // Inicializar partículas del corazón
+        function init() {
+            particles.length = 0;
+            
+            const centerX = heartCanvas.width / 2;
+            const centerY = heartCanvas.height / 2;
+            const scale = Math.min(heartCanvas.width, heartCanvas.height) * (isMobile ? config.heart.scaleFactor : config.heart.scaleFactorDesktop);
+            
+            for (let i = 0; i < config.heart.particleCount; i++) {
+                const t = Math.random() * Math.PI * 2;
+                const x = 16 * Math.pow(Math.sin(t), 3);
+                const y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+                
+                particles.push(new Particle(
+                    centerX + x * scale / 16,
+                    centerY + y * scale / 16,
+                    false
+                ));
+            }
+            
+            createTextParticles();
+        }
+        
+        // Animación optimizada
+        function animate() {
+            drawBackground();
+            ctx.clearRect(0, 0, heartCanvas.width, heartCanvas.height);
+            particles.forEach(particle => particle.update());
+            requestAnimationFrame(animate);
+        }
+        
+        // Iniciar
+        init();
+        animate();
+    </script>
+</body>
+</html>

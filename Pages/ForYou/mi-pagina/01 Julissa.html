@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bitácora de Viaje con Julissa</title>
+  <link rel="icon" href="mi-pagina/image.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap');
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 0;
+      background: url(https://cdn.pixabay.com/photo/2013/07/12/15/37/map-150768_1280.png) no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Poppins', sans-serif;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    body::before {
+      content: ""; position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.7); z-index: 0;
+    }
+
+    canvas#stars {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    header, .container, .signature { position: relative; z-index: 1; }
+
+    header {
+      margin-top: 40px; text-align: center;
+      animation: fadeInDown 2s ease-out forwards;
+    }
+
+    h2 {
+      font-size: 3em; color: #a0c4ff;
+      text-shadow: 0 0 12px #5ec5ff, 0 0 22px #78d6ff;
+      animation: glow 2.5s infinite alternate;
+    }
+
+    p.subtext {
+      font-size: 1.4em; color: #fefae0;
+      margin-top: 0.5em;
+      text-shadow: 1px 1px 4px #000;
+      animation: fadeIn 3s ease-in-out;
+    }
+
+    .container {
+      width: 100%; max-width: 900px; padding: 20px;
+      display: flex; flex-direction: column; gap: 20px;
+      animation: fadeInUp 2s ease-in-out;
+    }
+
+    .msg-box {
+      background: linear-gradient(135deg, #1a1a2e, #0f0c29);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 20px 24px; border-radius: 20px;
+      font-size: 1.2em; color: #f3f3f3;
+      cursor: pointer;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      box-shadow: 0 0 22px rgba(144, 238, 255, 0.15);
+      backdrop-filter: blur(6px);
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    .msg-box:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 35px rgba(144, 238, 255, 0.5);
+    }
+
+    .popup {
+      position: fixed; top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 20px; z-index: 1000;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    .popup img {
+      width: 130px; height: 130px;
+      object-fit: contain; margin-bottom: 25px;
+      filter: drop-shadow(0 0 18px #ffd6ff);
+      animation: pop 0.4s ease-in-out;
+    }
+
+    .popup p {
+      font-size: 1.3em; color: #ffcbf2;
+      text-align: center; line-height: 1.6em;
+    }
+
+    .back-btn {
+      margin-top: 30px;
+      background-color: #a0c4ff;
+      border: none; color: black;
+      padding: 12px 25px; border-radius: 14px;
+      cursor: pointer; font-weight: bold;
+      font-size: 1em;
+      box-shadow: 0 0 15px #a0c4ff;
+      transition: background 0.3s ease, transform 0.2s ease;
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    .back-btn:hover {
+      background-color: #c9dfff;
+      transform: scale(1.05);
+    }
+
+    .signature {
+      font-size: 1em; margin-top: 45px;
+      text-align: center; opacity: 0.85;
+      font-style: italic; color: #ccc;
+      animation: fadeIn 3s ease;
+    }
+
+    #play-music {
+      position: fixed;
+      bottom: 15px; right: 15px;
+      z-index: 1001;
+      background: #a0c4ff;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #a0c4ff;
+    }
+
+    @keyframes fadeInDown {
+      from { transform: translateY(-40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.7); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #8ecae6; }
+      to { text-shadow: 0 0 30px #8ecae6, 0 0 50px #8ecae6; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Audio -->
+  <audio id="bg-music" loop>
+    <source src="/Julissa/mi-pagina/musica.mp3">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+
+  <button id="play-music" onclick="document.getElementById('bg-music').play(); this.style.display='none';">▶️ Iniciar Música</button>
+
+  <canvas id="stars"></canvas>
+
+  <header>
+    <h2>Bitácora de Viaje</h2>
+    <p class="subtext">Dicen que viajar educa, ¡pero contigo se gradúa uno en aventuras! 🎓🧳</p>
+  </header>
+
+  <div class="container">
+     <div class="container">
+    <div class='msg-box' onclick='showPopup("¿Lista para la próxima aventura? Trae snacks. 🧃🍿", "https://cdn-icons-png.flaticon.com/512/4516/4516589.png")'>🌟 Planes nuevos, rutas nuevas.</div>
+    <div class='msg-box' onclick='showPopup("¡Prometo no perderme esta vez! Bueno, tal vez solo un poco... 🗺️😉", "https://cdn-icons-png.flaticon.com/512/4516/4516581.png")'>📸 Sonrisas en cada esquina.</div>
+    <div class='msg-box' onclick='showPopup("¿GPS? Nah... tú guías y yo manejo. 😅", "https://cdn-icons-png.flaticon.com/512/7194/7194164.png")'>🚗 El camino es más bonito contigo.</div>
+    <div class='msg-box' onclick='showPopup("¡Somos como Dora la Exploradora y Botas! Solo que más fashion. 💄🎒", "https://cdn-icons-png.flaticon.com/512/7039/7039043.png")'>🧭 Aventura estilo libre.</div>
+    <div class='msg-box' onclick='showPopup("¿Maleta lista? ¡Yo llevo los antojos! 🍫", "https://cdn-icons-png.flaticon.com/512/7194/7194113.png")'>🌍 Rumbo desconocido, risas aseguradas.</div>
+    <div class='msg-box' onclick='showPopup("Viajar contigo es como TikTok: se pasa volando y te ríes un montón. 😂📱", "https://cdn-icons-png.flaticon.com/512/3132/3132693.png")'>🚀 Aventuras sin filtros.</div>
+    <div class='msg-box' onclick='showPopup("Spoiler: ¡Este viaje también termina con papitas y carcajadas! 🥔🤣", "https://cdn-icons-png.flaticon.com/512/1604/1604443.png")'>🍟 Final feliz garantizado.</div>
+    <div class='msg-box' onclick='showPopup("Somos los mochileros VIP: Viajeros Increíblemente Payasos. 🎭✈️", "https://cdn-icons-png.flaticon.com/512/1046/1046857.png")'>🎒 El viaje es la excusa, las risas son la misión.</div>
+    <div class='msg-box' onclick='showPopup("Un viaje contigo es como WiFi con señal completa: ¡todo fluye! 📶💙", "https://cdn-icons-png.flaticon.com/512/3176/3176295.png")'>🌐 Conexión total (de almas y memes).</div>
+  </div>
+  </div>
+
+  <div class="signature">
+    <p>Diseñado con un toque de locura... solo para Julissa 💫</p>
+    <p>Rutas inciertas, cielos infinitos y una mochila llena de magia ✈️💜</p>
+    <p>&copy; 2025 — Creación secreta para ojos que sueñan despiertos</p>
+  </div>
+
+  <script>
+    function showPopup(message, flowerImage) {
+      const popup = document.createElement('div');
+      popup.className = 'popup';
+      popup.innerHTML = `
+        <img src="${flowerImage}" alt="Icon">
+        <p>${message}</p>
+        <button class="back-btn" onclick="closePopup(this)"><i class='fas fa-arrow-left'></i> Volver</button>
+      `;
+      document.body.appendChild(popup);
+    }
+
+    function closePopup(btn) {
+      const popup = btn.closest('.popup');
+      if (popup) popup.remove();
+    }
+
+    // Estrellas animadas
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resizeStars() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      stars = Array.from({ length: 100 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.5 + 0.5
+      }));
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#ffffff";
+      stars.forEach(star => {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(drawStars);
+    }
+
+    window.addEventListener("resize", resizeStars);
+    resizeStars();
+    drawStars();
+  </script>
+</body>
+</html>

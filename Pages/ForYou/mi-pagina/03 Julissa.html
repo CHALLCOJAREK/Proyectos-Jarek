@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Sorter Neo 🔮</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0e0f11;
+            color: #ffffff;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background-color: #1a1d24;
+            border: 2px solid #2e3540;
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+            max-width: 520px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        .card-title {
+            color: #00f0ff;
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .btn-neo {
+            background-color: #2b2f38;
+            color: #00f0ff;
+            border: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .btn-neo:hover {
+            background-color: #00f0ff;
+            color: #0e0f11;
+        }
+        .form-select {
+            background-color: #2b2f38;
+            color: #00f0ff;
+            border: 1px solid #00f0ff;
+        }
+        .form-select:focus {
+            background-color: #2b2f38;
+            color: #00f0ff;
+            border-color: #00f0ff;
+            box-shadow: none;
+        }
+        .progress {
+            background-color: #2b2f38;
+            border: 1px solid #00f0ff;
+        }
+        .progress-bar {
+            background-color: #00f0ff;
+        }
+        .alert {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-title">🔠 Excel Sorter Neo</div>
+        <div class="mb-3">
+            <label for="fileInput" class="form-label">📂 Seleccionar archivo</label>
+            <input type="file" id="fileInput" class="form-control" accept=".xlsx,.xls">
+        </div>
+        <div class="mb-3" id="sheetSelectContainer" style="display: none;">
+            <label for="sheetSelect" class="form-label">Selecciona la hoja:</label>
+            <select id="sheetSelect" class="form-select"></select>
+        </div>
+        <div class="mb-3" id="columnSelectContainer" style="display: none;">
+            <label for="columnSelect" class="form-label">Selecciona la columna de nombres:</label>
+            <select id="columnSelect" class="form-select"></select>
+        </div>
+        <div class="mb-3" id="orderSelectContainer" style="display: none;">
+            <label for="orderSelect" class="form-label">Orden:</label>
+            <select id="orderSelect" class="form-select">
+                <option value="asc">Ascendente</option>
+                <option value="desc">Descendente</option>
+            </select>
+        </div>
+        <button id="sortButton" class="btn btn-neo w-100" style="display: none;">✅ Ordenar y guardar</button>
+        <div class="progress mt-3" id="progressBar" style="display: none;">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%;"></div>
+        </div>
+        <div id="alertContainer"></div>
+    </div>
+
+    <!-- Bibliotecas necesarias -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const sheetSelect = document.getElementById('sheetSelect');
+        const columnSelect = document.getElementById('columnSelect');
+        const orderSelect = document.getElementById('orderSelect');
+        const sortButton = document.getElementById('sortButton');
+        const progressBar = document.getElementById('progressBar');
+        const alertContainer = document.getElementById('alertContainer');
+        let workbook, worksheet, data;
+
+        fileInput.addEventListener('change', handleFile);
+        sheetSelect.addEventListener('change', loadSheet);
+        sortButton.addEventListener('click', sortAndSave);
+
+        function showAlert(message, type) {
+            alertContainer.innerHTML = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>`;
+            alertContainer.style.display = 'block';
+            setTimeout(() => {
+                alertContainer.style.display = 'none';
+            }, 5000);
+        }
+
+        function handleFile(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    workbook = XLSX.read(e.target.result, { type: 'array' });
+                    if (!workbook.SheetNames.length) {
+                        throw new Error('El archivo no contiene hojas válidas.');
+                    }
+                    sheetSelect.innerHTML = workbook.SheetNames.map(name => `<option value="${name}">${name}</option>`).join('');
+                    document.getElementById('sheetSelectContainer').style.display = 'block';
+                    document.getElementById('orderSelectContainer').style.display = 'block';
+                    showAlert(`✔ Archivo cargado: ${file.name}`, 'success');
+                    loadSheet();
+                } catch (error) {
+                    showAlert(`Error: No se pudo cargar el archivo: ${error.message}`, 'danger');
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function loadSheet() {
+            const sheetName = sheetSelect.value;
+            try {
+                worksheet = workbook.Sheets[sheetName];
+                data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                if (data.length < 2) {
+                    throw new Error('La hoja seleccionada está vacía o no tiene encabezados.');
+                }
+                if (data[0].length < 2) {
+                    throw new Error('El archivo debe tener al menos dos columnas: numeración y nombres.');
+                }
+
+                // Validar que la primera columna (A) contenga numeración
+                const firstColumn = data.slice(1).map(row => row[0]);
+                if (!firstColumn.every(val => typeof val === 'number' && !isNaN(val))) {
+                    throw new Error('La primera columna (A) debe contener valores numéricos (numeración).');
+                }
+
+                // Mostrar columnas a partir de la segunda para ordenar (nombres)
+                const headers = data[0].slice(1);
+                columnSelect.innerHTML = headers.map((header, i) => `<option value="${i + 1}">${header}</option>`).join('');
+                document.getElementById('columnSelectContainer').style.display = 'block';
+                sortButton.style.display = 'block';
+            } catch (error) {
+                showAlert(`Error al leer la hoja: ${error.message}`, 'danger');
+                document.getElementById('columnSelectContainer').style.display = 'none';
+                sortButton.style.display = 'none';
+            }
+        }
+
+        function sortAndSave() {
+            const columnIndex = parseInt(columnSelect.value);
+            const order = orderSelect.value;
+
+            if (!columnIndex && columnIndex !== 0) {
+                showAlert('⚠ Selecciona una columna de nombres.', 'warning');
+                return;
+            }
+
+            try {
+                // Validar que la columna seleccionada contenga texto
+                const columnData = data.slice(1).map(row => row[columnIndex]);
+                if (!columnData.every(val => typeof val === 'string')) {
+                    throw new Error('La columna seleccionada debe contener nombres (texto).');
+                }
+
+                // Mostrar barra de progreso
+                progressBar.style.display = 'block';
+
+                // Ordenar datos
+                const header = data[0];
+                const body = data.slice(1);
+                body.sort((a, b) => {
+                    const valA = a[columnIndex] || '';
+                    const valB = b[columnIndex] || '';
+                    return order === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+                });
+
+                // Crear nuevo libro y hoja
+                const newWorkbook = XLSX.utils.book_new();
+                const newWorksheet = XLSX.utils.json_to_sheet([header, ...body], { skipHeader: true });
+
+                // Aplicar estilos
+                const range = XLSX.utils.decode_range(newWorksheet['!ref']);
+                for (let C = range.s.c; C <= range.e.c; C++) {
+                    const headerCell = XLSX.utils.encode_cell({ r: 0, c: C });
+                    newWorksheet[headerCell].s = {
+                        fill: { fgColor: { rgb: '007acc' } },
+                        font: { color: { rgb: 'FFFFFF' }, bold: true, name: 'Segoe UI' },
+                        alignment: { horizontal: 'center', vertical: 'center' },
+                        border: {
+                            top: { style: 'thin' }, bottom: { style: 'thin' },
+                            left: { style: 'thin' }, right: { style: 'thin' }
+                        }
+                    };
+
+                    // Autoajuste de columnas
+                    let maxLength = 0;
+                    for (let R = 0; R <= range.e.r; R++) {
+                        const cell = newWorksheet[XLSX.utils.encode_cell({ r: R, c: C })];
+                        if (cell && cell.v) {
+                            maxLength = Math.max(maxLength, String(cell.v).length);
+                        }
+                    }
+                    newWorksheet['!cols'] = newWorksheet['!cols'] || [];
+                    newWorksheet['!cols'][C] = { wch: Math.max(maxLength + 2, 10) };
+
+                    // Estilo para celdas normales
+                    for (let R = 1; R <= range.e.r; R++) {
+                        const cell = XLSX.utils.encode_cell({ r: R, c: C });
+                        if (newWorksheet[cell]) {
+                            newWorksheet[cell].s = {
+                                font: { name: 'Segoe UI', sz: 10 },
+                                alignment: { horizontal: C === 0 ? 'center' : 'left', vertical: 'center' },
+                                border: {
+                                    top: { style: 'thin' }, bottom: { style: 'thin' },
+                                    left: { style: 'thin' }, right: { style: 'thin' }
+                                }
+                            };
+                        }
+                    }
+                }
+
+                XLSX.utils.book_append_sheet(newWorkbook, newWorksheet, 'SortedSheet');
+
+                // Guardar archivo
+                setTimeout(() => {
+                    const wbout = XLSX.write(newWorkbook, { bookType: 'xlsx', type: 'array' });
+                    const blob = new Blob([wbout], { type: 'application/octet-stream' });
+                    saveAs(blob, `sorted_excel_${new Date().toISOString()}.xlsx`);
+                    progressBar.style.display = 'none';
+                    showAlert(`✅ Archivo ordenado por '${header[columnIndex]}' con numeración sincronizada.`, 'success');
+                    resetUI();
+                }, 1000); // Simular procesamiento
+            } catch (error) {
+                progressBar.style.display = 'none';
+                showAlert(`Error: No se pudo procesar el archivo: ${error.message}`, 'danger');
+            }
+        }
+
+        function resetUI() {
+            document.getElementById('sheetSelectContainer').style.display = 'none';
+            document.getElementById('columnSelectContainer').style.display = 'none';
+            document.getElementById('orderSelectContainer').style.display = 'none';
+            sortButton.style.display = 'none';
+            fileInput.value = '';
+            workbook = null;
+            worksheet = null;
+            data = null;
+        }
+    </script>
+</body>
+</html>

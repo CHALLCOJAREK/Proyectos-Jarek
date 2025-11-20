@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Firma HTML Editable</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .firma {
+      display: inline-flex;
+      background-color: #fff;
+      border-radius: 16px;
+      border: 1px solid #ccc;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+      padding: 18px;
+      margin: 0;
+    }
+    .foto-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-right: 1px solid #ddd;
+      padding-right: 18px;
+      margin-right: 18px;
+    }
+    .foto-logo img.foto {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #0073e6;
+      margin-bottom: 12px;
+    }
+    .foto-logo img.logo {
+      width: 90px;
+      height: auto;
+    }
+    .info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .nombre {
+      font-size: 24px;
+      font-weight: 700;
+      color: #0053a4;
+      margin: 0 0 6px;
+    }
+    .cargo {
+      font-size: 18px;
+      color: #0073e6;
+      font-style: italic;
+      margin: 0 0 12px;
+    }
+    .dato {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      margin: 6px 0;
+      color: #333;
+      line-height: 1.4;
+    }
+    .dato i {
+      font-size: 18px;
+      margin-right: 8px;
+      color: #0073e6;
+    }
+    .dato a {
+      text-decoration: none;
+      color: #333;
+    }
+    .dato a:hover {
+      text-decoration: underline;
+      color: #0053a4;
+    }
+    .formulario {
+      width: 100%;
+      max-width: 720px;
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+      margin-top: 20px;
+    }
+    .formulario label {
+      display: block;
+      margin-top: 10px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .formulario input {
+      width: 100%;
+      padding: 6px;
+      margin-top: 4px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    .acciones {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .acciones button {
+      padding: 8px 16px;
+      background-color: #0073e6;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .acciones button:hover {
+      background-color: #005bb5;
+    }
+    #codigoHtml {
+      margin-top: 20px;
+      background: #272822;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 14px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      width: 100%;
+      max-width: 720px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FIRMA HTML -->
+  <div id="firma" class="firma">
+    <div class="foto-logo">
+      <img id="foto" src="jose.png" alt="Foto de perfil" class="foto" />
+      <img id="logo" src="logo ibit.png" alt="Logotipo" class="logo" />
+    </div>
+    <div class="info">
+      <p id="nombre" class="nombre">José Incio</p>
+      <p id="cargo" class="cargo">Desarrollador Full Stack</p>
+      <div class="dato"><i class="fas fa-phone-alt"></i><span id="telefono">+51 987 654 321</span></div>
+      <div class="dato"><i class="fas fa-envelope"></i><a id="email" href="mailto:jose.incio@ibit.pe">jose.incio@ibit.pe</a></div>
+      <div class="dato"><i class="fas fa-globe"></i><a id="web" href="https://ibit.pe">ibit.pe</a></div>
+      <div class="dato"><i class="fab fa-linkedin"></i><a id="linkedin" href="https://linkedin.com/in/joseincio">linkedin.com/in/joseincio</a></div>
+    </div>
+  </div>
+
+  <!-- FORMULARIO PARA EDITAR DATOS -->
+  <div class="formulario">
+    <h3 style="margin:0;font-size:16px;">Editar Firma</h3>
+    <label for="inputNombre">Nombre</label><input type="text" id="inputNombre" />
+    <label for="inputCargo">Cargo</label><input type="text" id="inputCargo" />
+    <label for="inputTelefono">Teléfono</label><input type="text" id="inputTelefono" />
+    <label for="inputEmail">Correo</label><input type="email" id="inputEmail" />
+    <label for="inputWeb">Sitio Web</label><input type="text" id="inputWeb" />
+    <label for="inputLinkedin">LinkedIn</label><input type="text" id="inputLinkedin" />
+    <label for="inputFoto">Foto de Perfil</label><input type="file" id="inputFoto" accept="image/*" />
+    <div class="acciones">
+      <button onclick="actualizarFirma()">Actualizar Firma</button>
+      <button onclick="verHTML()">Ver HTML</button>
+      <button onclick="generarOutlook()">Generar Firma para Outlook</button>
+    </div>
+  </div>
+
+  <!-- RESULTADO HTML -->
+  <pre id="codigoHtml"></pre>
+
+  <script>
+    function actualizarFirma() {
+      document.getElementById('nombre').textContent = document.getElementById('inputNombre').value;
+      document.getElementById('cargo').textContent = document.getElementById('inputCargo').value;
+      document.getElementById('telefono').textContent = document.getElementById('inputTelefono').value;
+
+      const email = document.getElementById('inputEmail').value;
+      document.getElementById('email').href = `mailto:${email}`;
+      document.getElementById('email').textContent = email;
+
+      const web = document.getElementById('inputWeb').value;
+      document.getElementById('web').href = web;
+      document.getElementById('web').textContent = web.replace(/^https?:\/\//, '');
+
+      const linkedin = document.getElementById('inputLinkedin').value;
+      document.getElementById('linkedin').href = linkedin;
+      document.getElementById('linkedin').textContent = linkedin.replace(/^https?:\/\//, '');
+
+      const fotoFile = document.getElementById('inputFoto').files[0];
+      if (fotoFile) {
+        const reader = new FileReader();
+        reader.onload = e => document.getElementById('foto').src = e.target.result;
+        reader.readAsDataURL(fotoFile);
+      }
+    }
+
+    function verHTML() {
+      const firmaHTML = document.getElementById('firma').outerHTML;
+      const codigoHtml = document.getElementById('codigoHtml');
+      codigoHtml.textContent = firmaHTML;
+      codigoHtml.style.display = 'block';
+    }
+
+    function generarOutlook() {
+      const nombre = document.getElementById('inputNombre').value || 'José Incio';
+      const cargo = document.getElementById('inputCargo').value || 'Desarrollador Full Stack';
+      const telefono = document.getElementById('inputTelefono').value || '+51 987 654 321';
+      const email = document.getElementById('inputEmail').value || 'jose.incio@ibit.pe';
+      const web = document.getElementById('inputWeb').value || 'https://ibit.pe';
+      const linkedin = document.getElementById('inputLinkedin').value || 'https://linkedin.com/in/joseincio';
+      const foto = document.getElementById('foto').src;
+      const logo = document.getElementById('logo').src;
+
+      const html = `
+<table style="font-family:Roboto,Arial,sans-serif;border:1px solid #ccc;border-radius:12px;padding:16px;background:#ffffff;color:#000;max-width:600px;width:100%;">
+  <tr>
+    <td style="padding-right:20px;border-right:1px solid #ccc;text-align:center;">
+      <img src="${foto}" alt="Foto" style="border-radius:50%;width:120px;height:120px;object-fit:cover;border:2px solid #0073e6;display:block;margin-bottom:10px;">
+      <img src="${logo}" alt="Logo" style="width:80px;">
+    </td>
+    <td style="padding-left:20px;">
+      <p style="margin:0;font-size:20px;font-weight:bold;color:#0053a4;">${nombre}</p>
+      <p style="margin:4px 0 10px;font-size:16px;font-style:italic;color:#0073e6;">${cargo}</p>
+      <p style="margin:2px 0;"><strong>📞</strong> ${telefono}</p>
+      <p style="margin:2px 0;"><strong>📧</strong> <a href="mailto:${email}" style="color:#000;text-decoration:none;">${email}</a></p>
+      <p style="margin:2px 0;"><strong>🌐</strong> <a href="${web}" style="color:#000;text-decoration:none;">${web.replace(/^https?:\/\//, '')}</a></p>
+      <p style="margin:2px 0;"><strong>🔗</strong> <a href="${linkedin}" style="color:#000;text-decoration:none;">${linkedin.replace(/^https?:\/\//, '')}</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding-top:20px;font-size:12px;color:#555;">
+      <p style="margin:4px 0;">De acuerdo con lo establecido en la Ley de Protección de Datos Personales, les informamos que los datos que figuran en esta comunicación pueden estar incluidos en un fichero automatizado propiedad de IBIT.</p>
+      <p style="margin:4px 0;">Para el ejercicio de los derechos de acceso, rectificación, cancelación u oposición, podrán dirigirse en cualquier momento a nuestra organización, al correo <a href="mailto:info@ibit.pe" style="color:#000;">info@ibit.pe</a>.</p>
+      <p style="margin:4px 0;">Este documento se dirige exclusivamente a sus destinatarios. Por poder contener información confidencial sometida a secreto profesional o cuya divulgación esté prohibida en virtud de la persona autorizada por éste, que la información contenida en el mismo es reservada y su utilización o divulgación con cualquier fin está prohibida. Si ha recibido este documento por error, por favor proceda a su destrucción.</p>
+    </td>
+  </tr>
+</table>
+      `;
+      const codigoHtml = document.getElementById('codigoHtml');
+      codigoHtml.textContent = html;
+      codigoHtml.style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+[
+    {
+        "update_id": 505157208,
+        "message": {
+            "message_id": 72,
+            "from": {
+                "id": 7274315307,
+                "is_bot": false,
+                "first_name": "Angelo",
+                "username": "jarekChallco",
+                "language_code": "en"
+            },
+            "chat": {
+                "id": 7274315307,
+                "first_name": "Angelo",
+                "username": "jarekChallco",
+                "type": "private"
+            },
+            "date": 1748987101,
+            "text": "hola"
+        }
+    }
+]

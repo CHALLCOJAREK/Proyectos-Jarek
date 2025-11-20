@@ -1,0 +1,143 @@
+/* estilos.css */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.firma-container {
+  max-width: 600px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  transition: all 0.3s ease;
+}
+
+.firma-container:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.columna-firma {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.col-izquierda {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.foto {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #ffffff;
+  margin-bottom: 15px;
+}
+
+.foto img {
+  width: 100%;
+  height: auto;
+}
+
+.logo-empresa img {
+  width: 90px;
+  height: auto;
+}
+
+.linea-separadora-vertical {
+  width: 2px;
+  background-color: #ddd;
+  height: 100%;
+  margin: 0 20px;
+}
+
+.col-derecha {
+  flex-grow: 1;
+}
+
+.nombre {
+  font-size: 28px;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.cargo {
+  font-size: 20px;
+  color: #555;
+  font-style: italic;
+  margin-bottom: 15px;
+}
+
+.contacto {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.contacto td {
+  padding: 8px 0;
+}
+
+.contacto a {
+  color: #333;
+  text-decoration: none;
+}
+
+.contacto a:hover {
+  color: #0073e6;
+  text-decoration: underline;
+}
+
+.icono {
+  font-size: 20px;
+  margin-right: 12px;
+  color: #0073e6;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 25px;
+  border: 1px solid #ddd;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-container label {
+  margin-bottom: 5px;
+}
+
+.form-container input, .form-container textarea {
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.form-container button {
+  padding: 10px 20px;
+  background-color: #0073e6;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.form-container button:hover {
+  background-color: #005bb5;
+}

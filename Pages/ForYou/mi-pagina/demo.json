@@ -1,0 +1,29 @@
+[
+    {
+        "update_id": 505157207,
+        "message": {
+            "message_id": 70,
+            "from": {
+                "id": 7274315307,
+                "is_bot": false,
+                "first_name": "Angelo",
+                "username": "jarekChallco",
+                "language_code": "en"
+            },
+            "chat": {
+                "id": 7274315307,
+                "first_name": "Angelo",
+                "username": "jarekChallco",
+                "type": "private"
+            },
+            "date": 1748986869,
+            "voice": {
+                "duration": 4,
+                "mime_type": "audio/ogg",
+                "file_id": "AwACAgEAAxkBAANGaD9r9WpzMTMxiB3ZjFMSYrVonCYAAmsFAAIo__lF-Ew9SdmmpAo2BA",
+                "file_unique_id": "AgADawUAAij_-UU",
+                "file_size": 1224
+            }
+        }
+    }
+]
