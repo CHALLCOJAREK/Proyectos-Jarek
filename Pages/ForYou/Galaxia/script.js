@@ -24,7 +24,7 @@ const IMAGE_URLS = [
 const RING_TEXT = "TE AMO CON TODO MI CORAZÓN Y ALMA PARA SIEMPRE MI AMOR ETERNO";
 
 const FLOATING_WORDS = [
-   // Básicas
+  // Básicas
   "MI AMOR", "MI LUZ", "MI PAZ", "MI DESTINO", "MI FUTURO", "MI HOY", "MI TODO",
   "MI ÁNGEL", "MI SONRISA", "MI RISITA", "MI VIDA", "MI ALMA", "MI SERENIDAD",
   "MI SUEÑO", "MI PASIÓN", "MI FUERZA", "MI REFUGIO", "MI TESORO",
@@ -63,6 +63,7 @@ const FLOATING_WORDS = [
   "MI JULI", "MI JULISSA", "MI NIÑA", "MI AZULITO", 
   "MI FAVORITA", "MI CONSENTIDA", "MI ELEGIDA"
 ];
+
 
 const GALLERY_MESSAGES = [
   "Mi corazón late por ti",
@@ -679,25 +680,31 @@ function closeModal() {
 // ======================================================
 
 async function initApp() {
-  createDomStars(150);
-  await startLoader();
+  try {
+    createDomStars(150);
+    await startLoader();
 
-  const cargando = document.getElementById("cargando");
-  if (cargando) cargando.style.display = "none";
+    // Ocultar pantalla de carga
+    const cargando = document.getElementById("cargando");
+    if (cargando) cargando.style.display = "none";
 
-  await loadThreeResources();
+    await loadThreeResources();
 
-  createScene();
-  createCamera();
-  createRenderer();
-  createLights();
-  createRotatingImage();
-  createRingsAndText();
-  createFloatingWords();
-  createStarField();
-  initUIEvents();
-  animate();
+    createScene();
+    createCamera();
+    createRenderer();
+    createLights();
+    createRotatingImage();
+    createRingsAndText();
+    createFloatingWords();
+    createStarField();
+    initUIEvents();
+    animate();
+  } catch (err) {
+    console.error("Error al inicializar la aplicación:", err);
+    document.body.innerHTML =
+      '<div style="color:red;text-align:center;padding:50px;font-size:24px;">Error al cargar la experiencia. Puedes recargar la página o avisarle a Jarek 💙</div>';
+  }
 }
-
 
 document.addEventListener("DOMContentLoaded", initApp);
