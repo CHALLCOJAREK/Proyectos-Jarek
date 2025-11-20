@@ -26,9 +26,9 @@ const header = document.getElementById("header");
 
 window.addEventListener("scroll", () => {
   if (window.scrollY > 40) {
-    header.classList.add("header-scrolled");
+    header?.classList.add("header-scrolled");
   } else {
-    header.classList.remove("header-scrolled");
+    header?.classList.remove("header-scrolled");
   }
 });
 
@@ -38,15 +38,20 @@ window.addEventListener("scroll", () => {
 const holo = document.querySelector(".hero-holo-frame");
 
 window.addEventListener("mousemove", (e) => {
+  if (!holo) return;
+
   const x = (window.innerWidth / 2 - e.clientX) / 40;
   const y = (window.innerHeight / 2 - e.clientY) / 40;
+
   holo.style.transform = `translateY(-4px) rotateX(${y}deg) rotateY(${-x}deg)`;
 });
 
 /* ============================================================
-   SCROLL REVEAL PRO (IntersectionObserver)
+   SCROLL REVEAL PRO
 ============================================================ */
-const revealElements = document.querySelectorAll(".section, .glass-card, .hero-title, .hero-subtitle");
+const revealElements = document.querySelectorAll(
+  ".section, .glass-card, .hero-title, .hero-subtitle"
+);
 
 const revealObserver = new IntersectionObserver(
   (entries) => {
@@ -66,7 +71,7 @@ revealElements.forEach((el) => {
 });
 
 /* ============================================================
-   HOVER REACTIVO CON BRILLO INTELIGENTE
+   HOVER REACTIVO → brillo inteligente
 ============================================================ */
 function addReactiveHover(selector) {
   document.querySelectorAll(selector).forEach((card) => {
@@ -80,7 +85,6 @@ function addReactiveHover(selector) {
     });
   });
 }
-
 addReactiveHover(".glass-card");
 
 /* ============================================================
@@ -96,7 +100,6 @@ function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 }
-
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
@@ -108,11 +111,10 @@ function createParticles() {
       y: Math.random() * canvas.height,
       r: Math.random() * 2 + 1,
       vx: (Math.random() - 0.5) * 0.4,
-      vy: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4
     });
   }
 }
-
 createParticles();
 
 function animateParticles() {
@@ -130,16 +132,16 @@ function animateParticles() {
     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
     ctx.fill();
 
-    // Líneas de conexión
     for (let j = i + 1; j < particles.length; j++) {
       const p2 = particles[j];
       const dx = p.x - p2.x;
       const dy = p.y - p2.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
+      const dist = Math.hypot(dx, dy);
 
       if (dist < 140) {
         ctx.strokeStyle = `rgba(14,165,233,${1 - dist / 140})`;
         ctx.lineWidth = 0.6;
+
         ctx.beginPath();
         ctx.moveTo(p.x, p.y);
         ctx.lineTo(p2.x, p2.y);
@@ -150,18 +152,16 @@ function animateParticles() {
 
   requestAnimationFrame(animateParticles);
 }
-
 animateParticles();
 
 /* ============================================================
-   QR GENERATOR ENGINE (Tu lógica original optimizada)
+   QR GENERATOR ENGINE
 ============================================================ */
 
 let qrInstance = null;
 
 const textoInput = document.getElementById("texto");
 const colorFrenteInput = document.getElementById("colorFrente");
-const colorFondoInput = document.getElementById("colorFondo");
 const sizeInput = document.getElementById("size");
 const sizeValue = document.getElementById("sizeValue");
 const nivelSelect = document.getElementById("nivel");
@@ -172,12 +172,6 @@ sizeInput.addEventListener("input", () => {
   sizeValue.textContent = sizeInput.value;
 });
 
-colorFondoInput.addEventListener("input", () => {
-  document.documentElement.style.setProperty("--qr-bg", colorFondoInput.value);
-});
-
-document.documentElement.style.setProperty("--qr-bg", colorFondoInput.value);
-
 btnGenerar.addEventListener("click", generarQR);
 
 textoInput.addEventListener("keydown", (e) => {
@@ -187,14 +181,8 @@ textoInput.addEventListener("keydown", (e) => {
   }
 });
 
-function nivelToCorrectLevel(nivel) {
-  switch (nivel) {
-    case "L": return QRCode.CorrectLevel.L;
-    case "M": return QRCode.CorrectLevel.M;
-    case "Q": return QRCode.CorrectLevel.Q;
-    case "H":
-    default: return QRCode.CorrectLevel.H;
-  }
+function nivelToCorrectLevel(n) {
+  return QRCode.CorrectLevel[n] || QRCode.CorrectLevel.H;
 }
 
 function generarQR() {
@@ -202,17 +190,14 @@ function generarQR() {
   contenedor.innerHTML = "";
 
   const texto = textoInput.value.trim();
-  const colorFrente = colorFrenteInput.value;
-  const visualBackground = colorFondoInput.value;
-  const size = parseInt(sizeInput.value, 10) || 260;
-  const nivel = nivelSelect.value;
-
   if (!texto) {
     alert("Escribe el contenido que tendrá el código QR.");
     return;
   }
 
-  document.documentElement.style.setProperty("--qr-bg", visualBackground);
+  const size = parseInt(sizeInput.value, 10) || 260;
+  const colorFrente = colorFrenteInput.value;
+  const nivel = nivelSelect.value;
 
   qrInstance = new QRCode(contenedor, {
     text: texto,
@@ -220,13 +205,11 @@ function generarQR() {
     height: size,
     colorDark: colorFrente,
     colorLight: "transparent",
-    correctLevel: nivelToCorrectLevel(nivel),
+    correctLevel: nivelToCorrectLevel(nivel)
   });
 
   downloadBtn.style.display = "inline-flex";
   downloadBtn.classList.remove("success");
-  downloadBtn.innerHTML =
-    '<i class="fa-solid fa-download"></i> Descargar PNG';
 }
 
 downloadBtn.addEventListener("click", descargarQR);
@@ -235,33 +218,17 @@ function descargarQR() {
   const canvas = document.querySelector("#qrcode canvas");
   if (!canvas) return;
 
-  const exportCanvas = document.createElement("canvas");
-  exportCanvas.width = canvas.width;
-  exportCanvas.height = canvas.height;
+  const tempCanvas = document.createElement("canvas");
+  tempCanvas.width = canvas.width;
+  tempCanvas.height = canvas.height;
 
-  const exportCtx = exportCanvas.getContext("2d");
-  exportCtx.drawImage(canvas, 0, 0);
-
-  const imgData = exportCtx.getImageData(0, 0, exportCanvas.width, exportCanvas.height);
-  const data = imgData.data;
-
-  for (let i = 0; i < data.length; i += 4) {
-    const r = data[i];
-    const g = data[i + 1];
-    const b = data[i + 2];
-
-    if (r === 255 && g === 0 && b === 255) {
-      data[i + 3] = 0;
-    }
-  }
-
-  exportCtx.putImageData(imgData, 0, 0);
+  const ctx2 = tempCanvas.getContext("2d");
+  ctx2.drawImage(canvas, 0, 0);
 
   const enlace = document.createElement("a");
   enlace.download = "codigo-qr.png";
-  enlace.href = exportCanvas.toDataURL("image/png");
+  enlace.href = tempCanvas.toDataURL("image/png");
   enlace.click();
 
   downloadBtn.classList.add("success");
-  downloadBtn.innerHTML = '<i class="fa-solid fa-check"></i> PNG descargado';
 }

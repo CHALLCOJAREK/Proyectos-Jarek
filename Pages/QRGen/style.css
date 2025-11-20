@@ -1,39 +1,106 @@
-/* =========================================================
-   NEO•TECH TOOL LAYOUT v6 (Limpio, funcional, elegante)
-========================================================= */
-
+/* ============================================================
+   00) TOKENS DE DISEÑO (Variables globales)
+   ------------------------------------------------------------
+   Aqui definimos colores, radios, blur, sombras, etc.
+=========================================================== */
 :root {
-  --bg1: #05060d;
-  --bg2: #0b0e16;
-  --bg3: #111623;
-
-  --glass: rgba(255, 255, 255, 0.06);
-  --glass-strong: rgba(255, 255, 255, 0.14);
-
-  --accent: #0ea5e9;
-  --accent2: #38bdf8;
-
+  /* Colores principales */
   --text-main: #e8ecf5;
-  --text-soft: #9ca3af;
+  --text-soft: #9aa3b5;
 
-  --border: rgba(255,255,255,0.10);
+  --accent: #38bdf8;
+  --accent-strong: #0ea5e9;
 
-  --radius: 20px;
+  /* Glass */
+  --glass: rgba(255, 255, 255, 0.08);
+  --glass-strong: rgba(255, 255, 255, 0.18);
 
+  /* Bordes y radios */
+  --border: rgba(255,255,255,0.16);
+  --radius: 22px;
+
+  /* Sombras */
+  --shadow-sm: 0 10px 25px rgba(0,0,0,0.35);
+  --shadow-lg: 0 28px 80px rgba(0,0,0,0.65);
+
+  /* Transiciones */
   --transition: 0.25s ease;
 }
-/* =========================================================
-   INTRO LOADER
-========================================================= */
 
+
+
+/* ============================================================
+   01) RESET BÁSICO
+=========================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+
+/* ============================================================
+   02) BODY + FONDO GLOBAL (Corregido sin separación)
+=========================================================== */
+body {
+  font-family: "Inter", sans-serif;
+  color: var(--text-main);
+  overflow-x: hidden;
+  min-height: 100vh;
+
+  /* QUITAMOS EL PADDING QUE GENERABA LA BRECHA */
+  padding: 50px 5px;
+
+  /* Fondo cósmico original o translúcido según desees */
+  background: radial-gradient(circle at 25% 15%, 
+              #1e3a8a 0%, 
+              #0f172a 22%, 
+              #020617 60%, 
+              #00040f 100%);
+}
+
+/* Padding interno correcto para el contenido */
+.app {
+  padding-top: 120px;  /* Se movió aquí del body */
+}
+
+
+
+
+/* ============================================================
+   03) CANVAS DE FONDO ANIMADO
+   ------------------------------------------------------------
+   La animación está en tu app.js. Aquí solo estilizamos.
+=========================================================== */
+#bg-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  width: 100vw;
+  height: 100vh !important;
+  pointer-events: none;
+
+  filter: brightness(1.25) saturate(1.25);
+}
+
+
+
+/* ============================================================
+   04) INTRO / LOADER
+=========================================================== */
 #intro {
   position: fixed;
   inset: 0;
-  background: var(--bg1);
+  z-index: 9999;
+
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(20px);
+
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+
   transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 
@@ -42,286 +109,756 @@
   visibility: hidden;
 }
 
-.intro-inner {
-  text-align: center;
-}
-
 .loader {
   width: 54px;
   height: 54px;
-  border: 4px solid rgba(255,255,255,0.15);
-  border-top-color: var(--accent);
   border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 0 auto 14px;
+  border: 4px solid rgba(255,255,255,0.2);
+  border-top-color: var(--accent);
+  animation: spin 0.9s linear infinite;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
 .intro-text {
-  font-size: 0.9rem;
+  margin-top: 14px;
   color: var(--text-soft);
+  text-align: center;
+  font-size: 0.9rem;
 }
 
-/* === RESET === */
-* { margin: 0; padding: 0; box-sizing: border-box; }
 
-body {
-  font-family: "Inter", sans-serif;
-  color: var(--text-main);
-  background: linear-gradient(160deg, var(--bg1), var(--bg2));
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+/* ============================================================
+   06) CONTENEDOR PRINCIPAL .app
+   ------------------------------------------------------------
+   · PC = 2 columnas centradas
+   · MÓVIL = 1 columna
+=========================================================== */
+.app {
+  /* —— GRID RESPONSIVE —— */
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 32px;
 
-/* Fondo canvas */
-#bg-canvas {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-}
-
-/* =========================================================
-   HEADER MINI TOOL (no modal, no caja)
-========================================================= */
-.tool-header {
+  /* —— ESTÉTICA NEO GLASS —— */
   width: 100%;
-  padding: 18px 32px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  max-width: 1080px;
 
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 30;
+  background: rgba(0, 11, 25, 0.46);
+  backdrop-filter: blur(28px) saturate(1.4);
 
-  background: rgba(0,0,0,0.15);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 40px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+
+  /* —— POSICIONAMIENTO —— */
+  margin: 0 auto;   /* 🔥 ESTO LO CENTRA EN TODA PANTALLA */
+  margin-top: 20px; /* separación desde el header */
 }
 
-.tool-home-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 14px;
-  background: var(--glass);
-  border: 1px solid var(--border);
+/* ============================================================
+   07) CABECERA DE LA APP (Icono + títulos) — NEO•TECH PRO v2
+=========================================================== */
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-bottom: 4px;
+  position: relative;
+}
+
+/* En caso el icono sea un <a>, eliminamos estilos de link */
+.app-header a,
+.app-header a:visited,
+.app-header a:hover,
+.app-header a:active {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+/* Icono premium */
+.app-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-main);
-  transition: var(--transition);
+
+  font-size: 22px;
+  color: #eaf8ff;
+
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9 70%);
+  border: 1px solid rgba(255,255,255,0.12);
+
+  /* Glow suave */
+  box-shadow:
+    0 0 12px rgba(14,165,233,0.45),
+    inset 0 0 12px rgba(255,255,255,0.18);
+
+  transition: 0.25s ease;
 }
 
-.tool-home-btn:hover {
-  background: var(--glass-strong);
-  transform: translateY(-2px);
+/* Hover: efecto de energía reactiva */
+.app-icon:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow:
+    0 0 18px rgba(56,189,248,0.65),
+    inset 0 0 18px rgba(255,255,255,0.25);
 }
 
-.tool-title {
+/* Contenedor de títulos */
+.app-title {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Título pequeño */
+.app-title span:first-child {
+  font-size: 0.78rem;
+  color: var(--text-soft);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* Título principal */
+.app-title span:last-child {
+  font-size: 1.32rem;
   font-weight: 600;
-  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  color: #e8f7ff;
+  text-shadow: 0 0 12px rgba(14,165,233,0.35);
 }
 
-.tool-title i {
-  color: var(--accent);
+/* Subtítulo */
+.app-subtitle {
+  font-size: 0.94rem;
+  color: var(--text-soft);
+  line-height: 1.48;
+  margin-top: -4px;
 }
 
-/* =========================================================
-   TOOL CONTENT (YA NO ES MODAL)
-========================================================= */
+/* ============================================================
+   08) PANEL DE CONFIGURACIÓN Y PANEL DE PREVIEW — PRO v3
+   ------------------------------------------------------------
+   · Glass multicapa
+   · Borde doble (outer + inner)
+   · Fondo degradado transparente
+   · Sombras optimizadas
+=========================================================== */
 
-.tool-wrapper {
-  max-width: 1150px;
-  margin: 120px auto 60px;
-  padding: 0 32px;
+.panel,
+.preview-panel {
+  position: relative;
 
-  display: grid;
-  grid-template-columns: 360px 1fr;
-  gap: 36px;
-}
+  /* —— Glass multicapa —— */
+  background: linear-gradient(
+      145deg,
+      rgba(255,255,255,0.10) 0%,
+      rgba(255,255,255,0.04) 35%,
+      rgba(255,255,255,0.02) 100%
+  );
 
-/* =========================================================
-   PANEL CONFIG (IZQUIERDA)
-========================================================= */
+  backdrop-filter: blur(28px) saturate(1.45);
 
-.tool-panel {
-  background: rgba(18, 22, 32, 0.45);
-  backdrop-filter: blur(16px);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  padding: 24px;
+  /* —— Borde principal —— */
+  border: 1px solid rgba(255,255,255,0.20);
+  border-radius: 22px;
 
+  /* —— Inner border (borde interno iluminado) —— */
+  box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.12),
+        0 18px 35px rgba(0,0,0,0.45),
+        0 0 40px rgba(14,165,233,0.08);
+
+  padding: 28px;
   display: flex;
   flex-direction: column;
   gap: 22px;
 
-  box-shadow:
-    0 12px 40px rgba(0,0,0,0.30),
-    inset 0 0 0 1px rgba(255,255,255,0.04);
+  transition: 0.25s ease;
 }
 
+/* —— Hover (muy suave, elegante) —— */
+.panel:hover,
+.preview-panel:hover {
+  box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.16),
+      0 26px 55px rgba(0,0,0,0.55),
+      0 0 58px rgba(56,189,248,0.12);
+
+  transform: translateY(-2px);
+}
+
+/* —— Distribución en el grid —— */
+.panel {
+  grid-column: 1 / 2;
+}
+
+.preview-panel {
+  grid-column: 2 / 3;
+}
+
+
+/* ============================================================
+   09) TITULOS, CAMPOS E INPUTS — NEO•TECH GLASS v10
+   ------------------------------------------------------------
+   · Estética corporativa futurista
+   · Inputs con glass suave + iluminación azul ion-lit
+   · Select custom moderno con icono elegante
+   · Color pickers coherentes con toda la UI
+=========================================================== */
+
+
+/* ============================================================
+   TITULOS DE SECCIÓN (panel)
+=========================================================== */
 .panel-title {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 1.1rem;
+
   font-weight: 600;
+  font-size: 1rem;
+  color: var(--accent);
+
+  text-shadow: 0 0 6px rgba(56,189,248,0.35);
 }
 
-/* INPUTS */
+
+/* ============================================================
+   LABELS
+=========================================================== */
+label {
+  color: var(--text-soft);
+  font-size: 0.86rem;
+  font-weight: 1000;
+  letter-spacing: 0.01em;
+}
+
+
+/* ============================================================
+   CONTENEDORES DE CAMPOS
+=========================================================== */
 .field-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
+.input-row,
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+
+/* ============================================================
+   INPUTS BASE — (texto, select)
+=========================================================== */
 .input-text,
-.input-select {
-  background: var(--bg3);
-  border: 1px solid var(--border);
+.select-input {
+  width: 100%;
+  padding: 14px 18px;
+
+  /* glass base */
+  background: rgba(255, 255, 255, 0.045);
+  backdrop-filter: blur(18px) saturate(1.35);
+
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.06),
+    0 4px 18px rgba(0,0,0,0.35);
+
+  font-size: 0.95rem;
+  color: var(--text-main);
+
+  transition: 0.25s ease;
+}
+
+/* Placeholder moderno */
+.input-text::placeholder {
+  color: rgba(255,255,255,0.38);
+  font-weight: 500;
+}
+
+/* Focus premium */
+.input-text:focus,
+.select-input:focus {
+  background: rgba(255,255,255,0.065);
+  border-color: rgba(56,189,248,0.55);
+
+  box-shadow:
+      inset 0 0 10px rgba(56,189,248,0.20),
+      0 0 26px rgba(56,189,248,0.28);
+
+  outline: none;
+}
+
+
+/* ============================================================
+   SELECT INPUT — custom icon, no UI nativa fea
+=========================================================== */
+.select-input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+
+  /* Flecha premium integrada */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='%23bcd7ff' viewBox='0 0 16 16'%3E%3Cpath d='M2 5l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 14px;
+}
+
+
+/* ESTILO PARA OPCIONES DEL MENÚ */
+select option {
+  background: rgba(3,10,22,0.92);
   color: var(--text-main);
   padding: 12px;
-  border-radius: 12px;
-  outline: none;
-  transition: var(--transition);
+  font-size: 0.92rem;
+
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
-.input-text:focus,
-.input-select:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(14,165,233,0.25);
+select option:hover {
+  background: rgba(56,189,248,0.22);
 }
 
-.field-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
+select option:checked {
+  background: rgba(56,189,248,0.32);
+  color: white;
 }
 
-.color-input {
-  background: rgba(20,24,32,0.6);
-  border-radius: 12px;
-  padding: 10px 14px;
-  border: 1px solid rgba(255,255,255,0.10);
 
+/* ============================================================
+   COLOR PICKER — NEO•TECH v9
+   ------------------------------------------------------------
+   · Glass suave + acento elegante
+   · Micro sombras realistas
+   · Selector redondo tipo "orb"
+=========================================================== */
+
+/* —— WRAPPER —— */
+.color-input-wrapper {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 18px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 10px 14px;
+
+  backdrop-filter: blur(14px) saturate(1.4);
+
+  box-shadow:
+      0 2px 12px rgba(0, 0, 0, 0.35),
+      inset 0 0 0 1px rgba(255,255,255,0.06);
+
+  transition: 0.25s ease;
 }
 
-.color-input input[type="color"] {
+/* Hover premium */
+.color-input-wrapper:hover {
+  border-color: rgba(56,189,248,0.35);
+  box-shadow:
+      0 4px 18px rgba(56,189,248,0.20),
+      inset 0 0 12px rgba(56,189,248,0.12),
+      inset 0 0 0 1px rgba(56,189,248,0.35);
+}
+
+/* Label */
+.color-input-wrapper span {
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  color: var(--text-soft);
+  opacity: 0.92;
+}
+
+/* —— ORB DE COLOR —— */
+.color-input-wrapper input[type="color"] {
+  appearance: none;
+  -webkit-appearance: none;
+
   width: 26px;
   height: 26px;
+
   border-radius: 50%;
   border: none;
+  padding: 0;
   cursor: pointer;
+
+  background: none;
+
+  box-shadow:
+      0 0 10px rgba(0,0,0,0.45),
+      inset 0 0 5px rgba(255,255,255,0.45);
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Buttons */
-.btn-primary,
-.btn-secondary {
-  padding: 12px 18px;
-  border-radius: 999px;
-  display: inline-flex;
+/* Elimina borde feo interno */
+.color-input-wrapper input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border-radius: 50%;
+}
+
+.color-input-wrapper input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+/* —— Hover del orb —— */
+.color-input-wrapper input[type="color"]:hover {
+  transform: scale(1.14);
+  box-shadow:
+      0 0 14px rgba(56,189,248,0.45),
+      inset 0 0 6px rgba(255,255,255,0.75);
+}
+
+/* —— Click (feedback físico) —— */
+.color-input-wrapper input[type="color"]:active {
+  transform: scale(0.92);
+}
+
+
+
+/* ============================================================
+   10) BOTONES — NEO•TECH v7 (ULTRA PREMIUM)
+=========================================================== */
+
+.actions {
+  display: flex;
+  gap: 14px;
+  align-items: stretch;
+}
+
+/* ============================================================
+   BOTÓN PRIMARIO — Acción fuerte
+=========================================================== */
+.btn-primary {
+  flex: 1;
+  padding: 14px 20px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(56,189,248,0.95),
+    rgba(14,165,233,1)
+  );
+
+  border: none;
+  border-radius: 16px;
+  color: #fff;
+
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-  border: 1px solid transparent;
-}
 
-.btn-primary {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff;
+  font-size: 0.98rem;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.25s ease;
+
+  box-shadow:
+      0 8px 25px rgba(56,189,248,0.32),
+      inset 0 0 6px rgba(255,255,255,0.28);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(14,165,233,0.45);
+  box-shadow:
+      0 14px 38px rgba(56,189,248,0.55),
+      inset 0 0 10px rgba(255,255,255,0.45);
 }
 
+.btn-primary.success {
+  background: linear-gradient(135deg, #34d399, #059669);
+  box-shadow: 0 14px 38px rgba(52,211,153,0.45);
+}
+
+
+/* ============================================================
+   BOTÓN SECUNDARIO — Versión Futurista “Steel Glass”
+=========================================================== */
 .btn-secondary {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  color: var(--text-soft);
+  padding: 14px 22px;
+  min-width: 160px;
+
+  /* —— Fondo glass pero con tono azul acero —— */
+  background: rgba(30, 41, 59, 0.46);
+
+  border: 1px solid rgba(148,163,184,0.28);
+  border-radius: 16px;
+
+  backdrop-filter: blur(14px) saturate(1.25);
+
+  color: #dbeafe;
+  font-size: 0.92rem;
+  font-weight: 500;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  cursor: pointer;
+  transition: 0.25s ease;
+
+  /* Light glow */
+  box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.05),
+      0 6px 18px rgba(0,0,0,0.38);
 }
 
+/* —— Hover premium —— */
 .btn-secondary:hover {
-  background: var(--bg1);
+  background: rgba(51, 65, 85, 0.60);
+  border-color: rgba(56,189,248,0.35);
+
+  transform: translateY(-2px);
+
+  box-shadow:
+      inset 0 0 10px rgba(56,189,248,0.18),
+      0 10px 28px rgba(56,189,248,0.25);
 }
 
-/* =========================================================
-   PREVIEW (DERECHA)
-========================================================= */
+/* —— Icono mejor alineado —— */
+.btn-secondary i,
+.btn-primary i {
+  font-size: 1rem;
+  opacity: 0.9;
+}
 
-.preview-card {
-  background: rgba(18,22,32,0.45);
-  backdrop-filter: blur(16px);
+/* ============================================================
+   11) PANEL DE PREVIEW — NEO•TECH v4
+   ------------------------------------------------------------
+   · Caja holográfica glass con borde luminoso suave
+   · Sombra flotante elegante
+   · Placeholder más moderno
+=========================================================== */
+
+.preview-box {
+  padding: 32px;
+  min-height: 300px;
+
+  /* —— Fondo glass premium —— */
+  background: rgba(255, 255, 255, 0.045);
+  backdrop-filter: blur(28px) saturate(1.25);
+
+  /* —— Borde iluminado suave —— */
   border-radius: 20px;
-  border: 1px solid var(--border);
-  padding: 28px;
+  border: 1px solid rgba(56,189,248,0.15);
+  box-shadow:
+      inset 0 0 25px rgba(56,189,248,0.08),
+      0 18px 55px rgba(0,0,0,0.65);
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Glow sutil en el borde al hacer hover */
+.preview-box:hover {
+  border-color: rgba(56,189,248,0.35);
+  box-shadow:
+      inset 0 0 35px rgba(56,189,248,0.12),
+      0 22px 65px rgba(0,0,0,0.7);
+
+  transition: 0.25s ease;
+}
+
+/* ============================================================
+   PLACEHOLDER MODERNO
+=========================================================== */
+
+.placeholder {
+  text-align: center;
+  color: var(--text-soft);
+  font-size: 0.85rem;
+
+  max-width: 260px;
+  opacity: 0.9;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 22px;
+  gap: 18px;
+
+  transition: 0.25s ease opacity;
+}
+
+.placeholder-icon {
+  width: 64px;
+  height: 64px;
+
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(4px);
+
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--accent);
+  font-size: 22px;
 
   box-shadow:
-    0 12px 40px rgba(0,0,0,0.30),
-    inset 0 0 0 1px rgba(255,255,255,0.04);
+      inset 0 0 14px rgba(56,189,248,0.25),
+      0 6px 16px rgba(0,0,0,0.35);
 }
 
-#preview-holo {
-  width: 70px;
-  height: 70px;
-  border-radius: 18px;
-  background: rgba(14,165,233,0.12);
-  border: 1px solid rgba(14,165,233,0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent);
-  font-size: 33px;
+/* Pequeña animación leve al hover */
+.placeholder-icon:hover {
+  transform: translateY(-2px);
+  box-shadow:
+      inset 0 0 18px rgba(56,189,248,0.32),
+      0 8px 20px rgba(0,0,0,0.45);
 
-  box-shadow: 0 0 22px rgba(14,165,233,0.25);
-}
-
-.preview-box {
-  width: 100%;
-  min-height: 280px;
-  background: rgba(12,16,25,0.65);
-  border-radius: 16px;
-  border: 1px solid var(--border);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.placeholder {
-  color: var(--text-soft);
-  font-size: 0.92rem;
-  text-align: center;
-  max-width: 240px;
+  transition: 0.3s ease;
 }
 
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
+/* ============================================================
+   12) RESPONSIVE — NEO•TECH v5
+   ------------------------------------------------------------
+   · Mejor espaciado
+   · Paneles fluidos
+   · Inputs más táctiles
+   · Diseño más consistente con móvil premium
+=========================================================== */
 
-@media (max-width: 980px) {
-  .tool-wrapper {
+/* ============================================================
+   — TABLET (≤ 860px)
+=========================================================== */
+@media (max-width: 860px) {
+
+  .app {
     grid-template-columns: 1fr;
-    gap: 26px;
+    gap: 32px;
+
+    padding: 32px 22px;
+    border-radius: 20px;
+
+    backdrop-filter: blur(26px) saturate(1.1);
   }
+
+  /* TODO ocupa fila completa */
+  .panel,
+  .preview-panel,
+  .app-header,
+  .app-subtitle {
+    grid-column: 1 / -1;
+  }
+
+  /* Inputs verticales */
+  .grid-2,
+  .input-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .input-text,
+  .select-input,
+  .range-input {
+    padding: 14px 16px;
+    font-size: 1rem;
+  }
+
+  .color-input-wrapper {
+    padding: 14px 18px;
+  }
+
+  /* Botones más cómodos */
+  .actions {
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 1.05rem;
+  }
+
+  .preview-box {
+    min-height: 280px;
+    padding: 30px;
+  }
+}
+
+
+/* ============================================================
+   — MÓVIL PEQUEÑO (≤ 480px)
+=========================================================== */
+@media (max-width: 480px) {
+
+  .app {
+    padding: 22px 16px;
+    border-radius: 16px;
+  }
+
+  .app-header {
+    gap: 12px;
+  }
+
+  .app-title span:first-child {
+    font-size: 0.75rem;
+  }
+
+  .app-title span:last-child {
+    font-size: 1.05rem;
+  }
+
+  .input-text,
+  .select-input {
+    padding: 12px 14px;
+    font-size: 0.95rem;
+  }
+
+  .color-input-wrapper input {
+    width: 24px;
+    height: 24px;
+  }
+
+  .preview-box {
+    min-height: 240px;
+    padding: 24px;
+  }
+
+  .placeholder-icon {
+    width: 52px;
+    height: 52px;
+    font-size: 18px;
+  }
+}
+.helper-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 0.83rem;
+  color: var(--text-soft);
+  opacity: 0.9;
+}
+
+.helper-row i {
+  color: var(--accent);
+  font-size: 0.95rem;
 }

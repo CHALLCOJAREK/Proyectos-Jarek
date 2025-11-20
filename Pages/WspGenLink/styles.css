@@ -1,0 +1,739 @@
+/* ============================================================
+   01) VARIABLES — NEO•TECH ULTRA GLASS GREEN v12
+=========================================================== */
+:root {
+  --bg: #020617;
+  --text-main: #e2e8f0;
+  --text-soft: #94a3b8;
+
+  --accent: #22c55e;
+  --accent-strong: #16a34a;
+  --accent-glow: rgba(34,197,94,0.55);
+
+  --glass-light: rgba(255,255,255,0.05);
+  --glass-mid: rgba(255,255,255,0.09);
+  --glass-strong: rgba(255,255,255,0.16);
+
+  --radius-lg: 28px;
+  --radius-md: 20px;
+  --radius-sm: 14px;
+
+  --blur-strong: blur(28px) saturate(1.45);
+  --blur-mid: blur(20px) saturate(1.35);
+  --blur-soft: blur(14px) saturate(1.2);
+
+  --shadow-panel: 0 24px 65px rgba(0,0,0,0.55);
+  --shadow-soft: 0 16px 40px rgba(0,0,0,0.35);
+  --shadow-glow: 0 0 28px rgba(34,197,94,0.45);
+}
+
+
+/* ============================================================
+   02) RESET GLOBAL
+=========================================================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Outfit", sans-serif;
+  background: var(--bg);
+  color: var(--text-main);
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding: 48px 22px;
+  overflow-x: hidden;
+}
+
+
+/* ============================================================
+   03) INTRO LOADER — ULTRA SPHERE GREEN
+=========================================================== */
+#intro {
+  position: fixed;
+  inset: 0;
+  background: #020617;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+#intro.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader {
+  width: 72px;
+  height: 72px;
+
+  border-radius: 50%;
+  border: 6px solid rgba(34,197,94,0.22);
+  border-top-color: var(--accent);
+
+  animation: spin 1s linear infinite, glowPulse 1.9s ease-in-out infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@keyframes glowPulse {
+  0%,100% { box-shadow: 0 0 16px var(--accent-glow); }
+  50%     { box-shadow: 0 0 34px var(--accent-glow); }
+}
+
+
+/* ============================================================
+   04) CANVAS BACKGROUND — NeoTech Ultra Grid v4
+   ------------------------------------------------------------
+   · Fondo animado más profundo
+   · Mayor glow verde elegante
+   · Gradiente base que elimina “manchas” o “zonas planas”
+=========================================================== */
+
+#bg-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+
+  /* Hace que el fondo se funda SUPER bien con el glass */
+  opacity: 0.92;
+
+  /* glow uniforme del canvas */
+  filter:
+    drop-shadow(0 0 18px rgba(34,197,94,0.25))
+    brightness(1.18)
+    saturate(1.25);
+
+  /* un “layer” detrás del propio canvas para que nunca se vea plano */
+  background:
+    radial-gradient(circle at 25% 15%, rgba(34,197,94,0.12), transparent 60%),
+    radial-gradient(circle at 80% 70%, rgba(15,23,42,0.65), transparent 70%),
+    linear-gradient(160deg, #020617, #0b1220 60%, #020617);
+}
+
+
+
+/* ============================================================
+   05) APP CONTAINER — ULTRA GLASS 3D v4.2 (NeoTech)
+   ------------------------------------------------------------
+   · Mucho más glass
+   · Capas de luz internas REALISTAS
+   · Borde ion-lit verde ultrasuave
+   · Volumen 3D con sombras cruzadas
+=========================================================== */
+
+.app {
+  width: 100%;
+  max-width: 650px;
+
+  /* —— GLASS REAL —— */
+  background: rgba(15, 23, 42, 0.58);
+  backdrop-filter: var(--blur-strong);
+
+  /* —— Bordes premium —— */
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255,255,255,0.06);
+  outline: 1px solid rgba(34,197,94,0.22); /* borde glow externo */
+
+  padding: 36px 38px 32px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  /* —— Sombras 3D cruzadas —— */
+  box-shadow:
+      0 24px 55px rgba(0,0,0,0.65),                      /* sombra externa */
+      inset 0 0 22px rgba(34,197,94,0.10),               /* glow verde interno */
+      inset 0 0 12px rgba(255,255,255,0.04),             /* luz suave */
+      inset 0 0 2px rgba(255,255,255,0.12);              /* filo glass */
+
+  animation: fadeInApp 0.55s ease-out forwards;
+}
+
+@keyframes fadeInApp {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.96);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+
+
+/* ============================================================
+   06) HEADER — NEO•TECH ULTRA GLASS v9
+   ------------------------------------------------------------
+   + Icono sin subrayado
+   + Link neutralizado
+   + Títulos premium ordenados
+   + Glow sutil
+=========================================================== */
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 4px;
+}
+
+/* -----------------------------------------------
+   LINK del icono — Eliminamos subrayado SIEMPRE
+----------------------------------------------- */
+.app-header a,
+.app-header a:visited,
+.app-header a:active {
+  text-decoration: none !important;
+  color: inherit !important;
+  outline: none;
+  border: none;
+}
+
+/* -----------------------------------------------
+   ICONO
+----------------------------------------------- */
+.app-icon {
+  width: 56px;
+  height: 56px;
+
+  border-radius: 18px;
+
+  background: linear-gradient(145deg, #4ade80, #16a34a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Glow PRO */
+  box-shadow:
+    0 10px 28px rgba(34,197,94,0.46),
+    inset 0 0 10px rgba(255,255,255,0.22),
+    0 0 14px rgba(34,197,94,0.45);
+}
+
+.app-icon i {
+  font-size: 26px;
+  color: #eaffea;
+  text-decoration: none !important; /* blindaje final */
+}
+
+/* -----------------------------------------------
+   TITULOS — PRO EDITION
+----------------------------------------------- */
+.app-title {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  gap: 3px;
+}
+
+/* TÍTULO PRINCIPAL */
+.app-title .title-main {
+  font-size: 1.46rem;
+  font-weight: 650;
+  color: var(--text-main);
+  letter-spacing: -0.015em;
+
+  /* Glow suave */
+  text-shadow: 0 0 6px rgba(255,255,255,0.15);
+}
+
+/* SUBTÍTULO / MARCA */
+.app-title .title-sub {
+  font-size: 0.76rem;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.20em;
+
+  opacity: 0.75;
+}
+
+
+/* ============================================================
+   07) PANEL GLASS — ULTRA NEO•TECH v12
+   ------------------------------------------------------------
+   + Más brillo volumétrico
+   + Más glass real
+   + Gradientes suaves
+   + Luces verdes sutiles (sin saturar)
+=========================================================== */
+
+.panel {
+  padding: 30px 28px;
+  border-radius: var(--radius-md);
+
+  background:
+    radial-gradient(circle at 0% 0%, rgba(34,197,94,0.20), transparent 55%),
+    linear-gradient(145deg, rgba(15,23,42,0.78), rgba(15,23,42,0.68));
+
+  backdrop-filter: var(--blur-mid);
+
+  /* Borde + Glass */
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow:
+    0 14px 40px rgba(0,0,0,0.45),
+    inset 0 0 0 1px rgba(34,197,94,0.25),
+    inset 0 0 24px rgba(34,197,94,0.10);
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  /* Animación suave */
+  animation: panelFadeIn 0.55s ease forwards;
+}
+
+@keyframes panelFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ------------------------------------------------------------
+   TÍTULO DEL PANEL
+------------------------------------------------------------ */
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--accent);
+
+  /* Glow premium */
+  text-shadow:
+    0 0 8px rgba(34,197,94,0.55),
+    0 0 12px rgba(34,197,94,0.25);
+}
+
+/* Ícono del título */
+.panel-title i {
+  font-size: 1.1rem;
+  color: var(--accent);
+  filter: drop-shadow(0 0 4px rgba(34,197,94,0.45));
+}
+
+/* ============================================================
+   08) INPUTS — NEO•TECH ULTRA v15
+   ------------------------------------------------------------
+   • Más glass
+   • Más profundidad
+   • Más glow verde premium
+   • Experiencia “campo interactivo”
+=========================================================== */
+
+label {
+  font-size: 0.90rem;
+  color: var(--text-soft);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  padding-left: 2px;
+}
+
+/* Fila general de inputs */
+.row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+/* ------------------------------------------------------------
+   COUNTRY PILL (selector verde premium)
+------------------------------------------------------------ */
+.country-pill {
+  border-radius: 999px;
+  padding: 12px 16px;
+
+  background: rgba(15,23,42,0.78);
+  border: 1px solid rgba(255,255,255,0.14);
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: var(--text-soft);
+  backdrop-filter: var(--blur-soft);
+
+  transition: 0.28s ease;
+  cursor: pointer;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(34,197,94,0.10),
+    0 6px 14px rgba(0,0,0,0.45);
+}
+
+/* Iconito del planeta */
+.country-pill i {
+  color: var(--accent);
+  font-size: 0.92rem;
+  filter: drop-shadow(0 0 4px rgba(34,197,94,0.5));
+}
+
+/* Select interno */
+.country-pill select {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+/* Hover premium */
+.country-pill:hover {
+  border-color: var(--accent);
+  box-shadow:
+    0 0 20px rgba(34,197,94,0.35),
+    inset 0 0 10px rgba(34,197,94,0.15);
+  transform: translateY(-1px);
+}
+
+/* ------------------------------------------------------------
+   INPUTS GENERALES
+------------------------------------------------------------ */
+.input-text,
+textarea.input-text {
+  width: 100%;
+  padding: 14px 18px;
+
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.10);
+
+  background: rgba(15,23,42,0.78);
+  color: var(--text-main);
+  font-size: 0.94rem;
+
+  backdrop-filter: var(--blur-soft);
+
+  transition: 0.28s ease;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(34,197,94,0.10),
+    0 6px 16px rgba(0,0,0,0.45);
+}
+
+/* Placeholder suave */
+.input-text::placeholder,
+textarea.input-text::placeholder {
+  color: rgba(148,163,184,0.55);
+}
+
+/* FOCUS — versión super elegante */
+.input-text:focus,
+textarea.input-text:focus {
+  border-color: var(--accent);
+  box-shadow:
+    0 0 22px rgba(34,197,94,0.45),
+    inset 0 0 12px rgba(34,197,94,0.20);
+  background: rgba(15,23,42,0.92);
+}
+
+/* Textarea */
+textarea.input-text {
+  min-height: 90px;
+  resize: vertical;
+}
+
+/* ============================================================
+   09) BOTONES — NEO•TECH ULTRA v18
+   ------------------------------------------------------------
+   · Brillo 3D realista
+   · Sombras dinámicas
+   · Iconos alineados perfectos
+   · Comportamiento táctil premium
+=========================================================== */
+
+/* Contenedor de botones */
+.actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 2px;
+  align-items: stretch;
+}
+
+/* Base general */
+button {
+  padding: 14px 20px;
+  border-radius: 16px;
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+
+  cursor: pointer;
+  transition: 0.28s ease;
+
+  /* Glass suave */
+  backdrop-filter: var(--blur-soft);
+  -webkit-backdrop-filter: var(--blur-soft);
+
+  /* Touch feel */
+  transform: translateZ(0);
+}
+
+button i {
+  font-size: 1rem;
+  opacity: 0.92;
+}
+
+
+/* ============================================================
+   BOTÓN PRIMARIO — ACCIÓN FUERTE
+=========================================================== */
+.btn-primary {
+  flex: 1;
+
+  background: linear-gradient(
+    135deg,
+    var(--accent) 0%,
+    var(--accent-strong) 100%
+  );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 14px 40px rgba(34,197,94,0.45),
+    inset 0 0 10px rgba(255,255,255,0.18),
+    inset 0 -4px 12px rgba(0,0,0,0.35);
+
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 22px 65px rgba(34,197,94,0.65),
+    inset 0 0 12px rgba(255,255,255,0.28);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+  box-shadow:
+    0 10px 25px rgba(34,197,94,0.35) inset,
+    inset 0 0 8px rgba(255,255,255,0.20);
+}
+
+
+/* ============================================================
+   BOTÓN SECUNDARIO — GLASS PREMIUM
+=========================================================== */
+.btn-secondary {
+  padding-inline: 18px;
+
+  background: rgba(255,255,255,0.06);
+  color: var(--text-soft);
+
+  border: 1px solid rgba(255,255,255,0.14);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(34,197,94,0.10),
+    0 10px 25px rgba(0,0,0,0.38);
+}
+
+.btn-secondary:hover {
+  background: rgba(34,197,94,0.12);
+  color: #d1fae5;
+
+  border-color: var(--accent);
+
+  box-shadow:
+    0 12px 32px rgba(34,197,94,0.25),
+    inset 0 0 10px rgba(34,197,94,0.12);
+}
+
+.btn-secondary:active {
+  transform: translateY(1px);
+  box-shadow:
+    inset 0 0 20px rgba(34,197,94,0.20),
+    0 8px 18px rgba(34,197,94,0.20);
+}
+
+
+/* ============================================================
+   BOTÓN “SUCCESS” (cuando COPIADO)
+=========================================================== */
+.btn-secondary.success {
+  background: rgba(34,197,94,0.20);
+  border-color: var(--accent);
+  color: #bbf7d0;
+
+  box-shadow:
+    0 10px 30px rgba(34,197,94,0.25),
+    inset 0 0 14px rgba(34,197,94,0.25);
+}
+
+
+/* ============================================================
+   10) OUTPUT CARD — NEO•TECH ULTRA v20
+   ------------------------------------------------------------
+   · Glass profundo con capas reales
+   · Glow verde suave y táctil
+   · Contenedor flotante con animación de entrada
+   · Texto encapsulado en burbuja glass
+=========================================================== */
+
+.output-card {
+  padding: 22px;
+  border-radius: var(--radius-md);
+
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: var(--blur-mid);
+  -webkit-backdrop-filter: var(--blur-mid);
+
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 18px 45px rgba(0,0,0,0.55),
+    inset 0 0 18px rgba(34,197,94,0.10),
+    inset 0 0 0 1px rgba(34,197,94,0.22);
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  animation: outputPop 0.45s ease forwards;
+  transform-origin: top;
+}
+
+@keyframes outputPop {
+  0%   { opacity: 0; transform: translateY(10px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+
+/* ============================================================
+   TEXTO DEL LINK — BURBUJA GLASS PREMIUM
+=========================================================== */
+.output-text {
+  padding: 14px 16px;
+  border-radius: 14px;
+
+  background: rgba(0, 0, 0, 0.52);
+  backdrop-filter: var(--blur-soft);
+  -webkit-backdrop-filter: var(--blur-soft);
+
+  border: 1px solid rgba(34,197,94,0.22);
+  box-shadow:
+    inset 0 0 14px rgba(34,197,94,0.10),
+    inset 0 0 0 1px rgba(34,197,94,0.18);
+
+  font-size: 0.90rem;
+  color: var(--text-main);
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  /* sutil animación al aparecer */
+  animation: textFade 0.6s ease forwards;
+  opacity: 0;
+}
+
+@keyframes textFade {
+  0%   { opacity: 0; filter: blur(3px); }
+  100% { opacity: 1; filter: blur(0); }
+}
+
+/* ============================================================
+   11) RESPONSIVE — NEO•TECH ULTRA MOBILE v12
+   ------------------------------------------------------------
+   · Columnas bien ordenadas
+   · Inputs con espaciado táctil
+   · Botones full-width suaves
+   · Panel más respirable
+   · App centrada sin perder glass
+=========================================================== */
+
+@media (max-width: 540px) {
+
+  /* Contenedor principal más compacto */
+  .app {
+    padding: 26px 22px 22px;
+    gap: 18px;
+    border-radius: var(--radius-md);
+  }
+
+  /* Header más compacto */
+  .app-header {
+    gap: 12px;
+  }
+
+  .app-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+  }
+
+  .app-title .title-main {
+    font-size: 1.22rem;
+  }
+
+  /* Panel ajustado */
+  .panel {
+    padding: 22px;
+    gap: 14px;
+    border-radius: var(--radius-md);
+  }
+
+  /* Inputs en columna */
+  .row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* Country pill full width */
+  .country-pill {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Textareas más cómodas */
+  textarea.input-text {
+    min-height: 90px;
+  }
+
+  /* Botones en columna */
+  .actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .btn-secondary,
+  .btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Output card con más aire */
+  .output-card {
+    padding: 18px;
+    border-radius: 16px;
+  }
+
+  .output-text {
+    font-size: 0.86rem;
+    padding: 12px 14px;
+  }
+
+  /* Hint centrado */
+  .hint {
+    text-align: center;
+    font-size: 0.78rem;
+    margin-top: 4px;
+  }
+}

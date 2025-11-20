@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>QR Generator – J²</title>
+  <title>QR Generator</title>
 
   <link rel="icon" type="image/png" href="https://i.postimg.cc/66Ct5ryw/j2.png">
 
@@ -14,104 +14,128 @@
 
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div id="intro">
+
+  <!-- INTRO LOADER -->
+  <div id="intro">
     <div class="intro-inner">
       <div class="loader"></div>
-      <p class="intro-text">Inicializando…</p>
     </div>
   </div>
-
 
   <!-- CANVAS BACKGROUND -->
   <canvas id="bg-canvas"></canvas>
 
-  <!-- HEADER MINIMAL TOOL -->
-  <header class="tool-header">
-    <a href="../index.html" class="tool-home-btn">
-      <i class="fa-solid fa-house"></i>
-    </a>
+  <!-- MAIN WRAPPER -->
+  <main class="app">
 
-    <div class="tool-title">
-      <i class="fa-solid fa-qrcode title-icon"></i>
-      <span>QR Generator</span>
-    </div>
-  </header>
+    <!-- HEADER DE LA APP -->
+    <header class="app-header">
+      <a href="../index.html" class="app-icon">
+        <i class="fa-solid fa-qrcode"></i>
+      </a>
 
-  <!-- MAIN TOOL LAYOUT -->
-  <main class="tool-wrapper">
+      <div class="app-title">
+        <span>Generador QR</span>
+      </div>
+    </header>
 
-    <!-- LEFT: CONFIG PANEL -->
-    <section class="tool-panel glass-card">
+    <!-- ============================
+         PANEL IZQUIERDO (CONFIG)
+    =============================-->
+    <section class="panel">
 
-      <h2 class="panel-title">
-        <i class="fa-solid fa-sliders"></i>
-        Configuración
-      </h2>
-
-      <div class="field-group">
-        <label for="texto">Contenido</label>
-        <input id="texto" type="text" class="input-text" placeholder="Escribe un texto o URL…">
+      <div class="panel-title">
+        <i class="fa fa-cog"></i>
+        <span>Configuración del código QR</span>
       </div>
 
+      <!-- Contenido del QR -->
       <div class="field-group">
-        <label>Apariencia</label>
-        <div class="field-grid">
-          <div class="color-input">
-            <span>Color del QR</span>
-            <input type="color" id="colorFrente" value="#000000">
-          </div>
-
-          <div class="color-input">
-            <span>Fondo Visual</span>
-            <input type="color" id="colorFondo" value="#ffffff">
-          </div>
+        <label for="texto">Contenido del código</label>
+        <div class="input-row">
+          <input type="text" id="texto" class="input-text" placeholder="URL o TEXTO" />
         </div>
       </div>
 
+      <!-- Apariencia -->
       <div class="field-group">
-        <label>Tamaño y Corrección</label>
-        <div class="field-grid">
-          <div class="range-box">
-            <input type="range" id="size" min="160" max="360" step="20" value="260">
+        <label>Apariencia</label>
+
+        <div class="grid-2">
+          <div class="color-input-wrapper">
+            <span>Color del QR</span>
+            <input type="color" id="colorFrente" value="#000000" />
+          </div>
+        </div>
+
+        <div class="helper-row">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>El QR será con fondo <strong>100% transparente</strong>.</span>
+        </div>
+      </div>
+
+      <!-- Tamaño y Corrección -->
+      <div class="field-group">
+        <label>Tamaño y nivel de corrección</label>
+
+        <div class="grid-2">
+          <div class="range-row">
+            <input type="range" id="size" min="160" max="360" step="20" value="260" class="range-input" />
             <output id="sizeValue">260</output>
           </div>
 
-          <select id="nivel" class="input-select">
+          <select id="nivel" class="select-input">
             <option value="H">Corrección alta</option>
-            <option value="Q">Media-alta</option>
-            <option value="M">Media</option>
-            <option value="L">Básica</option>
+            <option value="Q">Corrección media-alta</option>
+            <option value="M">Corrección media</option>
+            <option value="L">Corrección básica</option>
           </select>
         </div>
       </div>
 
-      <button id="btnGenerar" class="btn-primary">
-        <i class="fa-solid fa-bolt"></i>
-        Generar
-      </button>
+      <!-- Botones -->
+      <div class="actions">
+        <button class="btn-primary" id="btnGenerar">
+          <i class="fa-solid fa-bolt"></i>
+          Generar código QR
+        </button>
 
-      <button id="download" class="btn-secondary" style="display:none;">
-        <i class="fa-solid fa-download"></i> Descargar PNG
-      </button>
+        <button class="btn-secondary" id="download" style="display: none;">
+          <i class="fa-solid fa-download"></i>
+          Descargar PNG
+        </button>
+      </div>
 
     </section>
 
-    <!-- RIGHT: PREVIEW PANEL -->
-    <section class="preview-card glass-card">
+    <!-- ============================
+         PANEL DERECHO (PREVIEW)
+    =============================-->
+    <section class="preview-panel">
 
-      <div id="preview-holo">
-        <i class="fa-solid fa-qrcode"></i>
+      <div class="preview-header">
+        <div class="preview-header-title">Vista previa</div>
       </div>
 
-      <div class="preview-box" id="qrcode-container">
-        <div id="qrcode">
-          <div class="placeholder">
-            <i class="fa-solid fa-qrcode placeholder-icon"></i>
-            Genera un código QR para verlo aquí.
+      <div class="preview-box">
+        <div id="qrcode-container">
+          <div id="qrcode">
+            <div class="placeholder">
+              <div class="placeholder-icon">
+                <i class="fa-solid fa-qrcode"></i>
+              </div>
+              Genera un código para verlo aquí.
+            </div>
           </div>
         </div>
       </div>
+
+      <p class="hint">
+        <i class="fa fa-info-circle"></i>
+        Usa colores con buen contraste para mejor lectura.
+      </p>
 
     </section>
 
@@ -120,27 +144,26 @@
   <!-- LIB QR -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-  <!-- APP -->
+  <!-- APP JS -->
   <script src="app.js" defer></script>
-  <!-- Créditos -->
-<div style="
+
+  <!-- CRÉDITOS -->
+  <div style="
     position: fixed;
-    bottom: 20px;
+    bottom: 16px;
     right: 20px;
-    padding: 10px 14px;
-    backdrop-filter: blur(6px);
-    border-radius: none;
     font-family: 'Outfit', sans-serif;
     font-size: 14px;
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255,255,255,0.55);
     z-index: 9999;
-">
-    by <a href="https://github.com/CHALLCOJAREK" 
-        target="_blank" 
-        style="color: rgba(255, 255, 255, 0.75); text-decoration: none; font-weight: bold;">
-        Jarek
+  ">
+    by 
+    <a href="https://github.com/CHALLCOJAREK"
+       target="_blank"
+       style="color: rgba(255,255,255,0.75); text-decoration: none; font-weight: 600;">
+       Jarek
     </a>
-</div>
+  </div>
 
 </body>
 </html>

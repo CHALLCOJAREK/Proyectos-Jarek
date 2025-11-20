@@ -1,0 +1,1204 @@
+/* ============================================================
+   01) VARIABLES — PALETA NEOGLASS CYAN/BLUE
+=========================================================== */
+:root {
+  --bg: #0b1020;
+
+  --panel: #0f172a;
+  --panel-2: #111827;
+
+  --muted: #94a3b8;
+  --text: #e5e7eb;
+
+  /* === NUEVA PALETA PURPLE NEO === */
+  --brand: #a78bfa;    /* lavender neon */
+  --brand-2: #c084fc;  /* bright lilac */
+
+  --ok: #34d399;
+  --warn: #f59e0b;
+  --err: #ef4444;
+
+  --glass-1: rgba(255,255,255,0.04);
+  --glass-2: rgba(255,255,255,0.08);
+  --glass-3: rgba(255,255,255,0.14);
+
+  --shadow: 0 20px 60px rgba(0,0,0,.45),
+            inset 0 0 0 1px rgba(255,255,255,.04);
+
+  --radius: 18px;
+
+  --blur-strong: blur(26px) saturate(1.35);
+  --blur-mid: blur(18px) saturate(1.2);
+  --blur-soft: blur(12px) saturate(1.1);
+}
+
+/* ============================================================
+   02) RESET — Purple NeoGlass Edition
+=========================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/* Suaviza tipografía en la mayoría de navegadores */
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  overflow-x: hidden;
+
+  /* Fondo NeoTech con halos violetas + azules */
+  background:
+    radial-gradient(
+      1200px 800px at 80% -10%,
+      rgba(167, 139, 250, 0.22),   /* glow violeta */
+      transparent 65%
+    ),
+    radial-gradient(
+      1000px 700px at 10% 110%,
+      rgba(96, 165, 250, 0.18),    /* glow azul suave */
+      transparent 60%
+    ),
+    var(--bg);
+
+  /* Respira mejor en pantallas grandes y pequeñas */
+  padding-block: clamp(22px, 4vh, 50px);
+  min-height: 100vh;
+}
+
+/* Pequeño ajuste para móviles muy chicos */
+@media (max-width: 600px) {
+  body {
+    padding-block: 18px;
+  }
+}
+
+/* ============================================================
+   03) INTRO LOADER — Purple NeoGlass PRO
+=========================================================== */
+#intro {
+  position: fixed;
+  inset: 0;
+  background: #0a0d1a; /* morado-azulado limpio, más elegante */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .65s ease, visibility .65s ease;
+}
+
+/* Fade out perfecto */
+#intro.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Loader circular cristal-violeta */
+.loader {
+  width: 72px;
+  height: 72px;
+
+  border-radius: 50%;
+  border: 5px solid rgba(167,139,250,0.22); /* violeta suave */
+  border-top-color: #c084fc;                /* violeta brillante */
+
+  backdrop-filter: blur(10px) saturate(1.4);
+
+  /* Glow Violeta Tech */
+  box-shadow:
+    0 0 18px rgba(192,132,252,0.48),
+    inset 0 0 12px rgba(255,255,255,0.08);
+
+  animation:
+    spin 1s linear infinite,
+    loaderGlow 2.2s ease-in-out infinite;
+}
+
+/* Rotación */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Glow vivo que respira */
+@keyframes loaderGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 18px rgba(192,132,252,0.48),
+      inset 0 0 10px rgba(255,255,255,0.06);
+  }
+  50% {
+    box-shadow:
+      0 0 32px rgba(192,132,252,0.78),
+      inset 0 0 16px rgba(255,255,255,0.14);
+  }
+}
+
+/* ============================================================
+   04) CANVAS FX — NeoGlass Purple Grid/Glow PRO
+=========================================================== */
+canvas#fx {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+  z-index: -10;
+
+  /* Evita que parpadee y mejora el render */
+  will-change: transform, opacity;
+
+  /* Glow violeta-azul general */
+  opacity: 1;
+  filter:
+    brightness(1.18)
+    saturate(1.32)
+    drop-shadow(0 0 18px rgba(192,132,252,0.25))
+    drop-shadow(0 0 28px rgba(96,165,250,0.20));
+  
+  /* Elimina bordes “duros” en canvas */
+  image-rendering: auto;
+}
+
+/* ============================================================
+   03) CANVAS DE FONDO ANIMADO
+   ------------------------------------------------------------
+   La animación está en tu app.js. Aquí solo estilizamos.
+=========================================================== */
+#bg-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  width: 100vw;
+  height: 100vh !important;
+  pointer-events: none;
+
+  filter: brightness(1.25) saturate(1.25);
+}
+
+/* ============================================================
+   05) WRAP GENERAL — NeoGlass Purple Layout PRO
+   ------------------------------------------------------------
+   · Centrado visual perfecto
+   · Sin estiramientos raros
+   · Sin espacios fantasma
+   · Fade-in suave PRO
+=========================================================== */
+
+/* Contenedor maestro */
+.wrap {
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+
+  padding-inline: 26px;
+  padding-bottom: 42px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+
+  /* Fade suave del contenido */
+  opacity: 0;
+  transform: translateY(12px);
+  animation: wrapFadeIn .55s ease forwards;
+}
+
+/* Garantiza estructura limpia */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Evita bloques “fantasma” al final */
+body > *:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* -------- Animación -------- */
+@keyframes wrapFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* -------- Responsive fino -------- */
+@media (max-width: 540px) {
+  .wrap {
+    padding-inline: 18px;
+    gap: 22px;
+  }
+}
+
+
+/* ============================================================
+   06) HEADER (Logo + Título) — Holographic Neon Purple PRO
+=========================================================== */
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 26px;
+  margin-bottom: 36px;
+}
+
+/* Botón Home */
+.logo-return {
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+/* LOGO NEÓN HOLOGRÁFICO — versión PRO */
+.logo-main {
+  width: 24px;
+  height: 24px;
+
+  background: transparent !important;
+  border: none;
+  object-fit: contain;
+
+  /* Halo más limpio y estético */
+  filter:
+    drop-shadow(0 0 14px rgba(180, 94, 255, 0.60))
+    drop-shadow(0 0 26px rgba(140, 70, 255, 0.42));
+
+  transition: transform .28s ease, filter .28s ease;
+}
+
+/* HOVER — efecto pulido */
+.logo-main:hover {
+  transform: translateY(-3px) scale(1.08);
+
+  filter:
+    drop-shadow(0 0 20px rgba(200,110,255,0.85))
+    drop-shadow(0 0 36px rgba(160,75,255,0.60));
+}
+
+/* Pulso holográfico suave */
+@keyframes logoPulse {
+  0%   { filter: drop-shadow(0 0 12px rgba(180, 94, 255, 0.55)); }
+  50%  { filter: drop-shadow(0 0 20px rgba(210,125,255,0.75)); }
+  100% { filter: drop-shadow(0 0 12px rgba(180, 94, 255, 0.55)); }
+}
+
+.logo-main {
+  animation: logoPulse 3.8s ease-in-out infinite;
+}
+
+/* -------- TITULO -------- */
+.title {
+  text-align: center;
+}
+
+/* Título principal */
+.title h1 {
+  font-size: clamp(28px, 5vw, 46px);
+  font-weight: 700;
+
+  background: linear-gradient(90deg, var(--brand), var(--brand-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  letter-spacing: .3px;
+  filter: drop-shadow(0 3px 14px rgba(0,0,0,.45));
+}
+
+/* Subtítulo fino */
+.subtitle {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 14px;
+}
+/* ============================================================
+   07) GRID PRINCIPAL — NeoGlass Layout PRO v2
+   ------------------------------------------------------------
+   ✔ Más ancho (evita sensación de “delgado”)
+   ✔ Mejor equilibrio en desktop grande
+   ✔ Mantiene robustez sin romper móviles
+=========================================================== */
+
+.grid {
+  display: grid;
+
+  /* COLUMNA IZQUIERDA MÁS ANCHA – para que no se vea delgado */
+  grid-template-columns: 380px 1fr;
+
+  gap: 34px;
+  width: 100%;
+
+  transition: grid-template-columns .35s ease, gap .35s ease;
+}
+
+/* -------------------------------------------
+   💻 PANTALLAS GRANDES (hasta 1440px)
+------------------------------------------- */
+@media (max-width: 1440px) {
+  .grid {
+    grid-template-columns: 360px 1fr;
+    gap: 32px;
+  }
+}
+
+/* -------------------------------------------
+   💻 PANTALLAS MEDIAS (1080px)
+------------------------------------------- */
+@media (max-width: 1080px) {
+  .grid {
+    grid-template-columns: 330px 1fr;
+    gap: 28px;
+  }
+}
+
+/* -------------------------------------------
+   📱 TABLETS GRANDES (980px)
+------------------------------------------- */
+@media (max-width: 980px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 32px; /* mantiene aire */
+  }
+}
+
+/* -------------------------------------------
+   📱 MÓVILES NORMALES (540px)
+------------------------------------------- */
+@media (max-width: 540px) {
+  .grid {
+    gap: 26px;
+    padding-inline: 6px; /* mejora respiración sin romper */
+  }
+}
+
+/* -------------------------------------------
+   📱 MÓVILES MUY PEQUEÑOS (420px-)
+------------------------------------------- */
+@media (max-width: 420px) {
+  .grid {
+    gap: 22px;
+  }
+}
+
+/* ============================================================
+   08) CARD — GLASS PANELS PRO (NeoGlass Purple v3)
+   ------------------------------------------------------------
+   ✔ Más volumen
+   ✔ Mejor balance entre glow y nitidez
+   ✔ Headers más limpios
+   ✔ Cuerpo más respirable
+=========================================================== */
+
+.card {
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.065),
+    rgba(255,255,255,0.028)
+  );
+
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius);
+
+  backdrop-filter: var(--blur-mid);
+
+  /* Volumen real + halo sutil morado */
+  box-shadow:
+    0 24px 55px rgba(0,0,0,.50),
+    0 0 22px rgba(160,100,255,0.10),
+    inset 0 0 0 1px rgba(255,255,255,0.08);
+
+  transition: 
+    transform .28s ease, 
+    box-shadow .28s ease, 
+    border-color .28s ease;
+}
+
+/* ------- Hover Premium (solo en pantallas con cursor) ----- */
+@media (hover:hover) {
+  .card:hover {
+    transform: translateY(-4px);
+
+    border-color: rgba(255,255,255,0.20);
+
+    box-shadow:
+      0 30px 70px rgba(0,0,0,.55),
+      0 0 28px rgba(180,125,255,0.18),
+      inset 0 0 0 1px rgba(255,255,255,0.14);
+  }
+}
+
+/* ============================================================
+   HEADER DE LA CARD
+=========================================================== */
+.card .hd {
+  padding: 20px 24px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  /* Línea glass más suave */
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+
+  /* Transmite un efecto “cristal real” */
+  backdrop-filter: var(--blur-soft);
+}
+
+.card .hd h3 {
+  margin: 0;
+
+  /* Más grande, más presence */
+  font-size: 17px;
+  font-weight: 700;
+
+  width: 100%;
+  text-align: center;
+  letter-spacing: .5px;
+
+  /* Efecto GLASS TEXT */
+  color: rgba(255,255,255,0.72);
+
+  background: linear-gradient(
+      180deg,
+      rgba(255,255,255,0.95) 0%,
+      rgba(230,230,255,0.55) 40%,
+      rgba(180,180,255,0.25) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  /* Glow cristal fino */
+  text-shadow:
+    0 2px 8px rgba(255,255,255,0.12),
+    0 0 18px rgba(157,78,221,0.28),
+    0 0 26px rgba(157,78,221,0.18);
+
+  /* Nitidez premium */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+
+/* ============================================================
+   BODY INTERNO DE CADA CARD
+=========================================================== */
+.card .bd {
+  padding: 24px;
+  padding-top: 22px;
+  padding-bottom: 22px;
+}
+
+/* Texto secundario */
+.muted {
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+/* Separador elegante */
+.hr-line {
+  border: 0;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  margin: 20px 0;
+}
+
+/* ============================================================
+   09) INPUTS — NeoGlass Purple Modern v4
+   ------------------------------------------------------------
+   ✔ Líneas limpias (estilo Vercel / Linear + glass)
+   ✔ Focus más elegante, menos ruidoso
+   ✔ Fondo translúcido más moderno
+   ✔ Hover suave, no plasticoso
+=========================================================== */
+
+/* Labels */
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12.5px;
+  font-weight: 500;
+
+  color: var(--muted);
+  letter-spacing: .25px;
+}
+
+/* ------------------------------------------------------------
+   CAMPOS BASE — Nuevo estilo PRO
+------------------------------------------------------------ */
+textarea,
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 12px 14px;
+
+  font-size: 14px;
+  font-weight: 450;
+  color: var(--text);
+
+  border-radius: 14px;
+
+  /* Fondo más moderno: cristal + tinte púrpura */
+  background: rgba(22, 24, 40, 0.55);
+  backdrop-filter: blur(14px) saturate(1.4);
+
+  border: 1px solid rgba(255,255,255,0.10);
+
+  /* Transición suave de UI moderna */
+  transition:
+    border-color .22s ease,
+    background .22s ease,
+    box-shadow .22s ease,
+    transform .14s ease;
+}
+
+/* ------------------------------------------------------------
+   HOVER — Elevación ligera
+------------------------------------------------------------ */
+@media (hover:hover) {
+  textarea:hover,
+  input[type="text"]:hover,
+  input[type="number"]:hover {
+    background: rgba(28, 30, 52, 0.65);
+    border-color: rgba(255,255,255,0.16);
+  }
+}
+
+/* ------------------------------------------------------------
+   FOCUS — Línea violeta moderna + glow suave
+------------------------------------------------------------ */
+textarea:focus,
+input[type="text"]:focus,
+input[type="number"]:focus {
+  background: rgba(38, 17, 64, 0.25);
+  border-color: var(--brand);
+
+  /* Glow moderno, no exagerado */
+  box-shadow:
+    0 0 18px rgba(165, 105, 255, 0.35),
+    inset 0 0 6px rgba(255,255,255,0.06);
+
+  transform: translateY(-1px);
+}
+
+/* Textarea */
+textarea {
+  min-height: 180px;
+  resize: vertical;
+}
+
+/* ============================================================
+   CHECKBOXES — Estilo Minimal Premium
+=========================================================== */
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 13px;
+  color: var(--text);
+  padding: 3px 0;
+}
+
+/* Checkbox moderno */
+.check-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+
+  border-radius: 5px;
+  accent-color: var(--brand);
+
+  /* para navegadores sin accent-color */
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.20);
+
+  transition: transform .15s ease;
+}
+
+.check-row input[type="checkbox"]:active {
+  transform: scale(0.92);
+}
+/* ============================================================
+   10) BOTONES — NeoGlass LED EDGE v6 (Final PRO)
+=========================================================== */
+
+button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  cursor: pointer;
+  border: none;
+
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 600;
+
+  border-radius: 16px;
+  letter-spacing: .25px;
+
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+
+  overflow: hidden;
+  backdrop-filter: blur(16px) saturate(1.4);
+
+  transition:
+    transform .13s cubic-bezier(.2,.7,.3,1),
+    box-shadow .28s ease,
+    filter .28s ease;
+}
+
+/* Micro tap */
+button:active {
+  transform: scale(.96);
+}
+
+
+/* ============================================================
+   LED EDGE — Glow Perimetral Dinámico
+=========================================================== */
+button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+
+  border: 2px solid transparent;
+
+  box-shadow: 0 0 18px var(--led-color);
+
+  opacity: .0;
+  transition: opacity .3s ease, box-shadow .3s ease;
+}
+
+button:hover::before {
+  opacity: .55;
+  box-shadow: 0 0 28px var(--led-color);
+}
+
+/* Glow interno */
+button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+
+  background: radial-gradient(
+    circle at 50% 130%,
+    var(--led-color-strong) 0%,
+    transparent 65%
+  );
+
+  opacity: .0;
+  transition: opacity .35s ease;
+}
+
+button:hover::after {
+  opacity: .22;
+}
+
+
+/* ============================================================
+   BTN PRIMARIO (Purple → Magenta)
+=========================================================== */
+.btn {
+  --led-color: rgba(168, 85, 247, 0.65);
+  --led-color-strong: rgba(192, 132, 252, 0.55);
+
+  background: linear-gradient(180deg, var(--brand), var(--brand-2));
+  color: #0d0e14;
+
+  box-shadow:
+    0 12px 34px rgba(157,78,221,0.35),
+    inset 0 0 12px rgba(255,255,255,0.10);
+}
+
+.btn:hover {
+  filter: brightness(1.06);
+}
+
+
+/* ============================================================
+   BTN SECUNDARIO (Glass oscuro)
+=========================================================== */
+.btn-secondary {
+  --led-color: rgba(255,255,255,.14);
+  --led-color-strong: rgba(255,255,255,.22);
+
+  background: rgba(18, 20, 32, 0.75);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.btn-secondary:hover {
+  background: rgba(24, 26, 44, .85);
+}
+
+
+/* ============================================================
+   BTN GHOST — Glass Minimal
+=========================================================== */
+.btn-ghost {
+  --led-color: rgba(255,255,255,.16);
+  --led-color-strong: rgba(255,255,255,.30);
+
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: var(--text);
+}
+
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+
+/* ============================================================
+   BTN OK — Verde LED
+=========================================================== */
+.btn-ok {
+  --led-color: rgba(16,185,129,.55);
+  --led-color-strong: rgba(52,211,153,.50);
+
+  background: linear-gradient(180deg, #34d399, #10b981);
+  color: #04140c;
+
+  box-shadow:
+    0 12px 34px rgba(16,185,129,.28),
+    0 0 14px var(--led-color);
+}
+
+
+/* ============================================================
+   BTN WARN — Naranja LED
+=========================================================== */
+.btn-warn {
+  --led-color: rgba(249,115,22,.55);
+  --led-color-strong: rgba(245,158,11,.50);
+
+  background: linear-gradient(180deg, #f59e0b, #f97316);
+  color: #231403;
+
+  box-shadow:
+    0 12px 34px rgba(249,115,22,.28),
+    0 0 14px var(--led-color);
+}
+
+
+/* ============================================================
+   BTN DANGER — Rojo LED
+=========================================================== */
+.btn-danger {
+  --led-color: rgba(239,68,68,.60);
+  --led-color-strong: rgba(220,38,38,.50);
+
+  background: linear-gradient(180deg, #ef4444, #dc2626);
+  color: #2b0a0a;
+
+  box-shadow:
+    0 12px 34px rgba(239,68,68,.28),
+    0 0 14px var(--led-color);
+}
+
+
+/* ============================================================
+   CONTROLES (fix de separación + alineación)
+=========================================================== */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+
+  margin-top: 18px;
+  margin-bottom: 6px;
+}
+
+
+
+/* ============================================================
+   11) VIEWER — NeoGlass HOLOFRAME v7
+=========================================================== */
+
+.viewer {
+  height: 270px;
+  border-radius: 22px;
+  position: relative;
+  overflow: hidden;
+
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(22px) saturate(1.35);
+
+  border: 1px solid rgba(255,255,255,0.10);
+
+  box-shadow:
+    0 18px 48px rgba(0,0,0,0.55),
+    inset 0 0 28px rgba(157,78,221,0.18),
+    inset 0 0 50px rgba(157,78,221,0.10);
+
+  transition:
+    transform .35s ease,
+    box-shadow .35s ease;
+}
+
+/* Hover flotante */
+@media (hover:hover) {
+  .viewer:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 22px 58px rgba(0,0,0,0.55),
+      inset 0 0 34px rgba(157,78,221,0.25),
+      inset 0 0 70px rgba(157,78,221,0.15);
+  }
+}
+
+
+/* ============================================================
+   HOLOFRAME — Borde animado holográfico
+=========================================================== */
+.viewer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+
+  background: linear-gradient(
+    130deg,
+    rgba(157,78,221,0.45),
+    rgba(96,165,250,0.45),
+    rgba(157,78,221,0.45)
+  );
+  background-size: 250% 250%;
+  mix-blend-mode: lighten;
+
+  opacity: .18;
+
+  animation: holoFrame 5s ease-in-out infinite;
+}
+
+@keyframes holoFrame {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+/* Neblina violeta */
+.viewer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+
+  background: radial-gradient(
+      circle at 50% 130%,
+      rgba(157,78,221,0.25) 0%,
+      transparent 70%
+  );
+
+  pointer-events: none;
+  opacity: .35;
+}
+
+
+/* ============================================================
+   CONTENEDOR DEL NOMBRE
+=========================================================== */
+.ticker {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-inline: 20px;
+}
+
+
+/* ============================================================
+   TEXTO DEL PARTICIPANTE — HOLO TEXT
+=========================================================== */
+.name {
+  font-size: clamp(26px, 6vw, 52px);
+  font-weight: 800;
+  text-align: center;
+
+  background: linear-gradient(
+    90deg,
+    var(--brand),
+    var(--brand-2),
+    var(--brand)
+  );
+  background-size: 200% auto;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  animation: holoText 3s ease-in-out infinite;
+
+  filter:
+    drop-shadow(0 0 12px rgba(157,78,221,0.55))
+    drop-shadow(0 0 26px rgba(157,78,221,0.25));
+
+  letter-spacing: 0.6px;
+  transition: transform .35s ease;
+}
+
+@keyframes holoText {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.name.stopped {
+  transform: scale(1.10);
+}
+
+/* ============================================================
+   12) LISTA DE GANADORES — NeoGlass Purple HOLO v5
+=========================================================== */
+
+.winners {
+  display: grid;
+  gap: 14px;
+  margin-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* ------------------------------
+   CARD DEL GANADOR (Fila)
+------------------------------ */
+.winner {
+  position: relative;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 14px 18px;
+  border-radius: 16px;
+
+  background: rgba(157,78,221,0.08);
+  border: 1px solid rgba(157,78,221,0.25);
+
+  backdrop-filter: blur(16px) saturate(1.3);
+
+  box-shadow:
+    0 10px 22px rgba(0,0,0,0.45),
+    inset 0 0 22px rgba(157,78,221,0.18);
+
+  overflow: hidden;
+  transition:
+    transform .25s ease,
+    box-shadow .35s ease,
+    background .25s ease;
+}
+
+/* -----------------------------------
+   Glow holográfico interno animado
+----------------------------------- */
+.winner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+
+  background: linear-gradient(
+    120deg,
+    rgba(157,78,221,0.18),
+    rgba(96,165,250,0.18),
+    rgba(157,78,221,0.18)
+  );
+  background-size: 250% 250%;
+  mix-blend-mode: screen;
+
+  opacity: .20;
+  z-index: 0;
+
+  animation: holoRow 6s ease-in-out infinite;
+}
+
+@keyframes holoRow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* -----------------------------------
+   Hover — Levanta y aumenta el halo
+----------------------------------- */
+@media (hover:hover) {
+  .winner:hover {
+    transform: translateY(-3px);
+
+    background: rgba(157,78,221,0.12);
+
+    box-shadow:
+      0 14px 32px rgba(0,0,0,0.55),
+      inset 0 0 28px rgba(157,78,221,0.28),
+      0 0 28px rgba(157,78,221,0.34);
+  }
+}
+
+/* ------------------------------
+   NOMBRE DEL GANADOR
+------------------------------ */
+.winner strong {
+  font-size: 15px;
+  font-weight: 700;
+  z-index: 2;
+
+  background: linear-gradient(90deg, var(--brand), var(--brand-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  text-shadow:
+    0 0 12px rgba(157,78,221,0.40),
+    0 0 22px rgba(157,78,221,0.25);
+}
+
+/* ------------------------------
+   FECHA
+------------------------------ */
+.winner small {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: .3px;
+  z-index: 2;
+
+  opacity: 0.9;
+}
+
+
+
+/* ============================================================
+   14) RESPONSIVE — NeoGlass PRO
+=========================================================== */
+
+/* Tablets y pantallas medianas */
+@media (max-width: 980px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .viewer {
+    height: 230px;
+  }
+}
+
+/* Móviles */
+@media (max-width: 640px) {
+
+  .wrap {
+    padding-inline: 16px;
+  }
+
+  .header {
+    grid-template-columns: auto 1fr auto;
+    gap: 16px;
+  }
+
+  .logo-main {
+    width: 54px;
+    height: 54px;
+  }
+
+  .title h1 {
+    font-size: clamp(26px, 7vw, 34px);
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+
+  .controls button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .two-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .viewer {
+    height: 200px;
+  }
+
+  .name {
+    font-size: clamp(22px, 8vw, 36px);
+  }
+
+  .footer {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}
+
+/* Mini móviles (muy pequeños) */
+@media (max-width: 390px) {
+  .title h1 {
+    font-size: 24px;
+  }
+  .viewer {
+    height: 180px;
+  }
+  .logo-main {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* ============================================================
+   15) REDUCE MOTION — Accesibilidad PRO
+=========================================================== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* No zoom exagerado en el ganador */
+  .name {
+    transform: none !important;
+  }
+
+  /* Detener partículas o efectos intensos */
+  canvas#fx {
+    display: none !important;
+  }
+}
