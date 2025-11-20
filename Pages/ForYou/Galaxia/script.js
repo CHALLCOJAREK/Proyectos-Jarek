@@ -679,31 +679,25 @@ function closeModal() {
 // ======================================================
 
 async function initApp() {
-  try {
-    createDomStars(150);
-    await startLoader();
+  createDomStars(150);
+  await startLoader();
 
-    // Ocultar pantalla de carga
-    const cargando = document.getElementById("cargando");
-    if (cargando) cargando.style.display = "none";
+  const cargando = document.getElementById("cargando");
+  if (cargando) cargando.style.display = "none";
 
-    await loadThreeResources();
+  await loadThreeResources();
 
-    createScene();
-    createCamera();
-    createRenderer();
-    createLights();
-    createRotatingImage();
-    createRingsAndText();
-    createFloatingWords();
-    createStarField();
-    initUIEvents();
-    animate();
-  } catch (err) {
-    console.error("Error al inicializar la aplicación:", err);
-    document.body.innerHTML =
-      '<div style="color:red;text-align:center;padding:50px;font-size:24px;">Error al cargar la experiencia. Puedes recargar la página o avisarle a Jarek 💙</div>';
-  }
+  createScene();
+  createCamera();
+  createRenderer();
+  createLights();
+  createRotatingImage();
+  createRingsAndText();
+  createFloatingWords();
+  createStarField();
+  initUIEvents();
+  animate();
 }
+
 
 document.addEventListener("DOMContentLoaded", initApp);
