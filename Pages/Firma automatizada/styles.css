@@ -1,143 +1,836 @@
-/* estilos.css */
-body {
-  font-family: 'Arial', sans-serif;
+/* ============================================================
+   ONIX•DARK NEOGLASS — CSS FINAL (FÉNIX x JAREK)
+   Negro + plata tech · Glass real · Animaciones suaves
+=========================================================== */
+
+/* ============================================================
+   RESET GLOBAL — NeoTech Magma Ultra (Fénix Upgrade)
+   Base limpia, rendering suave, scroll fluido y tipografía nítida
+============================================================ */
+
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
+  box-sizing: border-box;
+
+  /* Renderización más fina */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.firma-container {
-  max-width: 600px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  padding: 25px;
-  transition: all 0.3s ease;
-}
-
-.firma-container:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.columna-firma {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.col-izquierda {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-right: 20px;
-}
-
-.foto {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 4px solid #ffffff;
-  margin-bottom: 15px;
-}
-
-.foto img {
+html {
   width: 100%;
-  height: auto;
-}
-
-.logo-empresa img {
-  width: 90px;
-  height: auto;
-}
-
-.linea-separadora-vertical {
-  width: 2px;
-  background-color: #ddd;
   height: 100%;
-  margin: 0 20px;
+  scroll-behavior: smooth;
+
+  /* Anti-blur + performance */
+  text-rendering: optimizeLegibility;
 }
 
-.col-derecha {
-  flex-grow: 1;
+body {
+  width: 100%;
+  min-height: 100vh;
+
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+
+  background: #020617; /* Night Deep Indigo */
+  color: #f9fafb;
+
+  overflow-x: hidden;
+
+  /* Evita saltos al cargar scroll */
+  overscroll-behavior-y: none;
+
+  /* Mejora animaciones */
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 
-.nombre {
-  font-size: 28px;
-  color: #333;
-  font-weight: 600;
-  margin-bottom: 5px;
+/* Suaviza imágenes y SVG */
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
-.cargo {
-  font-size: 20px;
-  color: #555;
-  font-style: italic;
-  margin-bottom: 15px;
+/* Limpia botones */
+button {
+  font-family: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
-.contacto {
-  font-size: 16px;
-  line-height: 1.6;
-}
-
-.contacto td {
-  padding: 8px 0;
-}
-
-.contacto a {
-  color: #333;
+/* Enlaces sin subrayado */
+a {
+  color: inherit;
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.contacto a:hover {
-  color: #0073e6;
-  text-decoration: underline;
+/* Listas limpias */
+ul,
+ol {
+  list-style: none;
 }
 
-.icono {
+/* ============================================================
+   PALETA Y VARIABLES — ONIX + SILVER QUANTUM v4
+   Elegancia fría, brillo metálico, sombras balanceadas,
+   glass premium y profundidad real.
+=========================================================== */
+:root {
+  /* ========================================================
+     1. SILVER CORE — tonos principales metálicos
+  ======================================================== */
+  --accent: #f3f4f6;                /* Plata casi pura */
+  --accent-soft: rgba(209, 213, 219, 0.28);
+  --accent-strong: #f9fafb;         /* Blanco metalizado */
+  --accent-glow: rgba(209, 213, 219, 0.55);
+
+  /* Luz secundaria fría (azul hielo premium) */
+  --accent-cold: #38bdf8;
+  --accent-cold-soft: rgba(56, 189, 248, 0.28);
+
+  /* ========================================================
+     2. ONIX BASE — profundidad, lujo y contraste
+  ======================================================== */
+  --bg-deep: #01040f;               /* Onix puro */
+  --bg-inner: #020617;              /* Onix profundo */
+  --bg-shadow: rgba(0, 0, 0, 0.6);  /* Para depth real */
+
+  /* Glass realista: tonos navy + transparencia ideal */
+  --glass: rgba(10, 16, 33, 0.72);
+  --glass-strong: rgba(10, 16, 33, 0.92);
+
+  /* ========================================================
+     3. BORDES — precisión industrial
+  ======================================================== */
+  --border: rgba(148, 163, 184, 0.33);       /* Borde plata suave */
+  --border-soft: rgba(148, 163, 184, 0.18);
+  --border-strong: rgba(243, 244, 246, 0.20); /* Borde blanco metal */
+
+  /* Glow lineal para marcos */
+  --edge-glow: 0 0 18px rgba(148, 163, 184, 0.45);
+
+  /* ========================================================
+     4. TEXTO — plata viva
+  ======================================================== */
+  --text-main: #f3f4f6;        /* Plata clara */
+  --text-soft: #9ca3af;        /* Gris frío */
+  --text-mute: #6b7280;        /* Tono humo */
+
+  /* ========================================================
+     5. RADIOS — estética suave premium
+  ======================================================== */
+  --radius: 22px;
+  --radius-lg: 30px;
+  --radius-sm: 14px;
+
+  /* ========================================================
+     6. BLUR — glass a nivel app desktop
+  ======================================================== */
+  --blur: blur(24px) saturate(1.35) brightness(1.15);
+  --blur-strong: blur(32px) saturate(1.4);
+
+  /* Sombra premium estándar */
+  --shadow-soft: 0 12px 28px rgba(0,0,0,0.45);
+  --shadow-hard: 0 22px 48px rgba(0,0,0,0.55);
+}
+
+/* ============================================================
+   FONDO GLOBAL CON HALOS — Silver Quantum v4
+   Profundidad real, halos suaves, transición tonal premium
+=========================================================== */
+body {
+  background:
+    /* Halo principal — Plata suave superior derecha */
+    radial-gradient(
+      1200px 900px at 82% -12%,
+      rgba(229, 231, 235, 0.22),
+      transparent 70%
+    ),
+
+    /* Halo secundario — Azul hielo suave inferior izquierda */
+    radial-gradient(
+      1000px 780px at 8% 115%,
+      rgba(56, 189, 248, 0.20),
+      transparent 68%
+    ),
+
+    /* Glow ambiental tenue */
+    radial-gradient(
+      1600px 1100px at 50% 50%,
+      rgba(148, 163, 184, 0.08),
+      transparent 85%
+    ),
+
+    /* Fondo base Onix */
+    var(--bg-deep);
+
+  /* Suaviza más en pantallas grandes */
+  background-attachment: fixed;
+
+  /* Para que el canvas se fusione mejor */
+  backdrop-filter: brightness(1.06) saturate(1.1);
+}
+
+
+/* ============================================================
+   INTRO LOADER — ANILLO PLATA
+=========================================================== */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top, #020617 0%, #020617 40%, #020617 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  animation: introFadeOut 1.1s ease forwards;
+  animation-delay: 1.6s;
+}
+
+@keyframes introFadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.loader {
+  width: 80px;
+  height: 80px;
+  border-radius: 999px;
+  border: 4px solid rgba(148, 163, 184, 0.22);
+  border-top-color: var(--accent-strong);
+  border-bottom-color: var(--accent-cold-soft);
+  box-shadow:
+    0 0 20px rgba(148, 163, 184, 0.45),
+    0 0 50px rgba(15, 23, 42, 0.9);
+  animation: spinLoader 1.1s linear infinite, loaderGlow 2.4s ease-in-out infinite;
+}
+
+@keyframes spinLoader {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loaderGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 18px rgba(148, 163, 184, 0.55),
+      0 0 60px rgba(15, 23, 42, 0.95);
+  }
+  50% {
+    box-shadow:
+      0 0 32px rgba(148, 163, 184, 0.9),
+      0 0 90px rgba(15, 23, 42, 1);
+  }
+}
+
+/* ============================================================
+   CANVAS — CONSTELLATION ONIX PRO
+=========================================================== */
+#bg-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  z-index: -10;
+  pointer-events: none;
+
+  background: transparent;
+
+  /* Glow frío general */
+  filter:
+    drop-shadow(0 0 12px rgba(56,189,248,0.22))
+    drop-shadow(0 0 26px rgba(148,163,184,0.18));
+}
+/* ============================================================
+   LAYOUT GENERAL — ONIX • ULTRA PREMIUM
+   Respira mejor • Más centrado • Scroll limpio • Sin saltos
+=========================================================== */
+
+.layout {
+  width: 100%;
+  min-height: 100vh;
+
+  padding-top: clamp(40px, 6vh, 80px);
+  padding-bottom: clamp(40px, 6vh, 80px);
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  /* Scroll elegante (reemplaza el feo default) */
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148,163,184,.32) transparent;
+}
+
+/* Scrollbar para Chrome/Edge */
+.layout::-webkit-scrollbar {
+  width: 10px;
+}
+
+.layout::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.layout::-webkit-scrollbar-thumb {
+  background: rgba(148,163,184,0.28);
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+}
+
+.layout::-webkit-scrollbar-thumb:hover {
+  background: rgba(148,163,184,0.42);
+}
+
+/* Centrado óptimo en pantallas grandes */
+@media (min-width: 1600px) {
+  .layout {
+    padding-top: 90px;
+  }
+}
+
+/* Optimizado para móviles */
+@media (max-width: 540px) {
+  .layout {
+    padding-top: 32px;
+    padding-bottom: 60px;
+  }
+}
+
+/* ============================================================
+   MAIN CARD — ONIX GLASS ULTRA v7  
+   Más profundidad • Capa de vidrio real • Glow metálico frío  
+=========================================================== */
+
+.main-card {
+  width: min(92%, 1250px);
+
+  /* Vidrio metálico con doble capa */
+  background:
+    linear-gradient(
+      145deg,
+      rgba(15, 23, 42, 0.82),
+      rgba(15, 23, 42, 0.94)
+    ),
+    var(--glass);
+
+  border-radius: var(--radius-lg);
+
+  /* Bordes sutiles + textura */
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  outline: 1px solid rgba(255, 255, 255, 0.03);
+
+  /* Blur del vidrio */
+  backdrop-filter: blur(26px) saturate(1.35);
+
+  /* GRID más equilibrado */
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(32px, 4vw, 48px);
+
+  padding: clamp(32px, 4vw, 50px);
+  position: relative;
+
+  /* Animación de aparición */
+  animation: fadeUpCard 0.9s ease forwards;
+
+  /* Sombras premium */
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.85),
+    inset 0 0 0 1px rgba(148, 163, 184, 0.06),
+    inset 0 0 40px rgba(56, 189, 248, 0.04);
+}
+
+@keyframes fadeUpCard {
+  from {
+    opacity: 0;
+    transform: translateY(26px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================================
+   HOLOGRAPHIC EDGE — LUZ DINÁMICA alrededor del panel
+=========================================================== */
+
+.main-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+
+  background: linear-gradient(
+    135deg,
+    rgba(56, 189, 248, 0.18),
+    transparent 35%,
+    transparent 65%,
+    rgba(148, 163, 184, 0.2)
+  );
+
+  opacity: 0.65;
+  mix-blend-mode: soft-light;
+
+  animation: holoSweep 6s ease-in-out infinite;
+}
+
+@keyframes holoSweep {
+  0%   { opacity: 0.35; }
+  50%  { opacity: 0.80; }
+  100% { opacity: 0.35; }
+}
+
+/* ============================================================
+   RESPONSIVE — Panel estable sin romper
+=========================================================== */
+
+@media (max-width: 1080px) {
+  .main-card {
+    grid-template-columns: 1fr;
+    padding: 34px 32px 42px;
+  }
+}
+
+@media (max-width: 540px) {
+  .main-card {
+    border-radius: 20px;
+    gap: 28px;
+  }
+}
+/* ============================================================
+   HEADER SUPERIOR — ONIX TITANIUM v8
+=========================================================== */
+
+.main-header {
+  grid-column: span 2;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  margin-bottom: 14px;
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+
+  /* Glow sutil debajo */
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.05),
+    0 8px 25px rgba(15,23,42,0.65);
+}
+
+/* ------------------------------------------------------------
+   ICONO CHIP — METAL FROST + LUZ DINÁMICA EN EL BORDE
+------------------------------------------------------------ */
+.header-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(
+      155deg,
+      rgba(148, 163, 184, 0.22),
+      rgba(56, 189, 248, 0.12)
+    ),
+    rgba(255,255,255,0.02);
+
+  border: 1px solid rgba(148,163,184,0.25);
+
+  color: var(--accent-strong);
   font-size: 20px;
-  margin-right: 12px;
-  color: #0073e6;
+
+  /* Sombra metálica real */
+  box-shadow:
+    0 10px 28px rgba(0,0,0,0.75),
+    inset 0 0 12px rgba(148,163,184,0.12);
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    filter .25s ease;
 }
 
-.form-container {
+.header-icon:hover {
+  transform: translateY(-3px);
+
+  filter: brightness(1.15);
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.9),
+    inset 0 0 16px rgba(148,163,184,0.22),
+    0 0 40px rgba(56,189,248,0.35);
+}
+
+/* ------------------------------------------------------------
+   TITULO — H1 ONIX PRO: Pesado, limpio, elegante
+------------------------------------------------------------ */
+.main-header h1 {
+  font-size: clamp(20px, 2.2vw, 26px);
+  font-weight: 650;
+  letter-spacing: 0.045em;
+
+  text-transform: uppercase;
+  color: var(--text-main);
+
+  font-family: "Inter", system-ui, sans-serif;
+
+  /* Luz fría mínima */
+  text-shadow:
+    0 0 6px rgba(56, 189, 248, 0.14),
+    0 0 16px rgba(148,163,184,0.10);
+}
+
+/* ------------------------------------------------------------
+   SUBTÍTULO / DESCRIPCIÓN
+------------------------------------------------------------ */
+.main-header small {
+  display: block;
+  margin-top: 2px;
+
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+
+  color: var(--text-soft);
+
+  opacity: 0.85;
+}
+
+
+/* ============================================================
+   PANEL IZQUIERDO — ONIX TITANIUM PRO v9
+=========================================================== */
+
+.left-panel {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  background-color: #ffffff;
+  gap: 22px;
+}
+
+/* ------------------------------------------------------------
+   TARJETA DE PREVIEW — Vidrio Onix con halo metálico animado
+------------------------------------------------------------ */
+.tarjeta {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(56,189,248,0.16), transparent 55%),
+    radial-gradient(circle at 90% 100%, rgba(148,163,184,0.22), transparent 60%),
+    linear-gradient(145deg, rgba(15,23,42,0.90), rgba(15,23,42,0.82));
+
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(148,163,184,0.30);
+
+  padding: 32px 28px;
+
+  /* Profundidad */
+  box-shadow:
+    0 26px 70px rgba(0,0,0,0.85),
+    0 0 80px rgba(15,23,42,0.95),
+    inset 0 0 0 1px rgba(255,255,255,0.02);
+
+  animation: floatCard 6.5s ease-in-out infinite;
+}
+
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ------------------------------------------------------------
+   MEDIA ZONE — Fotos / Logo con acabado premium
+------------------------------------------------------------ */
+.media-zone {
+  display: flex;
+  gap: 22px;
+  margin-bottom: 22px;
+}
+
+.preview-foto,
+.preview-logo {
+  width: 96px;
+  height: 96px;
+  border-radius: 20px;
+  object-fit: cover;
+
+  /* Vidrio + halo */
+  background: radial-gradient(circle at top, rgba(148,163,184,0.25), transparent 65%);
+  border: 2px solid rgba(148,163,184,0.45);
+
+  box-shadow:
+    0 12px 32px rgba(0,0,0,0.85),
+    0 0 26px rgba(148,163,184,0.55),
+    inset 0 0 12px rgba(255,255,255,0.06);
+
+  transition: transform .25s ease, filter .25s ease;
+}
+
+/* Efecto hover premium */
+.preview-foto:hover,
+.preview-logo:hover {
+  transform: translateY(-3px) scale(1.03);
+  filter: brightness(1.12);
+}
+
+/* ------------------------------------------------------------
+   NOMBRE — Tipografía elegante con glow metálico
+------------------------------------------------------------ */
+.preview-nombre {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.035em;
+
+  background: linear-gradient(120deg, var(--accent-strong), var(--accent-cold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  text-shadow:
+    0 0 12px rgba(148,163,184,0.45),
+    0 0 22px rgba(56,189,248,0.25);
+}
+
+/* ------------------------------------------------------------
+   CARGO
+------------------------------------------------------------ */
+.preview-cargo {
+  color: var(--text-soft);
+  font-size: 14px;
+  margin-top: 4px;
+  margin-bottom: 14px;
+}
+
+/* ------------------------------------------------------------
+   DATOS CONTACTO
+------------------------------------------------------------ */
+.preview-dato {
+  font-size: 14px;
+  color: var(--text-main);
+  opacity: 0.92;
+  margin-bottom: 6px;
+  letter-spacing: 0.015em;
+}
+
+/* ------------------------------------------------------------
+   BLOQUE HTML GENERADO — Terminal Onix Silver
+------------------------------------------------------------ */
+#codigoHtml {
+  margin-top: 22px;
+  padding: 16px 18px;
+  border-radius: 18px;
+
+  background: rgba(2,6,23,0.88);
+  border: 1px solid rgba(148,163,184,0.30);
+
+  color: var(--text-soft);
+  font-size: 12.5px;
+  line-height: 1.45;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+
+  max-height: 300px;
+  overflow-y: auto;
+
+  box-shadow:
+    inset 0 0 18px rgba(148,163,184,0.12),
+    0 0 30px rgba(0,0,0,0.85);
+}
+
+/* Scroll más fino */
+#codigoHtml::-webkit-scrollbar {
+  width: 6px;
+}
+#codigoHtml::-webkit-scrollbar-thumb {
+  background: rgba(148,163,184,0.32);
   border-radius: 12px;
-  padding: 25px;
-  border: 1px solid #ddd;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================================
+   PANEL DERECHO — FORM CONFIG
+=========================================================== */
+
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  padding-right: 4px;
+}
+
+.editor-header h2 {
+  color: var(--accent-strong);
+  font-size: 17px;
+  margin-bottom: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  text-shadow: 0 0 16px rgba(148, 163, 184, 0.5);
+}
+
+.editor-header p {
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+.editor-group {
+  margin-bottom: 16px;
+}
+
+.editor-group label {
+  font-size: 12px;
+  color: var(--text-soft);
+  margin-bottom: 6px;
+  display: block;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* INPUTS GLASS */
+.editor-group input {
   width: 100%;
-  max-width: 400px;
+  padding: 11px 13px;
+  background: rgba(15, 23, 42, 0.95);
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  color: var(--text-main);
+  font-size: 13px;
+  outline: none;
+
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.9);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, transform 0.12s ease;
 }
 
-.form-container label {
-  margin-bottom: 5px;
+.editor-group input::placeholder {
+  color: rgba(148, 163, 184, 0.7);
 }
 
-.form-container input, .form-container textarea {
-  padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  width: 100%;
+.editor-group input:hover {
+  border-color: rgba(148, 163, 184, 0.6);
+  background: rgba(15, 23, 42, 0.98);
 }
 
-.form-container button {
-  padding: 10px 20px;
-  background-color: #0073e6;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
+.editor-group input:focus {
+  border-color: var(--accent-cold);
+  background: rgba(15, 23, 42, 1);
+
+  box-shadow:
+    0 0 0 1px rgba(56, 189, 248, 0.55),
+    0 0 26px rgba(56, 189, 248, 0.32);
+  transform: translateY(-1px);
+}
+
+/* BOTONES FORM */
+.editor-actions {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.editor-actions button {
+  padding: 11px 14px;
+  font-size: 13px;
+  border-radius: 14px;
+
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  background: radial-gradient(circle at top left, rgba(148, 163, 184, 0.2), rgba(15, 23, 42, 0.95));
+  color: var(--accent-strong);
+
   cursor: pointer;
-  margin-top: 15px;
+  transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
 
-.form-container button:hover {
-  background-color: #005bb5;
+.editor-actions button:hover {
+  background: radial-gradient(circle at top, rgba(248, 250, 252, 0.18), rgba(15, 23, 42, 1));
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.9),
+    0 0 26px rgba(148, 163, 184, 0.6);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   CREDITS
+=========================================================== */
+
+.credits {
+  position: fixed;
+  bottom: 16px;
+  right: 20px;
+  font-size: 13px;
+  color: rgba(148, 163, 184, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+/* ============================================================
+   RESPONSIVE
+=========================================================== */
+
+@media (max-width: 1100px) {
+  .main-card {
+    grid-template-columns: 1fr;
+    padding: 30px 24px 40px;
+    gap: 32px;
+  }
+
+  .main-header {
+    grid-column: span 1;
+  }
+
+  #bg-canvas {
+    opacity: 0.55;
+    filter: blur(4px) brightness(0.95);
+  }
+}
+
+@media (max-width: 720px) {
+  .layout {
+    padding-top: 32px;
+  }
+
+  .main-card {
+    width: 94%;
+    padding: 24px 18px 32px;
+  }
+
+  .media-zone {
+    flex-direction: column;
+  }
+
+  .preview-foto,
+  .preview-logo {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-card {
+    padding: 20px 16px 28px;
+    gap: 24px;
+  }
+
+  .main-header h1 {
+    font-size: 18px;
+  }
 }
