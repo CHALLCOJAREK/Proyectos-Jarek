@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Para Ti, Juli 🌷</title>
+
+  <!-- Fuente -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+
+  <!-- AUDIO -->
+  <audio id="bg-audio" src="https://dl.dropboxusercontent.com/scl/fi/esct592hxwzjyf9a2egpc/Si-supieras-lo-que-siento-con-mirarte....mp3?rlkey=xqbaohnpyd7b3mejkvvdg6dlq&st=2vagx61x&dl=1" preload="auto"></audio>
+
+  <!-- CARD -->
+  <div class="card">
+
+    <h1 class="title">Solo quiero que sepas esto.</h1>
+
+    <p class="poem">
+     <span>Juli… estoy aprendiendo a sentir de verdad.</span>
+<span>A veces hablo de más, y otras pienso demasiado.</span>
+<span>No me sale perfecto todavía.</span>
+<span>Estoy entendiendo cómo manejar lo que me pasa por dentro.</span>
+
+<span>Es la primera vez que un sentimiento me mueve así,</span>
+<span>y a veces me pierdo entre lo que quiero decir</span>
+<span>y lo que quizá debería guardar.</span>
+
+<span>Si en algún momento mi forma fue torpe,</span>
+<span>si mis palabras pesaron,</span>
+<span>o si te hice sentir presión sin querer…</span>
+<span>de corazón, perdóname.</span>
+
+<span>Eres alguien especial para mí,</span>
+<span>con tus luces, tus gestos, tus silencios,</span>
+<span>y esos “defectitos” que tú ves</span>
+<span>y que para mí son parte de tu encanto.</span>
+
+<span>No quiero apresurarte,</span>
+<span>ni empujarte,</span>
+<span>ni adelantarte pasos que tú necesitas vivir a tu ritmo.</span>
+
+<span>Solo quiero que tengas algo claro:</span>
+<span>me importas… mucho.</span>
+
+<span>Y aquí estoy, con calma,</span>
+<span>aprendiendo a caminar a tu paso,</span>
+<span>sin ruido, sin prisa,</span>
+<span>con el corazón abierto y en paz,</span>
+<span>sin querer forzar nada.</span>
+<span>Solo queriendo estar cerca de ti,</span>
+<span>y que sepas que puedes contar conmigo.</span>   
+
+    </p>
+
+    <a href="flores.html" class="btn">Este regalo para ti 🌷</a>
+  </div>
+
+  <!-- FLORES FLOTANDO -->
+  <script>
+    const flowers = ["🌷","🌻"];
+    const total = 40;
+
+    function createFlower() {
+      const f = document.createElement("div");
+      f.classList.add("flower");
+      f.textContent = flowers[Math.floor(Math.random()*flowers.length)];
+
+      f.style.left = Math.random()*100 + "vw";
+      f.style.fontSize = (18 + Math.random()*10) + "px";
+      f.style.animationDuration = (6 + Math.random()*6) + "s";
+      f.style.opacity = 0.3 + Math.random()*0.5;
+
+      document.body.appendChild(f);
+
+      setTimeout(()=>{ f.remove(); }, 12000);
+    }
+
+    setInterval(createFlower, 350);
+
+    // AUDIO ACTIVO SUAVEMENTE
+    const audio = document.getElementById("bg-audio");
+    audio.volume = 0.3;
+
+    function playAudio() {
+      audio.play().catch(()=>{});
+      document.removeEventListener("click", playAudio);
+      document.removeEventListener("touchstart", playAudio);
+      document.removeEventListener("scroll", playAudio);
+    }
+
+    document.addEventListener("click", playAudio);
+    document.addEventListener("touchstart", playAudio);
+    document.addEventListener("scroll", playAudio);
+
+  </script>
+
+</body>
+</html>

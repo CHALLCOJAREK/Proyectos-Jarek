@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌷 Tulipanes para ti</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/66Ct5ryw/j2.png" />
+
+    <!-- Fuente -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Brython -->
+    <script src="https://cdn.jsdelivr.net/npm/brython@3.12.0/brython.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/brython@3.12.0/brython_stdlib.js"></script>
+
+    <style>
+       body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle at top, #1a1d2f 0%, #0b0c14 60%, #05060a 100%);
+    font-family: 'Outfit', sans-serif;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ======================
+   TITULO + STATUS
+======================= */
+h1 {
+    margin-top: 35px;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 400;
+    text-align: center;
+
+    color: #fff;
+    text-shadow:
+        0 0 10px rgba(255, 80, 170, 0.75),
+        0 0 20px rgba(255, 80, 170, 0.35);
+
+    letter-spacing: 1px;
+    animation: fadeIn 1.2s ease forwards;
+    opacity: 0;
+}
+
+.status {
+    margin-top: 14px;
+    font-size: clamp(1rem, 1.8vw, 1.3rem);
+    padding: 10px 22px;
+    border-radius: 14px;
+    text-align: center;
+
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 0 20px rgba(255,255,255,0.03),
+        inset 0 0 8px rgba(255,255,255,0.04);
+
+    animation: fadeIn 1.6s ease forwards;
+    opacity: 0;
+}
+
+/* ======================
+   CONTENEDOR CANVAS
+======================= */
+.canvas-container {
+    margin-top: 30px;
+    padding: clamp(14px, 3vw, 26px);
+    border-radius: 22px;
+
+    background: rgba(255,255,255,0.02);
+    backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        0 12px 40px rgba(0,0,0,0.65),
+        0 0 65px rgba(40, 60, 120, 0.25),
+        inset 0 0 0 1px rgba(255,255,255,0.12);
+
+    animation: fadeInUp 1.3s ease forwards;
+    opacity: 0;
+
+    /* RESPONSIVO */
+    max-width: 95vw;
+}
+
+/* El canvas se adapta sin perder proporción */
+#turtleCanvas {
+    width: 100%;
+    height: auto;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow:
+        0 0 12px rgba(255,255,255,0.1),
+        0 0 40px rgba(255,255,255,0.06),
+        inset 0 0 10px rgba(0,0,0,0.15);
+}
+
+/* ======================
+   CRÉDITOS
+======================= */
+.credit {
+    position: fixed;
+    bottom: 12px;
+    right: 12px;
+    font-size: clamp(11px, 1.4vw, 14px);
+    color: rgba(255,255,255,0.72);
+    backdrop-filter: blur(6px);
+    padding: 6px 10px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.2);
+    z-index: 50;
+}
+
+.credit a {
+    color: rgba(255,255,255,0.9);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* ======================
+   ANIMACIONES
+======================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ======================
+      BREAKPOINTS
+======================= */
+
+/* Tablets */
+@media (max-width: 900px) {
+    .canvas-container {
+        padding: 18px;
+    }
+}
+
+/* Móviles */
+@media (max-width: 600px) {
+    body {
+        padding: 16px 0;
+    }
+
+    .canvas-container {
+        padding: 12px;
+        border-radius: 18px;
+    }
+
+    #turtleCanvas {
+        border-radius: 14px;
+    }
+}
+
+
+    </style>
+</head>
+
+<body onload="brython()">
+
+    <h1>🌷 Tulipanes para ti</h1>
+    <div id="status" class="status">Preparando algo bonito para ti…</div>
+
+    <div class="canvas-container">
+        <canvas id="turtleCanvas" width="800" height="600"></canvas>
+    </div>
+
+   
+
+    <!-- CÓDIGO PYTHON -->
+    <script type="text/python">
+        from browser import document
+        from browser.timer import set_timeout, clear_timeout
+        import json
+
+        # Variables globales
+        turtle_data = None
+        drawing_active = False
+        current_shape = 0
+        drawing_timeout = None
+        turtle_speed = 7  # velocidad óptima para animación automática
+
+        # Canvas setup
+        canvas = document['turtleCanvas']
+        ctx = canvas.getContext('2d')
+        canvas_width = 800
+        canvas_height = 600
+
+        turtle_x = canvas_width // 2
+        turtle_y = canvas_height // 2
+        turtle_pen_down = True
+
+        def clear_canvas():
+            ctx.clearRect(0, 0, canvas_width, canvas_height)
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.02)'
+            ctx.fillRect(0, 0, canvas_width, canvas_height)
+
+        def set_color(r, g, b):
+            ctx.strokeStyle = f'rgb({int(r*255)}, {int(g*255)}, {int(b*255)})'
+            ctx.fillStyle = f'rgb({int(r*255)}, {int(g*255)}, {int(b*255)})'
+            ctx.lineWidth = 1
+
+        def pen_up():
+            global turtle_pen_down
+            turtle_pen_down = False
+
+        def pen_down():
+            global turtle_pen_down
+            turtle_pen_down = True
+
+        def goto(x, y):
+            global turtle_x, turtle_y
+            scale_factor = min(canvas_width, canvas_height) / 800
+            scaled_x = canvas_width // 2 + x * scale_factor * 0.8
+            scaled_y = canvas_height // 2 + y * scale_factor * 0.8
+
+            if turtle_pen_down:
+                ctx.lineTo(scaled_x, scaled_y)
+
+            turtle_x = scaled_x
+            turtle_y = scaled_y
+
+        def begin_fill():
+            ctx.beginPath()
+            global first_point
+            first_point = (turtle_x, turtle_y)
+
+        def end_fill():
+            if 'first_point' in globals():
+                ctx.lineTo(first_point[0], first_point[1])
+            ctx.fill()
+
+        def load_data():
+            global turtle_data
+            try:
+                import urllib.request
+                response = urllib.request.urlopen('./data.json')
+                data = response.read()
+                if isinstance(data, bytes):
+                    data = data.decode('utf-8')
+                turtle_data = json.loads(data)
+                document['status'].textContent = "Dibujando algo especial para ti…"
+                return True
+            except Exception as e:
+                document['status'].textContent = f"Error cargando datos: {str(e)}"
+                return False
+
+        def draw_next():
+            global current_shape, drawing_active, drawing_timeout
+
+            try:
+                if not drawing_active or not turtle_data:
+                    return
+
+                if current_shape >= len(turtle_data["coordenadas"]):
+                    drawing_active = False
+                    document['status'].textContent = "Listo 🌷💕"
+                    return
+
+                shape = turtle_data["coordenadas"][current_shape]
+                color = turtle_data["color"][current_shape]
+
+                progress = int(((current_shape + 1) / len(turtle_data["coordenadas"])) * 100)
+                document['status'].textContent = f"Dibujando… {progress}%"
+
+                set_color(color[0], color[1], color[2])
+                begin_fill()
+
+                pen_up()
+                goto(shape[0][0], shape[0][1])
+                pen_down()
+                ctx.moveTo(turtle_x, turtle_y)
+
+                for i in range(1, len(shape)):
+                    goto(shape[i][0], shape[i][1])
+
+                end_fill()
+                current_shape += 1
+
+                if drawing_active:
+                    delay = max(5, 45 - turtle_speed * 4)
+                    drawing_timeout = set_timeout(draw_next, delay)
+
+            except Exception as e:
+                document['status'].textContent = "Ocurrió un error en el dibujo :("
+                drawing_active = False
+
+        def start_drawing():
+            global drawing_active, current_shape, drawing_timeout
+
+            if not turtle_data:
+                if not load_data():
+                    return
+
+            if drawing_timeout:
+                clear_timeout(drawing_timeout)
+
+            drawing_active = True
+            current_shape = 0
+            clear_canvas()
+            draw_next()
+
+        # INICIALIZACIÓN AUTOMÁTICA
+        clear_canvas()
+        document['status'].textContent = "Preparando algo bonito para ti…"
+        # Llamar al dibujo automáticamente
+        start_drawing()
+    </script>
+
+</body>
+</html>

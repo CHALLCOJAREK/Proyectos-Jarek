@@ -1,0 +1,202 @@
+/* ============================================================
+   RESET GLOBAL — limpio, preciso
+============================================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   CUERPO GENERAL — neón suave + ambiente premium
+============================================================ */
+body {
+  font-family: 'Outfit', sans-serif;
+  background: radial-gradient(circle at top, #222437, #0d0d14 70%);
+  color: #fff;
+  min-height: 100vh;
+  padding: 32px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Glow más elegante y amplio */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 540px;
+  height: 540px;
+  background: radial-gradient(circle, rgba(255, 140, 255, 0.14), transparent 70%);
+  filter: blur(70px);
+  z-index: -2;
+  animation: pulseGlow 8s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.32; }
+}
+
+/* ============================================================
+   CARD PRINCIPAL — estética glass premium
+============================================================ */
+.card {
+  background: rgba(255,255,255,0.05);
+  padding: 42px 28px;
+  border-radius: 22px;
+  backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.13);
+  text-align: center;
+
+  box-shadow:
+    0 0 40px rgba(255,255,255,0.04),
+    0 20px 60px rgba(0,0,0,0.55);
+
+  max-width: 560px;
+  opacity: 0;
+  animation: fadeInCard 1.4s ease forwards, breathe 7s ease-in-out infinite 2s;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes fadeInCard {
+  0% { transform: translateY(26px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* ============================================================
+   TÍTULO — más limpio y elegante
+============================================================ */
+.title {
+  font-size: 1.82rem;
+  line-height: 1.35;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 1.7s ease forwards;
+}
+
+@keyframes fadeUp {
+  0% { transform: translateY(16px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* ============================================================
+   POEMA — ritmo visual + mejor spacing
+============================================================ */
+.poem {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  line-height: 1.75;
+  font-size: 1.07rem;
+}
+
+.poem span {
+  display: block;
+  margin-bottom: 14px;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: lineAppear 0.7s ease forwards;
+}
+
+@keyframes lineAppear {
+  0% { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Delay dinámico automático (18 líneas máximo) */
+.poem span:nth-child(n) {
+  animation-delay: calc(0.15s + (0.14s * (var(--i))));
+}
+
+.poem span:nth-child(1) { --i: 1; }
+.poem span:nth-child(2) { --i: 2; }
+.poem span:nth-child(3) { --i: 3; }
+.poem span:nth-child(4) { --i: 4; }
+.poem span:nth-child(5) { --i: 5; }
+.poem span:nth-child(6) { --i: 6; }
+.poem span:nth-child(7) { --i: 7; }
+.poem span:nth-child(8) { --i: 8; }
+.poem span:nth-child(9) { --i: 9; }
+.poem span:nth-child(10) { --i: 10; }
+.poem span:nth-child(11) { --i: 11; }
+.poem span:nth-child(12) { --i: 12; }
+.poem span:nth-child(13) { --i: 13; }
+.poem span:nth-child(14) { --i: 14; }
+.poem span:nth-child(15) { --i: 15; }
+.poem span:nth-child(16) { --i: 16; }
+.poem span:nth-child(17) { --i: 17; }
+.poem span:nth-child(18) { --i: 18; }
+
+/* ============================================================
+   BOTÓN — refinado + aura elegante
+============================================================ */
+.btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 14px 28px;
+  font-size: 1rem;
+  color: #fff;
+  text-decoration: none;
+
+  background: linear-gradient(135deg,
+    rgba(255,255,255,0.08),
+    rgba(255,255,255,0.22)
+  );
+  border: 1px solid rgba(255,255,255,0.28);
+  border-radius: 18px;
+  backdrop-filter: blur(6px);
+
+  transition: 0.35s ease;
+
+  opacity: 0;
+  animation: fadeUp 2.8s ease forwards;
+  animation-delay: 3.2s;
+}
+
+.btn:hover {
+  background: rgba(255,255,255,0.33);
+  box-shadow: 0 0 24px rgba(255,255,255,0.30);
+}
+
+/* ============================================================
+   FLORES PARALLAX — movimiento más orgánico
+============================================================ */
+.flower {
+  position: fixed;
+  pointer-events: none;
+  animation: floatFlower linear infinite;
+  z-index: -1;
+  opacity: 0;
+}
+
+@keyframes floatFlower {
+  0% {
+    transform: translateY(110vh) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: translateY(-22vh) translateX(30vw) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 480px) {
+  .card { padding: 32px 22px; }
+  .title { font-size: 1.52rem; }
+  .poem { font-size: 0.98rem; }
+  .btn { font-size: 0.94rem; padding: 12px 22px; }
+}
